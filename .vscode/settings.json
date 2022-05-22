@@ -4,5 +4,5 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.wordWrap": "on",
-    "cSpell.words": ["Signup"]
+    "cSpell.words": ["Formik", "Signup"]
 }
