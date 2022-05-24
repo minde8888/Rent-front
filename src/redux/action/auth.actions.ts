@@ -1,6 +1,7 @@
 import { AppThunk } from '../store';
 import { registerSuccess, registerFail, loginSuccess, loginFail, userLogout, refreshToken } from '../slice/authSlice';
 import { refreshTokenType } from '../models/auth.model';
+import AuthServices from '../../services/auth.services/Auth.services';
 
 export const registerSuccessValue = (): AppThunk => async (dispatch) => {
     dispatch(registerSuccess());
