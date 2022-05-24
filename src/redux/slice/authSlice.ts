@@ -1,8 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
-import { AppThunk, RootState } from '../store';
+import { refreshTokenType } from '../models/auth.model';
 
-type refreshToken = { token: string; refreshToken: string };
+export interface AuthError {
+    message: string;
+}
+
+export interface AuthState {
+    isAuth: boolean;
+    currentUser?: CurrentUser;
+    isLoading: boolean;
+    error: AuthError;
+}
+
+export interface CurrentUser {
+    id: string;
+    display_name: string;
+    email: string;
+    photo_url: string;
+}
+export const initialState: AuthState = {
+    isAuth: false,
+    isLoading: false,
+    error: { message: 'An Error occurred' }
+};
 
 const authSlice = createSlice({
     name: 'auth',
@@ -25,17 +45,18 @@ const authSlice = createSlice({
                 isLoggedIn: false
             };
         },
-        loginSuccess: (state, action: PayloadAction<string>) => {
+        loginSuccess: (state, action: PayloadAction<[]>) => {
+            return {
+                ...state,
+                isLoggedIn: false,
+                user: action.payload
+            };
+        },
+        loginFail: (state, action: PayloadAction<string>) => {
             return {
                 ...state,
                 isLoggedIn: false,
                 error: action.payload
-            };
-        },
-        loginFail: (state) => {
-            return {
-                ...state,
-                isLoggedIn: false
             };
         },
         userLogout: (state) => {
@@ -44,7 +65,7 @@ const authSlice = createSlice({
                 isLoggedIn: false
             };
         },
-        refreshToken: (state, { payload }: PayloadAction<refreshToken>) => {
+        refreshToken: (state, { payload }: PayloadAction<refreshTokenType>) => {
             return {
                 ...state,
                 token: payload.token,
@@ -53,3 +74,7 @@ const authSlice = createSlice({
         }
     }
 });
+
+export const { registerSuccess, registerFail, loginSuccess, loginFail, userLogout, refreshToken } = authSlice.actions;
+
+export default authSlice.reducer;
