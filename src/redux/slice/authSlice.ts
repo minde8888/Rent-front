@@ -45,7 +45,7 @@ const authSlice = createSlice({
                 isLoggedIn: false
             };
         },
-        loginSuccess: (state, action: PayloadAction<[]>) => {
+        loginSuccess: (state, action: PayloadAction<Promise<[]> | []>) => {
             return {
                 ...state,
                 isLoggedIn: false,
@@ -53,6 +53,8 @@ const authSlice = createSlice({
             };
         },
         loginFail: (state, action: PayloadAction<string>) => {
+            console.log(action);
+
             return {
                 ...state,
                 isLoggedIn: false,

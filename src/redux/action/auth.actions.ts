@@ -1,7 +1,6 @@
 import { AppThunk } from '../store';
 import { registerSuccess, registerFail, loginSuccess, loginFail, userLogout, refreshToken } from '../slice/authSlice';
 import { refreshTokenType } from '../models/auth.model';
-import AuthServices from '../../services/auth.services/Auth.services';
 
 export const registerSuccessValue = (): AppThunk => async (dispatch) => {
     dispatch(registerSuccess());
@@ -12,7 +11,7 @@ export const registerFailValue = (): AppThunk => async (dispatch) => {
 };
 
 export const loginSuccessValue =
-    (value: []): AppThunk =>
+    (value: Promise<[]> | []): AppThunk =>
     async (dispatch) => {
         dispatch(loginSuccess(value));
     };
@@ -20,6 +19,7 @@ export const loginSuccessValue =
 export const loginFailValue =
     (value: string): AppThunk =>
     async (dispatch) => {
+        console.log(value);
         dispatch(loginFail(value));
     };
 
