@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { refreshTokenType } from '../models/auth.model';
+import { RootState } from '../store';
 
 export interface AuthError {
     message: string;
@@ -78,5 +79,7 @@ const authSlice = createSlice({
 });
 
 export const { registerSuccess, registerFail, loginSuccess, loginFail, userLogout, refreshToken } = authSlice.actions;
+
+export const selectAuth = (state: RootState) => state.reducer.auth;
 
 export default authSlice.reducer;

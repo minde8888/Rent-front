@@ -1,8 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { loginFailValue, loginSuccessValue } from '../../redux/action/auth.actions';
 const AUTH_URL = 'https://localhost:44346/api/v1/auth/';
 
-export const login = (username: string, password: string): void => {
+export const login = (username: string, password: string) => {
+    console.log(username, password);
+
     axios
         .post(AUTH_URL + 'login', {
             username,
@@ -10,16 +12,16 @@ export const login = (username: string, password: string): void => {
         })
         .then((response) => {
             console.log(response);
-
-            if (response.data.accessToken) {
-                localStorage.setItem('user', JSON.stringify(response.data));
-            }
-            loginSuccessValue(response.data);
+            return response.data;
+            // if (response.data.accessToken) {
+            //     localStorage.setItem('user', JSON.stringify(response.data));
+            // }
         })
         .catch((error) => {
             console.log(error.message);
-            loginFailValue(error.message);
+            return error.message;
         });
+    return [];
 };
 
 export const logout = (): void => {
