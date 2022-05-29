@@ -1,4 +1,4 @@
-import Main from './components/Main';
+import Main from './components/main';
 
 function App(): JSX.Element {
     return (
@@ -10,7 +10,3 @@ function App(): JSX.Element {
 
 export default App;
 
-// FnName:React.FC<Interface> = ({})=>{}
-// renderList = ():JSX.Element[] =>{
-//   return el.map(e => return(<div>{e.name}</div>))
-// }

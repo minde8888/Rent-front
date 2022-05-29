@@ -1,5 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Outlet } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import style from './nav.module.scss'
 
 interface INavBar {
 
@@ -7,12 +9,20 @@ interface INavBar {
 
 const NavBar: FunctionComponent<INavBar> = () => {
     return (
-        <div>
-            <h1>{"title"}</h1>
-            <h2>{"subtitle"}</h2>
-            <div>{"children"}</div>
-            <Outlet />
-        </div>
+        <nav>
+            <div className={style.container}>
+                <div>{"home"}</div>
+                <div>{"children"}</div>
+                <div>{"children"}</div>
+                <NavLink to={"/login"} className="nav-link">
+                    Login
+                </NavLink>
+                <NavLink to={"/signup"} className="nav-link">
+                    Sign Up
+                </NavLink>
+                <Outlet />
+            </div>
+        </nav>
     );
 };
 

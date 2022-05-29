@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AxiosResponse } from 'axios';
 import { refreshTokenType } from '../models/auth.model';
 import { RootState } from '../store';
 
@@ -40,13 +41,14 @@ const authSlice = createSlice({
                 isLoggedIn: false
             };
         },
-        registerFail: (state) => {
+        registerFail: (state, action: PayloadAction<string>) => {
             return {
                 ...state,
-                isLoggedIn: false
+                isLoggedIn: false,
+                error: action.payload
             };
         },
-        loginSuccess: (state, action: PayloadAction<Promise<[]> | []>) => {
+        loginSuccess: (state, action: PayloadAction<AxiosResponse<any, any>>) => {
             return {
                 ...state,
                 isLoggedIn: false,
