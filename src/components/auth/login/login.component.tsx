@@ -54,16 +54,18 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         password: Yup.string()
             .min(6, 'Password must be at least 6 charters')
             .required('Password is required')
-            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})/, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
-        role: Yup.string().required("Please select a role").oneOf(["User", "Client"])
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})/, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character')
     }),
 
     handleSubmit: async (values, { props }) => {
+
         try {
             const data = await login(
                 values.email,
                 values.password,
             )
+            console.log(data);
+
             props.dispatch(loginSuccess(data));
         } catch (error) {
             if (axios.isAxiosError(error)) {

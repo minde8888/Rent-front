@@ -23,6 +23,8 @@ export interface Response {
 }
 
 export const login = async (email: string, password: string) => {
+    console.log(email, password);
+
     return await axios.post<{ data: Response[] }>(AUTH_URL + 'login', {
         email: email,
         password: password
