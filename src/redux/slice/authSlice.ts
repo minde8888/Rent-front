@@ -15,11 +15,25 @@ export interface AuthState {
 }
 
 export interface CurrentUser {
-    id: string;
-    display_name: string;
+    Id: string;
+    sellerId?: string;
+    customersId?: string;
+    name: string;
+    surname: string;
+    phoneNumber: string;
     email: string;
-    photo_url: string;
+    occupation?: string;
+    role?: string;
+    addressDto?: {
+        addressId: string;
+        street: string;
+        city: string;
+        zip: string;
+        country: string;
+        companyCode: string;
+    };
 }
+
 export const initialState: AuthState = {
     isAuth: false,
     isLoading: false,
@@ -48,7 +62,7 @@ const authSlice = createSlice({
                 error: action.payload
             };
         },
-        loginSuccess: (state, action: PayloadAction<AxiosResponse<any, any>>) => {
+        loginSuccess: (state, action: PayloadAction<CurrentUser>) => {
             return {
                 ...state,
                 isLoggedIn: false,

@@ -24,10 +24,10 @@ interface OtherProps {
 }
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-    const { isSubmitting, message, } = props;
-    const { name, surname, mobile, role, email } = props.values
+    const { isSubmitting, message } = props;
+    const { name, surname, mobile, role, email } = props.values;
 
-    const roles = ["User", "Client"];
+    const roles = ['User', 'Client'];
     const roleOptions = roles.map((r, key) => (
         <option value={r} key={key}>
             {r}
@@ -43,21 +43,24 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
             <TextField label="Email" name="email" type="email" value={email} />
             <TextField label="Password" name="password" type="password" />
             <TextField label="Confirm Password" name="confirmPassword" type="password" />
-            <SelectField name="role" as="select" value={role} >
-                <option >Choice Role</option>
+            <SelectField name="role" as="select" value={role}>
+                <option>Choice Role</option>
                 {roleOptions}
             </SelectField>
             <button type="submit" disabled={isSubmitting}>
-                Submit
+                SignUp
+            </button>
+            <button type="reset" disabled={isSubmitting}>
+                Reset
             </button>
         </Form>
     );
 };
 
 interface MyFormProps {
-    initName?: string,
-    initSurname?: string,
-    initMobile?: string,
+    initName?: string;
+    initSurname?: string;
+    initMobile?: string;
     initEmail?: string;
     initRole?: string;
     message: string;
@@ -65,7 +68,6 @@ interface MyFormProps {
 }
 
 const MyForm = withFormik<MyFormProps, FormValues>({
-
     mapPropsToValues: (props) => {
         return {
             name: props.initName || '',
@@ -74,20 +76,15 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             email: props.initEmail || '',
             role: props.initRole || '',
             password: '',
-            confirmPassword: "",
+            confirmPassword: ''
         };
     },
 
     validationSchema: Yup.object().shape({
-        name: Yup.string()
-            .max(15, 'Must be 15 characters or less')
-            .required('Required'),
-        surname: Yup.string()
-            .max(20, 'Must be 20 characters or less')
-            .required('Required'),
+        name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+        surname: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
         mobile: Yup.string()
-            .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
-                'Phone number is not valid')
+            .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/, 'Phone number is not valid')
             .min(11, 'Must be 10 characters')
             .max(11, 'Must be 10 characters'),
         email: Yup.string().email('Email not valid').required('Email is required'),
@@ -98,18 +95,12 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Password must match')
             .required('Confirm password is required'),
-        role: Yup.string().required("Please select a role").oneOf(["User", "Client"])
+        role: Yup.string().required('Please select a role').oneOf(['User', 'Client'])
     }),
 
     handleSubmit: async (values, { props }) => {
         try {
-            await register(values.name,
-                values.surname,
-                values.mobile,
-                values.email,
-                values.password,
-                values.role
-            )
+            await register(values.name, values.surname, values.mobile, values.email, values.password, values.role);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 props.dispatch(registerFail(error.message));
@@ -128,4 +119,3 @@ const SignUp = () => (
 );
 
 export default SignUp;
-

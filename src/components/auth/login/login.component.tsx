@@ -18,8 +18,8 @@ interface OtherProps {
 }
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-    const { isSubmitting, message, } = props;
-    const { email } = props.values
+    const { isSubmitting, message } = props;
+    const { email } = props.values;
 
     return (
         <Form>
@@ -28,7 +28,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
             <TextField label="Email" name="email" type="email" value={email} />
             <TextField label="Password" name="password" type="password" />
             <button type="submit" disabled={isSubmitting}>
-                Submit
+                Login
             </button>
         </Form>
     );
@@ -41,11 +41,10 @@ interface MyFormProps {
 }
 
 const MyForm = withFormik<MyFormProps, FormValues>({
-
     mapPropsToValues: (props) => {
         return {
             email: props.initEmail || '',
-            password: '',
+            password: ''
         };
     },
 
@@ -58,13 +57,9 @@ const MyForm = withFormik<MyFormProps, FormValues>({
     }),
 
     handleSubmit: async (values, { props }) => {
-
         try {
-            const data = await login(
-                values.email,
-                values.password,
-            )
-            console.log(data);
+            const Response = await login(values.email, values.password);
+            const { data } = Response;
 
             props.dispatch(loginSuccess(data));
         } catch (error) {
@@ -85,4 +80,3 @@ const Login = () => (
 );
 
 export default Login;
-
