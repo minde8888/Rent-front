@@ -1,34 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
+import { User } from '../../models/user.model';
+import { Response } from '../typings';
 
 const AUTH_URL = 'https://localhost:44346/api/v1/auth/';
 
-export interface Response {
-    Id: string;
-    sellerId?: string;
-    customersId?: string;
-    name: string;
-    surname: string;
-    phoneNumber: string;
-    email: string;
-    occupation?: string;
-    role?: string;
-    addressDto?: {
-        addressId: string;
-        street: string;
-        city: string;
-        zip: string;
-        country: string;
-        companyCode: string;
-    };
-}
-
-export const login = async (email: string, password: string) => {
+export const login = async (email: string, password: string): Promise<User> => {
     console.log(email, password);
-
-    return await axios.post<Response>(AUTH_URL + 'login', {
+    const { data } = await axios.post<Response<User>>(AUTH_URL + 'login', {
         email: email,
         password: password
     });
+    if (!(data?.$values?.length !== 0)) throw Error('no user found');
+    return data.$values[0];
 };
 
 export const logout = (): void => {
@@ -37,7 +20,6 @@ export const logout = (): void => {
 
 export const register = async (name: string, surname: string, mobile: string, email: string, password: string, role: string) => {
     console.log(role);
-
     return await axios.post<AxiosResponse>(AUTH_URL + 'signup', {
         name: name,
         surname: surname,
