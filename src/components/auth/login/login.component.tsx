@@ -58,10 +58,8 @@ const MyForm = withFormik<MyFormProps, FormValues>({
 
     handleSubmit: async (values, { props }) => {
         try {
-            const Response = await login(values.email, values.password);
-            const { data } = Response;
-
-            props.dispatch(loginSuccess(data));
+            const user = await login(values.email, values.password);
+            props.dispatch(loginSuccess(user));
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 props.dispatch(loginFail(error.message));

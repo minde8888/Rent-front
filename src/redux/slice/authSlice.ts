@@ -1,53 +1,33 @@
+import { User } from './../../models/user.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { refreshTokenType } from '../models/auth.model';
 import { RootState } from '../store';
 
-export interface AuthError {
-    message: string;
+interface AuthState {
+    isLoggedIn: boolean;
+    currentUser: User | null;
+    token: string;
+    refreshToken: string;
+    error: string | null;
 }
 
-export interface AuthState {
-    isAuth: boolean;
-    currentUser?: CurrentUser;
-    isLoading: boolean;
-    error: AuthError;
-}
+// class AuthError extends Error {
+//     constructor(message: string) {
+//         super(message);
+//     }
+// }
+// instanceof AuthError
 
-export interface CurrentUser {
-    Id: string;
-    sellerId?: string;
-    customersId?: string;
-    name: string;
-    surname: string;
-    phoneNumber: string;
-    email: string;
-    occupation?: string;
-    role?: string;
-    addressDto?: {
-        addressId: string;
-        street: string;
-        city: string;
-        zip: string;
-        country: string;
-        companyCode: string;
-    };
-}
-
-export const initialState: AuthState = {
-    isAuth: false,
-    isLoading: false,
-    error: { message: 'An Error occurred' }
-};
+// if (err instanceof AuthError)
 
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
         isLoggedIn: false,
-        error: '',
         token: '',
         refreshToken: ''
-    },
+    } as AuthState,
     reducers: {
         registerSuccess: (state) => {
             return {
@@ -62,7 +42,7 @@ const authSlice = createSlice({
                 error: action.payload
             };
         },
-        loginSuccess: (state, action: PayloadAction<CurrentUser>) => {
+        loginSuccess: (state, action: PayloadAction<User>) => {
             return {
                 ...state,
                 isLoggedIn: false,

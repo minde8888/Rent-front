@@ -1,14 +1,16 @@
-import { configureStore, Action } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
-import { ThunkAction } from 'redux-thunk'
 import logger from 'redux-logger';
 import rootReducer from "./reducers";
+
+type ImmutableCheck = { warnAfter: number; }
+type GetDefaultMiddlewareFn = (arg0: { immutableCheck: ImmutableCheck }) => any
 
 export const store = configureStore({
     reducer: {
         reducer: rootReducer
     },
-    middleware: (getDefaultMiddleware: (arg0: { immutableCheck: { warnAfter: number; }; }) => any) => [
+    middleware: (getDefaultMiddleware: GetDefaultMiddlewareFn) => [
         ...getDefaultMiddleware({
             immutableCheck: { warnAfter: 200 }
         }),
@@ -19,5 +21,5 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch()
-export type AppThunk = ThunkAction<void, RootState, unknown, Action>
+
 
