@@ -60,6 +60,7 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         try {
             const user = await login(values.email, values.password);
             props.dispatch(loginSuccess(user));
+            localStorage.setItem('user', JSON.stringify(user));
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 props.dispatch(loginFail(error.message));

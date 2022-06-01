@@ -1,14 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 import logger from 'redux-logger';
-import rootReducer from "./reducers";
+import rootReducer from './reducers';
 
-type ImmutableCheck = { warnAfter: number; }
-type GetDefaultMiddlewareFn = (arg0: { immutableCheck: ImmutableCheck }) => any
+type ImmutableCheck = { warnAfter: number };
+type GetDefaultMiddlewareFn = (arg0: { immutableCheck: ImmutableCheck }) => any;
 
 export const store = configureStore({
     reducer: {
-        reducer: rootReducer
+        data: rootReducer
     },
     middleware: (getDefaultMiddleware: GetDefaultMiddlewareFn) => [
         ...getDefaultMiddleware({
@@ -19,7 +19,5 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch
-export const useAppDispatch = () => useDispatch()
-
-
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch();

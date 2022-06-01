@@ -1,17 +1,18 @@
 import { User } from './../../models/user.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
-import { refreshTokenType } from '../models/auth.model';
 import { RootState } from '../store';
 
 interface AuthState {
     isLoggedIn: boolean;
     currentUser: User | null;
-    token: string;
-    refreshToken: string;
+    currentToken: RefreshToken | null;
     error: string | null;
 }
 
+interface RefreshToken {
+    token: string;
+    refreshToken: string;
+}
 // class AuthError extends Error {
 //     constructor(message: string) {
 //         super(message);
@@ -24,9 +25,7 @@ interface AuthState {
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        isLoggedIn: false,
-        token: '',
-        refreshToken: ''
+        isLoggedIn: false
     } as AuthState,
     reducers: {
         registerSuccess: (state) => {
@@ -64,7 +63,7 @@ const authSlice = createSlice({
                 isLoggedIn: false
             };
         },
-        refreshToken: (state, { payload }: PayloadAction<refreshTokenType>) => {
+        refreshToken: (state, { payload }: PayloadAction<RefreshToken>) => {
             return {
                 ...state,
                 token: payload.token,
@@ -76,6 +75,6 @@ const authSlice = createSlice({
 
 export const { registerSuccess, registerFail, loginSuccess, loginFail, userLogout, refreshToken } = authSlice.actions;
 
-export const selectAuth = (state: RootState) => state.reducer.auth;
+export const selectAuth = (state: RootState) => state.data.auth;
 
 export default authSlice.reducer;
