@@ -7,6 +7,8 @@ import { AnyAction } from 'redux';
 import { loginFail, loginSuccess } from '../../../redux/slice/authSlice';
 import axios from 'axios';
 import { TextField } from '../validation/textField';
+import { Navigate } from 'react-router-dom';
+import { useAppSelector } from '../../../hooks/redux.hooks';
 
 interface FormValues {
     email: string;
@@ -20,6 +22,10 @@ interface OtherProps {
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     const { isSubmitting, message } = props;
     const { email } = props.values;
+    let isLoggedIn = useAppSelector((state) => state.data.auth.isLoggedIn);
+    if (isLoggedIn) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <Form>
@@ -57,6 +63,8 @@ const MyForm = withFormik<MyFormProps, FormValues>({
     }),
 
     handleSubmit: async (values, { props }) => {
+        console.log(props);
+
         try {
             const user = await login(values.email, values.password);
             props.dispatch(loginSuccess(user));

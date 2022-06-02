@@ -44,7 +44,7 @@ const authSlice = createSlice({
         loginSuccess: (state, action: PayloadAction<User>) => {
             return {
                 ...state,
-                isLoggedIn: false,
+                isLoggedIn: true,
                 user: action.payload
             };
         },
