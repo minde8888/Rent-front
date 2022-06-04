@@ -1,17 +1,33 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import AuthError from '../../components/auth/authError/authError';
 import { User } from '../../models/user.model';
 import { Response } from '../typings';
 
 const AUTH_URL = 'https://localhost:44346/api/v1/auth/';
 
+interface ServerError {
+    errors: any;
+    errorMessage: string;
+}
+
 export const login = async (email: string, password: string): Promise<User> => {
-    console.log(email, password);
-    const { data } = await axios.post<Response<User>>(AUTH_URL + 'login', {
-        email: email,
-        password: password
-    });
-    if (!(data?.$values?.length !== 0)) throw Error('no user found');
-    return data.$values[0];
+    try {
+        const { data } = await axios.post<Response<User>>(AUTH_URL + 'login', {
+            email: email,
+            password: password
+        });
+        if (!(data?.$values?.length !== 0)) throw Error('no user found');
+        return data.$values[0];
+    } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+            const serverError = error as AxiosError<ServerError>;
+            if (serverError && serverError.response?.data) {
+                throw new AuthError(serverError.response.data.errors.$values[0]);
+            }
+            throw new AuthError(error.message);
+        }
+        throw error;
+    }
 };
 
 export const logout = (): void => {
@@ -19,7 +35,6 @@ export const logout = (): void => {
 };
 
 export const register = async (name: string, surname: string, mobile: string, email: string, password: string, role: string) => {
-    console.log(role);
     return await axios.post<AxiosResponse>(AUTH_URL + 'signup', {
         name: name,
         surname: surname,
@@ -28,10 +43,4 @@ export const register = async (name: string, surname: string, mobile: string, em
         password: password,
         Roles: role
     });
-};
-
-export const getCurrentUser = (): null | string => {
-    const userStr = localStorage.getItem('user');
-    if (userStr) return JSON.parse(userStr);
-    return null;
 };

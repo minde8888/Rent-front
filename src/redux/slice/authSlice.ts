@@ -2,9 +2,9 @@ import { User } from './../../models/user.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-interface AuthState {
+export interface AuthState {
     isLoggedIn: boolean;
-    currentUser: User | null;
+    user: User | null;
     currentToken: RefreshToken | null;
     error: string | null;
 }
@@ -13,14 +13,6 @@ interface RefreshToken {
     token: string;
     refreshToken: string;
 }
-// class AuthError extends Error {
-//     constructor(message: string) {
-//         super(message);
-//     }
-// }
-// instanceof AuthError
-
-// if (err instanceof AuthError)
 
 const authSlice = createSlice({
     name: 'auth',

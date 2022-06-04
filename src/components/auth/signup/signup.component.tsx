@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 import * as Yup from 'yup';
 import { withFormik, FormikProps, Form, Field } from 'formik';
 import { register } from '../../../services/auth.services/auth.services';
-import { useAppDispatch } from '../../../hooks/redux.hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { AnyAction } from 'redux';
 import { registerFail } from '../../../redux/slice/authSlice';
 import { SelectField } from '../validation/selectField';
@@ -26,6 +26,7 @@ interface OtherProps {
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     const { isSubmitting, message } = props;
     const { name, surname, mobile, role, email } = props.values;
+    let { error } = useAppSelector((state) => state.data.auth);
 
     const roles = ['User', 'Client'];
     const roleOptions = roles.map((r, key) => (
@@ -53,6 +54,13 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
             <button type="reset" disabled={isSubmitting}>
                 Reset
             </button>
+            {error && (
+                <div className="error-group">
+                    <div className="danger">
+                        {error}
+                    </div>
+                </div>
+            )}
         </Form>
     );
 };

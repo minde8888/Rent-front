@@ -7,8 +7,8 @@ export interface User {
     surname: string;
     phoneNumber: string;
     email: string;
-    occupation: string | null;
-    role: string | null;
-    imageName: string | null;
-    addressDto: string | null;
+    occupation?: string;
+    roles: string;
+    imageName?: string;
+    addressDto?: string;
 }
