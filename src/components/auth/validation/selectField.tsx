@@ -7,6 +7,7 @@ interface PropsType {
 
 export const SelectField = ({ label, ...props }: PropsType) => {
     const [field, meta] = useField(props);
+
     return (
         <div>
             <label htmlFor={props.id || props.name}>{label}</label>

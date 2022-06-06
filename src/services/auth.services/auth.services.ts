@@ -1,18 +1,15 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import AuthError from '../../components/auth/authError/authError';
+import AuthError from '../handleServerError/AuthServerError';
 import { User } from '../../models/user.model';
-import { Response } from '../typings';
+import { Response, ServerError } from '../typings';
+import RegisterError from '../handleServerError/RegisterError';
+import api from '../api.services/instanceApi.service';
 
-const AUTH_URL = 'https://localhost:44346/api/v1/auth/';
-
-interface ServerError {
-    errors: any;
-    errorMessage: string;
-}
+const AUTH_URL = 'auth/';
 
 export const login = async (email: string, password: string): Promise<User> => {
     try {
-        const { data } = await axios.post<Response<User>>(AUTH_URL + 'login', {
+        const { data } = await api.post<Response<User>>(AUTH_URL + 'login', {
             email: email,
             password: password
         });
@@ -35,12 +32,23 @@ export const logout = (): void => {
 };
 
 export const register = async (name: string, surname: string, mobile: string, email: string, password: string, role: string) => {
-    return await axios.post<AxiosResponse>(AUTH_URL + 'signup', {
-        name: name,
-        surname: surname,
-        phoneNumber: mobile,
-        email: email,
-        password: password,
-        Roles: role
-    });
+    try {
+        return await api.post<AxiosResponse>(AUTH_URL + 'signup', {
+            name: name,
+            surname: surname,
+            phoneNumber: mobile,
+            email: email,
+            password: password,
+            Roles: role
+        });
+    } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+            const serverError = error as AxiosError<ServerError>;
+            if (serverError && serverError.response) {
+                throw new RegisterError(serverError.response.data.errors.$values[0]);
+            }
+            throw new RegisterError(error.message);
+        }
+        throw error;
+    }
 };

@@ -1,15 +1,9 @@
-export default function authHeader():
-    | {
-          Authorization: string;
-      }
-    | {
-          Authorization?: undefined;
-      } {
-    const userStr = localStorage.getItem('user');
-    let user = null;
-    if (userStr) user = JSON.parse(userStr);
-    if (user && user.accessToken) {
-        return { Authorization: 'Bearer ' + user.accessToken };
+import { store } from '../../redux/store';
+
+export default function authHeader(): {} | { Authorization: string } | { Authorization?: undefined } {
+    const token = store.getState().data.auth.user?.token;
+    if (token?.length !== 0) {
+        return { Authorization: 'Bearer ' + token };
     } else {
         return {};
     }

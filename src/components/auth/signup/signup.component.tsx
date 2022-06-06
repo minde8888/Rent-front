@@ -1,13 +1,15 @@
 import { Dispatch } from 'react';
 import * as Yup from 'yup';
-import { withFormik, FormikProps, Form, Field } from 'formik';
+import { withFormik, FormikProps, Form } from 'formik';
 import { register } from '../../../services/auth.services/auth.services';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { AnyAction } from 'redux';
-import { registerFail } from '../../../redux/slice/authSlice';
 import { SelectField } from '../validation/selectField';
-import axios from 'axios';
 import { TextField } from '../validation/textField';
+import style from '../auth.module.scss'
+import { NavigateFunction, NavLink, useNavigate } from 'react-router-dom';
+import { Roles } from '../roles/roles.const';
+import { registerFail } from '../../../redux/slice/authSlice'
 
 interface FormValues {
     name: string;
@@ -28,12 +30,13 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     const { name, surname, mobile, role, email } = props.values;
     let { error } = useAppSelector((state) => state.data.auth);
 
-    const roles = ['User', 'Client'];
+    const roles = [Roles.user, Roles.customer];
     const roleOptions = roles.map((r, key) => (
         <option value={r} key={key}>
             {r}
         </option>
     ));
+
     return (
         <Form>
             <h1>{message}</h1>
@@ -61,6 +64,11 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                     </div>
                 </div>
             )}
+            <div className={style.links}>Du you have account ?
+                <NavLink to={"/login"} className="nav-link">
+                    Login
+                </NavLink>
+            </div>
         </Form>
     );
 };
@@ -73,6 +81,7 @@ interface MyFormProps {
     initRole?: string;
     message: string;
     dispatch: Dispatch<AnyAction>;
+    navigate: NavigateFunction;
 }
 
 const MyForm = withFormik<MyFormProps, FormValues>({
@@ -87,7 +96,6 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             confirmPassword: ''
         };
     },
-
     validationSchema: Yup.object().shape({
         name: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
         surname: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
@@ -105,25 +113,26 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             .required('Confirm password is required'),
         role: Yup.string().required('Please select a role').oneOf(['User', 'Client'])
     }),
-
     handleSubmit: async (values, { props }) => {
         try {
-            await register(values.name, values.surname, values.mobile, values.email, values.password, values.role);
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                props.dispatch(registerFail(error.message));
-            } else {
-                console.log('unexpected error: ', error);
-                props.dispatch(registerFail('An unexpected error occurred'));
+            const response = await register(values.name, values.surname, values.mobile, values.email, values.password, values.role);
+            if (response.status === 200) {
+                props.navigate("/login", { replace: true })
             }
+        } catch (error: any) {
+            props.dispatch(registerFail(error.message));
         }
     }
 })(InnerForm);
 
 const SignUp = () => (
-    <div>
-        <MyForm message="Sign up" dispatch={useAppDispatch()} />
+    <div className={style.container}>
+        <div className={style.auth}>
+            <MyForm message="Sign up" dispatch={useAppDispatch()} navigate={useNavigate()} />
+        </div>
     </div>
 );
 
 export default SignUp;
+
+

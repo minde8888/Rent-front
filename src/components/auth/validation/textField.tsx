@@ -1,7 +1,7 @@
 import { ErrorMessage, useField } from 'formik';
 
 interface PropsType {
-    [x: string]: string;
+    [x: string]: string | undefined;
     name: string;
 }
 

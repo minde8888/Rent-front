@@ -6,6 +6,6 @@
     "editor.wordWrap": "on",
     "cSpell.words": ["formik", "Signup"],
     "[jsonc]": {
-        "editor.defaultFormatter": "HookyQR.beautify"
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

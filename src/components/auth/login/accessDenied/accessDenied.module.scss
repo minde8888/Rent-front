@@ -19,7 +19,7 @@ $animationTime: 2s;
     width           : 100%;
 
     .message {
-        margin: 0 20px 0 0;
+        margin: 200px 0 0 80px;
 
         h1 {
             margin: 40px 0 20px;
@@ -31,7 +31,7 @@ $animationTime: 2s;
         border-radius   : 5px;
         width           : 55px;
         height          : 45px;
-        background-color: #333;
+        background-color: rgb(128, 8, 8);
         animation       : dip 1s;
         animation-delay : ($animationTime - .5);
 
@@ -101,4 +101,16 @@ $animationTime: 2s;
         }
     }
 
+}
+
+@media only screen and (max-width: 600px) {
+    .denied {
+        flex-direction: column-reverse;
+        align-items   : center;
+
+        .message {
+            margin : 200px 0 40px 0;
+            padding: 0 20px;
+        }
+    }
 }

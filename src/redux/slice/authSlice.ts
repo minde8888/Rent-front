@@ -5,11 +5,10 @@ import { RootState } from '../store';
 export interface AuthState {
     isLoggedIn: boolean;
     user: User | null;
-    currentToken: RefreshToken | null;
     error: string | null;
 }
 
-interface RefreshToken {
+export interface RefreshToken {
     token: string;
     refreshToken: string;
 }
@@ -20,12 +19,6 @@ const authSlice = createSlice({
         isLoggedIn: false
     } as AuthState,
     reducers: {
-        registerSuccess: (state) => {
-            return {
-                ...state,
-                isLoggedIn: false
-            };
-        },
         registerFail: (state, action: PayloadAction<string>) => {
             return {
                 ...state,
@@ -41,8 +34,6 @@ const authSlice = createSlice({
             };
         },
         loginFail: (state, action: PayloadAction<string>) => {
-            console.log(action);
-
             return {
                 ...state,
                 isLoggedIn: false,
@@ -55,7 +46,7 @@ const authSlice = createSlice({
                 isLoggedIn: false
             };
         },
-        refreshToken: (state, { payload }: PayloadAction<RefreshToken>) => {
+        changeRefreshToken: (state, { payload }: PayloadAction<RefreshToken>) => {
             return {
                 ...state,
                 token: payload.token,
@@ -65,7 +56,7 @@ const authSlice = createSlice({
     }
 });
 
-export const { registerSuccess, registerFail, loginSuccess, loginFail, userLogout, refreshToken } = authSlice.actions;
+export const { loginSuccess, loginFail, userLogout, changeRefreshToken, registerFail } = authSlice.actions;
 
 export const selectAuth = (state: RootState) => state.data.auth;
 
