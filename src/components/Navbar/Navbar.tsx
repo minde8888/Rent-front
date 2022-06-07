@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import './nav.scss';
 
-interface INavBar {}
+interface INavBar { }
 
 const NavBar: FunctionComponent<INavBar> = () => {
     const toggleClickHandler = (event: React.MouseEvent<HTMLHeadingElement>) => {
@@ -11,10 +11,26 @@ const NavBar: FunctionComponent<INavBar> = () => {
     };
 
     return (
-        <div className="menu" onClick={toggleClickHandler}>
-            <div className="button"></div>
-            <div className="button"></div>
-            <div className="button"></div>
+        <div className='navBar'>
+            <div className="menu" onClick={toggleClickHandler}>
+                <div className="button"></div>
+                <div className="button"></div>
+                <div className="button"></div>
+                <div className="button"></div>
+                <div className="button"></div>
+                <div className="button"></div>
+                <div className="button"></div>
+                <div className="button"></div>
+            </div>
+            <div className='links'>
+                <NavLink to={"/login"} className="login">
+                    Login
+                </NavLink>
+                <NavLink to={"/signup"} className="signup">
+                    Sign Up
+                </NavLink>
+            </div>
+            <Outlet />
         </div>
     );
 };
