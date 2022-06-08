@@ -1,3 +1,10 @@
+$base-bgcolor : #354152;
+$base-color : #7e8ba3;
+$base-text : #6b6d62;
+$text : #fff;
+$nav-button-left:12px;
+$nav-text-left:100px;
+
 .navBar {
     display: flex;
     justify-content: space-between;
@@ -14,7 +21,7 @@
         &::before,
         &::after {
             content: '';
-            background: #7e8ba3;
+            background: $base-color;
             border-radius: 5px;
             width: 30px;
             height: 5px;
@@ -44,68 +51,90 @@
                 transform: rotate(-45deg);
             }
 
-            .button {
+            .nav_button {
                 opacity: 1;
                 pointer-events: auto;
 
                 &:first-of-type {
+                    left: $nav-button-left;
                     bottom: -70px;
-                    left: 20%;
                     background: url('https://bassets.github.io/cam.svg') no-repeat 50%/50% #e8e8f3;
                 }
 
                 &:nth-of-type(2) {
+                    left: $nav-button-left;
                     bottom: -140px;
-                    left: 20%;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.05s;
                 }
 
                 &:nth-of-type(3) {
+                    left: $nav-button-left;
                     bottom: -210px;
-                    left: 20%;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.1s;
                 }
 
                 &:nth-of-type(4) {
+                    left: $nav-button-left;
                     bottom: -280px;
-                    left: 20%;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.15s;
                 }
 
                 &:nth-of-type(5) {
+                    left: $nav-button-left;
                     bottom: -350px;
-                    left: 20%;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.2s;
                 }
 
                 &:nth-of-type(6) {
+                    left: $nav-button-left;
                     bottom: -420px;
-                    left: 20%;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.25s;
                 }
 
                 &:nth-of-type(7) {
+                    left: $nav-button-left;
                     bottom: -490px;
-                    left: 20%;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.3s;
                 }
 
                 &:last-of-type {
+                    left: $nav-button-left;
                     bottom: -560px;
-                    left: 20%;
                     background: url('https://bassets.github.io/music.svg') no-repeat 50% 45%/50% 45% #e8e8f3;
                     transition-delay: 0.35s;
                 }
             }
         }
 
-        .button {
+        .home {
+            display: none;
+            position: absolute;
+            top: 90px;
+            left: $nav-text-left;
+            z-index: 1;
+        }
+
+        .home1 {
+            display: none;
+            position: absolute;
+            top: 160px;
+            left: $nav-text-left;
+        }
+
+        .home2 {
+            display: none;
+            position: absolute;
+            top: 230px;
+            left: $nav-text-left;
+        }
+
+        .nav_button {
             padding: 30px;
             border-radius: 50%;
             cursor: pointer;
@@ -118,17 +147,34 @@
             box-shadow: 0px 0px 10px 5px #15191f;
             transition: 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), 0.1s ease opacity;
 
-            &:hover {
+            &:hover+.home {
                 transform: scale(1.1);
+                display: block;
             }
 
-            .home {
+            &:hover+.home1 {
+                transform: scale(1.1);
+                display: block;
+            }
+
+            &:hover+.home2 {
+                transform: scale(1.1);
+                display: block;
+            }
+
+            .nav_link {
                 position: absolute;
-                left: 100px;
-                top: 18px;
+                left: 0;
+                top: 0;
                 text-decoration: none;
-                color: #2b2b2e;
+                color: $base-color;
                 font-weight: 600;
+                width: 60px;
+                height: 60px;
+            }
+
+            .nav_link:hover {
+                color: white;
             }
         }
     }
@@ -143,17 +189,17 @@
         a {
             text-decoration: none;
             font-weight: 500;
-            color: #7e8ba3;
+            color: $base-color;
         }
 
         a:hover {
-            color: #ffffff;
+            color: $text;
         }
 
         .navbar_profile_logout {
             display: flex;
             margin: 0 0 0 30px;
-            color: #7e8ba3;
+            color: $base-color;
         }
 
         .profile {
@@ -161,14 +207,11 @@
         }
 
         .profile:hover {
-            color: #ffffff;
+            color: $text;
         }
 
         .logout:hover {
-            color: #ffffff;
+            color: $text;
         }
     }
-
-
-
 }

@@ -4,7 +4,7 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.wordWrap": "on",
-    "cSpell.words": ["formik", "Signup"],
+    "cSpell.words": ["formik", "reduxjs", "Signup"],
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },

@@ -7,34 +7,46 @@ import { userLogout } from '../../redux/slice/authSlice';
 import { logout } from '../../services/auth.services/auth.services';
 import './nav.scss';
 
-interface INavBar {}
+interface INavBar { }
 
 const NavBar: FunctionComponent<INavBar> = () => {
+
     const dispatch = useAppDispatch();
     const { isLoggedIn, user } = useAppSelector((state) => state.data.auth);
 
     const toggleClickHandler = (event: React.MouseEvent<HTMLHeadingElement>) => {
+        event.stopPropagation();
         event.currentTarget.classList.toggle('open');
     };
+
     const onLogout = () => {
         dispatch(userLogout());
         logout();
     };
+
     return (
         <div className="navBar">
             <div className="menu" onClick={toggleClickHandler}>
-                <div className="button">
-                    <NavLink className="home" to={'/'}>
-                        Home
+                <div className="nav_button">
+                    <NavLink className="nav_link" to={'/'}>
                     </NavLink>
                 </div>
-                <div className="button"></div>
-                <div className="button"></div>
-                <div className="button"></div>
-                <div className="button"></div>
-                <div className="button"></div>
-                <div className="button"></div>
-                <div className="button"></div>
+                <span className='home' >home</span>
+                <div className="nav_button">
+                    <NavLink className="nav_link" to={'/'}>
+                    </NavLink>
+                </div>
+                <span className='home1'>home1</span>
+                <div className="nav_button">
+                    <NavLink className="nav_link" to={'/'}>
+                    </NavLink>
+                </div>
+                <span className='home2'>home2</span>
+                <div className="nav_button"></div>
+                <div className="nav_button"></div>
+                <div className="nav_button"></div>
+                <div className="nav_button"></div>
+                <div className="nav_button"></div>
             </div>
             <div className="links">
                 {!isLoggedIn ? (
