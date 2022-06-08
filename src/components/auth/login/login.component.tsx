@@ -8,7 +8,7 @@ import { loginFail, loginSuccess } from '../../../redux/slice/authSlice';
 import { TextField } from '../validation/textField';
 import { Navigate, NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/redux.hooks';
-import style from '../auth.module.scss'
+import style from '../auth.module.scss';
 
 interface FormValues {
     email: string;
@@ -45,18 +45,17 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
             </button>
             {error && (
                 <div className="error-group">
-                    <div className="danger">
-                        {error}
-                    </div>
+                    <div className="danger">{error}</div>
                 </div>
             )}
-            <div className={style.links}>Not a user ?
-                <NavLink to={"/signup"} className="nav-link">
+            <div className={style.links}>
+                Not a user ?
+                <NavLink to={'/signup'} className="nav-link">
                     Sign Up
                 </NavLink>
             </div>
             <div className={style.links}>
-                <NavLink to={"/forgot-password"} className="nav-link">
+                <NavLink to={'/forgot-password'} className="nav-link">
                     Forgot Password ?
                 </NavLink>
             </div>
@@ -83,7 +82,6 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             const user = await login(values.email, values.password);
             if (!(user instanceof Error)) {
                 props.dispatch(loginSuccess(user));
-                localStorage.setItem('user', JSON.stringify(user));
             }
         } catch (error: any) {
             props.dispatch(loginFail(error.message));
