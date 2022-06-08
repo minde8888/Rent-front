@@ -23,7 +23,11 @@ const NavBar: FunctionComponent<INavBar> = () => {
     return (
         <div className="navBar">
             <div className="menu" onClick={toggleClickHandler}>
-                <div className="button"></div>
+                <div className="button">
+                    <NavLink className="home" to={'/'}>
+                        Home
+                    </NavLink>
+                </div>
                 <div className="button"></div>
                 <div className="button"></div>
                 <div className="button"></div>

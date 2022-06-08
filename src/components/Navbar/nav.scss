@@ -121,6 +121,15 @@
             &:hover {
                 transform: scale(1.1);
             }
+
+            .home {
+                position: absolute;
+                left: 100px;
+                top: 18px;
+                text-decoration: none;
+                color: #2b2b2e;
+                font-weight: 600;
+            }
         }
     }
 
