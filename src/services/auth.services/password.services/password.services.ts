@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import api from '../api.services/instanceApi.service';
-import RegisterError from '../handleServerError/RegisterError';
-import { ServerError } from '../typings';
+import api from '../../api.services/instanceApi.service';
+import RegisterError from '../../handleServerError/RegisterError';
+import { ServerError } from '../../typings';
 
 const AUTH_URL = 'auth/';
 

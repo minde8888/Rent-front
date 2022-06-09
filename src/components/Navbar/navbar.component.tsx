@@ -7,10 +7,9 @@ import { userLogout } from '../../redux/slice/authSlice';
 import { logout } from '../../services/auth.services/auth.services';
 import './nav.scss';
 
-interface INavBar { }
+interface INavBar {}
 
 const NavBar: FunctionComponent<INavBar> = () => {
-
     const dispatch = useAppDispatch();
     const { isLoggedIn, user } = useAppSelector((state) => state.data.auth);
 
@@ -28,20 +27,17 @@ const NavBar: FunctionComponent<INavBar> = () => {
         <div className="navBar">
             <div className="menu" onClick={toggleClickHandler}>
                 <div className="nav_button">
-                    <NavLink className="nav_link" to={'/'}>
-                    </NavLink>
+                    <NavLink className="nav_link" to={'/'}></NavLink>
                 </div>
-                <span className='home' >home</span>
+                <span className="home nav">home home home</span>
                 <div className="nav_button">
-                    <NavLink className="nav_link" to={'/'}>
-                    </NavLink>
+                    <NavLink className="nav_link" to={'/'}></NavLink>
                 </div>
-                <span className='home1'>home1</span>
+                <span className="home1 nav">home1 home1</span>
                 <div className="nav_button">
-                    <NavLink className="nav_link" to={'/'}>
-                    </NavLink>
+                    <NavLink className="nav_link" to={'/'}></NavLink>
                 </div>
-                <span className='home2'>home2</span>
+                <span className="home2 nav">home2</span>
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
@@ -60,7 +56,7 @@ const NavBar: FunctionComponent<INavBar> = () => {
                     </>
                 ) : (
                     <div className="navbar_profile_logout">
-                        <NavLink to={'/profile'} className="profile">
+                        <NavLink to={`profile/${user?.id}`} className="profile">
                             {user?.name} {user?.surname}
                         </NavLink>
                         <div onClick={onLogout} className="logout">
