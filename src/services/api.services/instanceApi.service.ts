@@ -19,9 +19,10 @@ api.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig => {
         if (!config) throw new Error(`Expected 'config' not to be undefined`);
         if (!config?.headers) throw new Error(`Expected 'config.headers' not to be undefined`);
-
+        console.log(config.headers);
         const newHeader = { ...config.headers, ...authHeader() };
         config.headers = newHeader;
+        console.log(config.headers);
 
         return config;
     },

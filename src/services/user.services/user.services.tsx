@@ -8,7 +8,7 @@ const SELLER_URL = 'Seller/';
 
 export const getProfile = async (id: string): Promise<User> => {
     try {
-        const { data } = await api.post<Response<User>>(SELLER_URL + 'id?id=' + id);
+        const { data } = await api.get<Response<User>>(SELLER_URL + 'id?id=' + id);
         if (!(data?.$values?.length !== 0)) throw Error('no user found');
         return data.$values[0];
     } catch (error: any) {
