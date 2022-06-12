@@ -1,3 +1,6 @@
-const Home = () => <div>home page</div>;
+const Home = () => {
+    console.log("home");
 
+    return <div>home page</div>;
+}
 export default Home;

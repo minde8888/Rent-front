@@ -67,13 +67,11 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         email: Yup.string().email('Email not valid').required('Email is required')
     }),
     handleSubmit: async (values, { props }) => {
-        // props.setError()
         try {
             await sendPasswordToEmail(values.email);
         } catch (error: any) {
             console.log(props);
             props.setError(error.message);
-            // props.dispatch(loginFail(error.message));
         }
     }
 })(InnerForm);

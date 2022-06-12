@@ -7,11 +7,12 @@ import { userLogout } from '../../redux/slice/authSlice';
 import { logout } from '../../services/auth.services/auth.services';
 import './nav.scss';
 
-interface INavBar {}
+interface INavBar { }
 
 const NavBar: FunctionComponent<INavBar> = () => {
     const dispatch = useAppDispatch();
-    const { isLoggedIn, user } = useAppSelector((state) => state.data.auth);
+    let { isLoggedIn } = useAppSelector((state) => state.data.auth);
+    let { surname, name, id } = useAppSelector((state) => state.data.user);
 
     const toggleClickHandler = (event: React.MouseEvent<HTMLHeadingElement>) => {
         event.stopPropagation();
@@ -31,9 +32,9 @@ const NavBar: FunctionComponent<INavBar> = () => {
                 </div>
                 <span className="home nav">home home home</span>
                 <div className="nav_button">
-                    <NavLink className="nav_link" to={'/'}></NavLink>
+                    <NavLink className="nav_link" to={'/products'}></NavLink>
                 </div>
-                <span className="home1 nav">home1 home1</span>
+                <span className="home1 nav">products products</span>
                 <div className="nav_button">
                     <NavLink className="nav_link" to={'/'}></NavLink>
                 </div>
@@ -56,8 +57,8 @@ const NavBar: FunctionComponent<INavBar> = () => {
                     </>
                 ) : (
                     <div className="navbar_profile_logout">
-                        <NavLink to={`profile/${user?.id}`} className="profile">
-                            {user?.name} {user?.surname}
+                        <NavLink to={`profile/${id}`} className="profile">
+                            {name} {surname}
                         </NavLink>
                         <div onClick={onLogout} className="logout">
                             Logout

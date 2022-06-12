@@ -1,14 +1,9 @@
-import { User } from './../../models/user.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export interface AuthState {
-    isLoggedIn: boolean;
-    user: User | null;
-    error: string | null;
-}
-
-export interface RefreshToken {
+    isLoggedIn?: boolean;
+    error?: string | null;
     token: string;
     refreshToken: string;
 }
@@ -26,11 +21,12 @@ const authSlice = createSlice({
                 error: action.payload
             };
         },
-        loginSuccess: (state, action: PayloadAction<User>) => {
+        loginSuccess: (state, { payload }: PayloadAction<AuthState>) => {
             return {
                 ...state,
                 isLoggedIn: true,
-                user: action.payload
+                token: payload.token,
+                refreshToken: payload.refreshToken
             };
         },
         loginFail: (state, action: PayloadAction<string>) => {
@@ -43,11 +39,12 @@ const authSlice = createSlice({
         userLogout: (state) => {
             return {
                 ...state,
-                user: null,
-                isLoggedIn: false
+                isLoggedIn: false,
+                token: '',
+                refreshToken: ''
             };
         },
-        changeRefreshToken: (state, { payload }: PayloadAction<RefreshToken>) => {
+        changeRefreshToken: (state, { payload }: PayloadAction<AuthState>) => {
             return {
                 ...state,
                 token: payload.token,

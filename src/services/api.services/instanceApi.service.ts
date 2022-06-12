@@ -1,6 +1,6 @@
+import { User } from './../../models/user.model';
 import axios, { AxiosRequestConfig } from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import { User } from '../../models/user.model';
 import { changeRefreshToken } from '../../redux/slice/authSlice';
 import { store } from '../../redux/store';
 import authHeader from '../auth.services/authHeader.services';
@@ -11,19 +11,31 @@ export interface Response {
     refreshToken: string;
 }
 
+interface Auth {
+    isLoggedIn: boolean;
+    token: string;
+    refreshToken: string;
+}
+
+interface Token {
+    data: {
+        auth: Auth;
+        user: User;
+    };
+}
+
 const api = axios.create({
     baseURL: 'https://localhost:44346/api/v1/'
 });
 
 api.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig => {
+        console.log(666666);
+
         if (!config) throw new Error(`Expected 'config' not to be undefined`);
         if (!config?.headers) throw new Error(`Expected 'config.headers' not to be undefined`);
-        console.log(config.headers);
         const newHeader = { ...config.headers, ...authHeader() };
         config.headers = newHeader;
-        console.log(config.headers);
-
         return config;
     },
     (error) => {
@@ -33,21 +45,17 @@ api.interceptors.request.use(
 
 const refreshAuthLogic = async (failedRequest: any): Promise<void> => {
     try {
-        const user: User = JSON.parse(localStorage.getItem('user') || 'false');
-
-        const response = await api.post<Response>('RefreshToken/', {
-            token: user.token,
-            refreshToken: user.refreshToken
+        const auth: Token = JSON.parse(localStorage.getItem('auth') || 'false');
+        const response = await api.post<Response>('auth/RefreshToken/', {
+            token: auth.data.auth.token,
+            refreshToken: auth.data.auth.refreshToken
         });
-
         const { token, refreshToken } = response.data;
         if (!(token.length !== 0 || refreshToken.length !== 0)) throw Error('no token found');
-
-        user.refreshToken = refreshToken;
-        user.token = token;
-        const payload = { token, refreshToken };
-        store.dispatch(changeRefreshToken(payload));
-        localStorage.setItem('user', JSON.stringify(user));
+        auth.data.auth.refreshToken = refreshToken;
+        auth.data.auth.token = token;
+        store.dispatch(changeRefreshToken({ token, refreshToken }));
+        localStorage.setItem('auth', JSON.stringify(auth));
     } catch (error) {
         localStorage.clear();
         throw error;

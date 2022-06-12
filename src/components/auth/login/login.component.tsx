@@ -9,6 +9,8 @@ import { TextField } from '../validation/textField';
 import { Navigate, NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/redux.hooks';
 import style from '../auth.module.scss';
+import { User } from '../../../models/user.model';
+import { getUserProfile } from '../../../redux/slice/userSlice';
 
 interface FormValues {
     email: string;
@@ -81,7 +83,10 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         try {
             const user = await login(values.email, values.password);
             if (!(user instanceof Error)) {
-                props.dispatch(loginSuccess(user));
+                props.dispatch(getUserProfile(user))
+                if (typeof user.token === "string" && typeof user.refreshToken === "string") {
+                    props.dispatch(loginSuccess({ token: user.token, refreshToken: user.refreshToken }));
+                }
             }
         } catch (error: any) {
             props.dispatch(loginFail(error.message));
@@ -98,3 +103,4 @@ const Login = () => (
 );
 
 export default Login;
+

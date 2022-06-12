@@ -1,7 +1,7 @@
 export interface User {
     $id: string;
-    token: string;
-    refreshToken: string;
+    token?: string;
+    refreshToken?: string;
     id: string;
     name: string;
     surname: string;
@@ -13,14 +13,14 @@ export interface User {
     addressDto?: Address;
 }
 
-interface Address {
+export interface Address {
     $id: '3';
-    addressId: '3cce4d1e-db61-4ef9-8f46-0fa6f92df5ed';
+    addressId: string;
     city?: string;
     companyCode?: string;
     country?: string;
     customerId?: string;
-    sellerId?: '652f41d6-8d66-47a2-82c3-9e50d1f7df4a';
+    sellerId?: string;
     shopId?: string;
     street?: string;
     zip?: string;

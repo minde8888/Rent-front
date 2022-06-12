@@ -8,9 +8,10 @@ const SELLER_URL = 'Seller/';
 
 export const getProfile = async (id: string): Promise<User> => {
     try {
-        const { data } = await api.get<Response<User>>(SELLER_URL + 'id?id=' + id);
-        if (!(data?.$values?.length !== 0)) throw Error('no user found');
-        return data.$values[0];
+        console.log(444444);
+        const { data } = await api.get<User>(SELLER_URL + 'id?id=' + id);
+        if (!(Object.keys(data).length !== 0)) throw Error('no user found');
+        return data;
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;

@@ -13,7 +13,7 @@ export const login = async (email: string, password: string): Promise<User> => {
             email: email,
             password: password
         });
-        if (!(data?.$values?.length !== 0)) throw Error('no user found');
+        if (!(data.$values.length !== 0)) throw Error('no user found');
         return data.$values[0];
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
@@ -28,7 +28,7 @@ export const login = async (email: string, password: string): Promise<User> => {
 };
 
 export const logout = (): void => {
-    localStorage.removeItem('user');
+    localStorage.clear();
 };
 
 export const register = async (name: string, surname: string, mobile: string, email: string, password: string, role: string) => {

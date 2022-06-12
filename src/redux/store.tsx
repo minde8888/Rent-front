@@ -1,28 +1,28 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import logger from 'redux-logger';
-import { User } from '../models/user.model';
 import rootReducer from './reducers';
+import { AuthState } from './slice/authSlice';
 
 type ImmutableCheck = { warnAfter: number };
 type GetDefaultMiddlewareFn = (arg0: { immutableCheck: ImmutableCheck }) => any;
 
 interface Action {
     type: string;
-    payload: User;
+    payload: AuthState;
 }
 
 const localStorageMiddleware = ({ getState }: any) => {
     return (next: (arg0: any) => any) => (action: Action) => {
         const result = next(action);
-        localStorage.setItem('user', JSON.stringify(getState()));
+        localStorage.setItem('auth', JSON.stringify(getState()));
         return result;
     };
 };
 
 const reHydrateStore = () => {
-    if (localStorage.getItem('user') !== null) {
-        return JSON.parse(localStorage.getItem('user') || 'null');
+    if (localStorage.getItem('auth') !== null) {
+        return JSON.parse(localStorage.getItem('auth') || 'null');
     }
 };
 

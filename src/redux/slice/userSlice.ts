@@ -2,34 +2,26 @@ import { User } from './../../models/user.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-export interface AuthState {
-    isLoggedIn: boolean;
-    user: User | null;
-    error: string | null;
-}
-
-export interface RefreshToken {
-    token: string;
-    refreshToken: string;
-}
-
 const userSlice = createSlice({
-    name: 'auth',
-    initialState: {
-        isLoggedIn: false
-    } as AuthState,
+    name: 'user',
+    initialState: {} as User,
     reducers: {
+        getUserProfile: (state, action: PayloadAction<User>) => {
+            return {
+                ...state,
+                ...action.payload
+            };
+        },
         updateProfile: (state, action: PayloadAction<User>) => {
             return {
                 ...state,
-                isLoggedIn: true,
-                user: action.payload
+                ...action.payload
             };
         }
     }
 });
 
-export const { updateProfile } = userSlice.actions;
+export const { updateProfile, getUserProfile } = userSlice.actions;
 
 export const selectAuth = (state: RootState) => state.data.auth;
 
