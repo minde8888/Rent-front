@@ -4,12 +4,12 @@ import { withFormik, FormikProps, Form } from 'formik';
 import { register } from '../../../services/auth.services/auth.services';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { AnyAction } from 'redux';
-import { SelectField } from '../validation/selectField';
-import { TextField } from '../validation/textField';
-import style from '../auth.module.scss'
+import { SelectField } from '../../validation/selectField';
+import { TextField } from '../../validation/textField';
+import style from '../auth.module.scss';
 import { NavigateFunction, NavLink, useNavigate } from 'react-router-dom';
 import { Roles } from '../roles/roles.const';
-import { registerFail } from '../../../redux/slice/authSlice'
+import { registerFail } from '../../../redux/slice/authSlice';
 
 interface FormValues {
     name: string;
@@ -59,13 +59,12 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
             </button>
             {error && (
                 <div className="error-group">
-                    <div className="danger">
-                        {error}
-                    </div>
+                    <div className="danger">{error}</div>
                 </div>
             )}
-            <div className={style.links}>Du you have account ?
-                <NavLink to={"/login"} className="nav-link">
+            <div className={style.links}>
+                Du you have account ?
+                <NavLink to={'/login'} className="nav-link">
                     Login
                 </NavLink>
             </div>
@@ -117,7 +116,7 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         try {
             const response = await register(values.name, values.surname, values.mobile, values.email, values.password, values.role);
             if (response.status === 200) {
-                props.navigate("/login", { replace: true })
+                props.navigate('/login', { replace: true });
             }
         } catch (error: any) {
             props.dispatch(registerFail(error.message));
@@ -134,5 +133,3 @@ const SignUp = () => (
 );
 
 export default SignUp;
-
-

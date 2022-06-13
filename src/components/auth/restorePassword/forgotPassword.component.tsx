@@ -5,7 +5,7 @@ import { withFormik, FormikProps, Form } from 'formik';
 // import { useAppDispatch } from '../../../hooks/redux.hooks';
 // import { AnyAction } from 'redux';
 // import { loginFail, loginSuccess } from '../../../redux/slice/authSlice';
-import { TextField } from '../validation/textField';
+import { TextField } from '../../validation/textField';
 // import { Navigate, NavLink } from 'react-router-dom';
 // import { useAppSelector } from '../../../hooks/redux.hooks';
 import style from '../auth.module.scss';

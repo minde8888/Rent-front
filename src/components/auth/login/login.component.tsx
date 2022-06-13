@@ -5,11 +5,10 @@ import { login } from '../../../services/auth.services/auth.services';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction } from 'redux';
 import { loginFail, loginSuccess } from '../../../redux/slice/authSlice';
-import { TextField } from '../validation/textField';
+import { TextField } from '../../validation/textField';
 import { Navigate, NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/redux.hooks';
 import style from '../auth.module.scss';
-import { User } from '../../../models/user.model';
 import { getUserProfile } from '../../../redux/slice/userSlice';
 
 interface FormValues {
@@ -83,8 +82,8 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         try {
             const user = await login(values.email, values.password);
             if (!(user instanceof Error)) {
-                props.dispatch(getUserProfile(user))
-                if (typeof user.token === "string" && typeof user.refreshToken === "string") {
+                props.dispatch(getUserProfile(user));
+                if (typeof user.token === 'string' && typeof user.refreshToken === 'string') {
                     props.dispatch(loginSuccess({ token: user.token, refreshToken: user.refreshToken }));
                 }
             }
@@ -103,4 +102,3 @@ const Login = () => (
 );
 
 export default Login;
-

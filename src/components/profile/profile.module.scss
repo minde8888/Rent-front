@@ -12,6 +12,8 @@ $error: rgba(241, 83, 83, 0.171);
     margin: 0;
     background-color: $base-bgColor;
 
+
+
     h2 {
         color: $base-text;
         text-align: center;
@@ -102,5 +104,36 @@ $error: rgba(241, 83, 83, 0.171);
             background-color: $bottom-color-hover;
         }
 
+    }
+
+    form {
+        width: 100%;
+
+        .profileUpdate {
+            border-radius: 10px;
+            border: 1px solid #eee;
+            transition: .3s border-color;
+            height: 30px;
+            padding: 10px;
+        }
+
+        .profileUpdate:hover {
+            border: 1px solid #aaa;
+        }
+
+        label {
+            color: #949292;
+            font-size: 14px;
+        }
+
+        .image {
+            img {
+                cursor: pointer;
+            }
+
+            img:hover {
+                background-color: #7575751f;
+            }
+        }
     }
 }
