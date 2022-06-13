@@ -6,6 +6,7 @@ import userImage from '../../../svg/add-image-frame-svgrepo-com.svg';
 import { TextField } from '../../validation/textField';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
+import UploadImage from './uploadImage';
 
 interface MyFormProps extends Props {
     dispatch: Dispatch<AnyAction>;
@@ -16,6 +17,7 @@ interface FormValues extends Props {
 }
 
 const ProfileEdit = ({ error }: Props & FormikProps<FormValues>) => {
+
     return (
         <div className={style.columns}>
             <Form>
@@ -37,7 +39,7 @@ const ProfileEdit = ({ error }: Props & FormikProps<FormValues>) => {
                             </div>
                         </div>
                     </div>
-                    <input id="file" name="file" type="file" accept="image/*" />
+                    <UploadImage />
                     <div className={style.image}>
                         <img src={userImage} alt={'imageName'} />
                         {error && <div className={style.profileError}>{'error'}</div>}
@@ -131,3 +133,5 @@ const Edit = ({ error, id, name, surname, phoneNumber, email, occupation, imageN
 );
 
 export default Edit;
+
+
