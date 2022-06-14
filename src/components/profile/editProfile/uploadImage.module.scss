@@ -1,0 +1,40 @@
+.imageBottom {
+    position: absolute;
+    z-index: 1;
+
+    .clickDrop {
+        .uploadImage {
+            cursor: pointer;
+            height: 200px;
+            width: 200px;
+            top: 4px;
+            z-index: 2;
+            text-align: center;
+        }
+
+
+        .imageItem {
+            left: 0;
+            top: -2px;
+            position: absolute;
+            height: 200px;
+            width: 200px;
+
+            img {
+                height: 200px;
+                width: 200px;
+                object-fit: cover;
+            }
+
+        }
+    }
+
+    .imageError {
+        position: absolute;
+        line-height: 30px;
+        font-size: 20px;
+        background-color: rgba(201, 77, 77, 0.267);
+        width: 200px;
+        text-align: center;
+    }
+}

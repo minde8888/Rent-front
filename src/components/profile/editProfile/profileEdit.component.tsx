@@ -7,7 +7,6 @@ import { TextField } from '../../validation/textField';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import UploadImage from './uploadImage';
-import { SetStateAction, useState } from 'react';
 
 interface MyFormProps extends Props {
     dispatch: Dispatch<AnyAction>;
@@ -19,10 +18,9 @@ interface FormValues extends Props {
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
     const { error } = props;
+    const { image } = props.errors;
 
     const passData = async (data: any): Promise<void> => {
-        // setFile(await file);
-
         props.setFieldValue('image', await data.file);
     };
 
@@ -47,13 +45,11 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                             </div>
                         </div>
                     </div>
-                    <UploadImage getImage={passData} />
-
+                    <UploadImage getImage={passData} image={image} />
                     <div className={style.image}>
                         <img src={userImage} alt={'imageName'} />
                         {error && <div className={style.profileError}>{'error'}</div>}
                     </div>
-
                     <div className={style.details}>
                         <div>
                             <h3>Details</h3>

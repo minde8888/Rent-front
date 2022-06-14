@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import ImageUploading from 'react-images-uploading';
+import style from './uploadImage.module.scss'
 
 interface Image {
     data_url: string;
@@ -15,7 +16,8 @@ interface File {
     webkitRelativePath: string;
 }
 
-const UploadImage = ({ getImage }: any) => {
+const UploadImage = ({ getImage, image }: any) => {
+
     const [images, setImages] = React.useState([]);
 
     const onChange = (imageList: any) => {
@@ -26,22 +28,23 @@ const UploadImage = ({ getImage }: any) => {
     };
 
     return (
-        <div className="App">
+        <div className={style.imageBottom}>
             <ImageUploading value={images} onChange={onChange} dataURLKey="data_url">
                 {({ imageList, onImageUpload, isDragging, dragProps }) => (
                     // write your building UI
-                    <div className="upload__image-wrapper">
-                        <div style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
+                    <div className={style.clickDrop}>
+                        <div className={style.uploadImage} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
                             Click or Drop here
                         </div>
                         {imageList.map((image, index) => (
-                            <div key={index} className="image-item">
+                            <div key={index} className={style.imageItem}>
                                 <img src={image['data_url']} alt="" width="180" />
                             </div>
                         ))}
                     </div>
                 )}
             </ImageUploading>
+            {image && <div className={style.imageError}>{image}</div>}
         </div>
     );
 };
