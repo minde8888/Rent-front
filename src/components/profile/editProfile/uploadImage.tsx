@@ -14,36 +14,24 @@ interface File {
     type: string;
     webkitRelativePath: string;
 }
-const UploadImage = () => {
+
+const UploadImage = ({ getImage }: any) => {
     const [images, setImages] = React.useState([]);
 
     const onChange = (imageList: any) => {
         if (imageList.length !== 0) {
-            console.log(imageList[0].file);
+            getImage(imageList[0]);
         }
         setImages(imageList);
     };
 
     return (
         <div className="App">
-            <ImageUploading
-                value={images}
-                onChange={onChange}
-                dataURLKey="data_url"
-            >
-                {({
-                    imageList,
-                    onImageUpload,
-                    isDragging,
-                    dragProps,
-                }) => (
+            <ImageUploading value={images} onChange={onChange} dataURLKey="data_url">
+                {({ imageList, onImageUpload, isDragging, dragProps }) => (
                     // write your building UI
                     <div className="upload__image-wrapper">
-                        <div
-                            style={isDragging ? { color: 'red' } : undefined}
-                            onClick={onImageUpload}
-                            {...dragProps}
-                        >
+                        <div style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
                             Click or Drop here
                         </div>
                         {imageList.map((image, index) => (
@@ -56,6 +44,6 @@ const UploadImage = () => {
             </ImageUploading>
         </div>
     );
-}
+};
 
 export default UploadImage;

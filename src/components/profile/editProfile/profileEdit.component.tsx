@@ -7,16 +7,24 @@ import { TextField } from '../../validation/textField';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import UploadImage from './uploadImage';
+import { SetStateAction, useState } from 'react';
 
 interface MyFormProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
 interface FormValues extends Props {
-    image: HTMLImageElement | string;
+    image: any;
 }
 
-const ProfileEdit = ({ error }: Props & FormikProps<FormValues>) => {
+const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
+    const { error } = props;
+
+    const passData = async (data: any): Promise<void> => {
+        // setFile(await file);
+
+        props.setFieldValue('image', await data.file);
+    };
 
     return (
         <div className={style.columns}>
@@ -39,7 +47,8 @@ const ProfileEdit = ({ error }: Props & FormikProps<FormValues>) => {
                             </div>
                         </div>
                     </div>
-                    <UploadImage />
+                    <UploadImage getImage={passData} />
+
                     <div className={style.image}>
                         <img src={userImage} alt={'imageName'} />
                         {error && <div className={style.profileError}>{'error'}</div>}
@@ -94,9 +103,13 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         };
     },
     validationSchema: Yup.object().shape({
-        email: Yup.string().email('Email not valid').required('Email is required')
+        email: Yup.string().email('Email not valid').required('Email is required'),
+        image: Yup.mixed()
+            .test('fileSize', 'File size too large, max file size is 1 Mb', (file) => file && file.size <= 1100000)
+            .test('fileType', 'Incorrect file type', (file) => file && ['image/png', 'image/jpg', 'image/jpeg'].includes(file.type))
     }),
     handleSubmit: async (values, { props }) => {
+        // console.log(props);
         console.log(values);
 
         try {
@@ -133,5 +146,3 @@ const Edit = ({ error, id, name, surname, phoneNumber, email, occupation, imageN
 );
 
 export default Edit;
-
-
