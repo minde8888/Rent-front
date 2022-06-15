@@ -27,7 +27,7 @@ export interface Props {
     };
 }
 
-const Current = ({ error, id, name, surname, phoneNumber, email, occupation, imageName, address }: Props): JSX.Element => {
+const Current = ({ error, name, surname, phoneNumber, email, occupation, imageName, address }: Props): JSX.Element => {
     return (
         <div className={style.columns}>
             <div className={style.address}>
