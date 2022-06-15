@@ -7,21 +7,24 @@ import { TextField } from '../../validation/textField';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import UploadImage from './uploadImage';
+import { imageResize } from '../../../helper/imageResize.helper';
 
 interface MyFormProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
 interface FormValues extends Props {
-    image: any;
+    image: File | string;
 }
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
-    const { error } = props;
-    const { image } = props.errors;
+    const { error, errors } = props;
 
-    const passData = async (data: any): Promise<void> => {
-        props.setFieldValue('image', await data.file);
+    const passData = async (file: File): Promise<void> => {
+        const image = await imageResize(file, 'Profile_image');
+        props.setFieldValue('width', image?.width);
+        props.setFieldValue('height', image?.height);
+        props.setFieldValue('image', file);
     };
 
     return (
@@ -45,7 +48,7 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                             </div>
                         </div>
                     </div>
-                    <UploadImage getImage={passData} image={image} />
+                    <UploadImage getImage={passData} errors={errors.image} />
                     <div className={style.image}>
                         <img src={userImage} alt={'imageName'} />
                         {error && <div className={style.profileError}>{'error'}</div>}
@@ -95,7 +98,9 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             country: props.address?.country || '',
             street: props.address?.street || '',
             zip: props.address?.zip || '',
-            image: ''
+            image: '',
+            height: props.height || undefined,
+            width: props.width || undefined
         };
     },
     validationSchema: Yup.object().shape({

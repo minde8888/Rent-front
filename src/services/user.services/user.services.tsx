@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { User } from '../../models/user.model';
 import api from '../api.services/instanceApi.service';
 import AuthError from '../handleServerError/AuthServerError';
-import { ServerError, Response } from '../typings';
+import { ServerError } from '../typings';
 
 const SELLER_URL = 'Seller/';
 

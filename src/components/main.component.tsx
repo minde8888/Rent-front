@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './route/protectedRoute';
 import { Roles } from './auth/roles/roles.const';
+
 // import ForgotPassword from './auth/restorePassword/forgotPassword.component';
 // import Preloader from './preloader/preloader.component';
 // import Home from './home/home.component';
@@ -21,7 +22,6 @@ const Profile = lazy(() => import('./profile/profile.component'));
 const Products = lazy(() => import('./products/products.component'));
 
 function Main(): JSX.Element {
-
     return (
         <div className="main">
             <NavBar />
