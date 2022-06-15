@@ -1,4 +1,3 @@
-import { Address, User } from '../../models/user.model';
 import userImage from '../../svg/325966_user_account_avatar_human_male_icon.svg';
 import style from './profile.module.scss';
 
@@ -12,6 +11,8 @@ export interface Props {
     imageName?: string;
     error?: string;
     file?: HTMLImageElement;
+    height?: number;
+    width?: number;
     address?: {
         $id?: string;
         addressId?: string;
