@@ -11,8 +11,9 @@ export interface Props {
     imageName?: string;
     error?: string;
     file?: HTMLImageElement;
-    height?: number;
-    width?: number;
+    height?: string;
+    width?: string;
+    image?: File;
     address?: {
         $id?: string;
         addressId?: string;

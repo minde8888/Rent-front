@@ -13,9 +13,7 @@ interface MyFormProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
-interface FormValues extends Props {
-    image: File | string;
-}
+interface FormValues extends Props {}
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
     const { error, errors } = props;
@@ -98,20 +96,41 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             country: props.address?.country || '',
             street: props.address?.street || '',
             zip: props.address?.zip || '',
-            image: '',
-            height: props.height || undefined,
-            width: props.width || undefined
+            image: props.image || undefined,
+            height: props.height || '',
+            width: props.width || ''
         };
     },
     validationSchema: Yup.object().shape({
         email: Yup.string().email('Email not valid').required('Email is required'),
         image: Yup.mixed()
-            .test('fileSize', 'File size too large, max file size is 1 Mb', (file) => file && file.size <= 1100000)
+            .test('fileSize', 'File size too large, max file size is 10 Mb', (file) => file && file.size <= 11000000)
             .test('fileType', 'Incorrect file type', (file) => file && ['image/png', 'image/jpg', 'image/jpeg'].includes(file.type))
     }),
     handleSubmit: async (values, { props }) => {
         // console.log(props);
-        console.log(values);
+        let obj = {
+            name: values.name,
+            surname: values.surname,
+            phoneNumber: values.phoneNumber,
+            email: values.email,
+            occupation: values.occupation,
+            ImageFile: values.image,
+            height: values.height,
+            width: values.width
+        };
+
+        let formData = new FormData();
+
+        Object.entries(values).forEach(([key, value]) => {
+            if (value !== undefined) formData.append(key, value);
+        });
+        // if (values.address !== undefined)
+        //     Object.entries(values.address).forEach(([key, value]) => {
+        //         if (value !== undefined) formData.append(key, value);
+        //     });
+        // console.log(values);
+        console.log(Object.fromEntries(formData));
 
         try {
             // const user = await login(values.email, values.password);

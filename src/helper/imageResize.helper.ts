@@ -10,7 +10,7 @@ function getImage64(file: File): Promise<string | ArrayBuffer | null> {
     throw new Error('Error wrong image format');
 }
 
-function getImage(image64: HTMLImageElement | string | Event) {
+function getImage(image64: HTMLImageElement | string | Event): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
         let image = new Image();
         if (typeof image64 === 'string') {
@@ -23,12 +23,12 @@ function getImage(image64: HTMLImageElement | string | Event) {
     });
 }
 
-export async function imageResize(imageFile: File, type: string) {
+export async function imageResize(imageFile: File, type: string): Promise<{ height: number; width: number } | undefined> {
     let image64 = await getImage64(imageFile).then((data) => {
         return data;
     });
     if (typeof image64 === 'string') {
-        return await getImage(image64).then((image: any) => {
+        return await getImage(image64).then((image: HTMLImageElement) => {
             let maxWidth;
             let maxHeight;
 
