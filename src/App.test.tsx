@@ -3,7 +3,9 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 
 xtest('renders the App', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const { asFragment } = render(<App />);
+  expect(asFragment()).toMatchSnapshot();
+  // render(<App />);
+  // const linkElement = screen.getByText(/learn react/i);
+  // expect(linkElement).toBeInTheDocument();
 });

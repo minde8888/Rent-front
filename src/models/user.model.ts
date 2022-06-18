@@ -8,9 +8,10 @@ export interface User {
     phoneNumber: string;
     email: string;
     occupation?: string;
-    roles: string;
+    roles?: string;
     imageName?: string;
     addressDto?: Address;
+    imageSrc?: ProfileImage;
 }
 
 export interface Address {
@@ -24,4 +25,9 @@ export interface Address {
     shopId?: string;
     street?: string;
     zip?: string;
+}
+
+export interface ProfileImage {
+    $id: string;
+    $values?: [string];
 }

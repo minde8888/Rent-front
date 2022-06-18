@@ -5,34 +5,39 @@ import { User } from '../../models/user.model';
 import style from './profile.module.scss';
 import Current from './current.component';
 import Edit from './editProfile/profileEdit.component';
+import { useAppSelector } from '../../hooks/redux.hooks';
 
 const Profile: React.FC = (): JSX.Element => {
-    const [data, setData] = useState<User | undefined>();
+    // const [data, setData] = useState<User | undefined>();
     const [logged, setLogged] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
     const [toggle, setToggle] = useState<boolean>(true);
     const { id } = useParams();
 
-    const getRequests = async () => {
-        console.log(2222);
+    const { user } = useAppSelector((state) => state.data);
+    // console.log(data);
 
-        try {
-            if (typeof id === 'string') {
-                console.log(3333);
 
-                const user = await getProfile(id);
-                setData(user);
-            }
-        } catch (error: any) {
-            setError(error.message);
-        }
-    };
-    if (logged && typeof id === 'string') {
-        console.log(1111);
+    // const getRequests = async () => {
+    //     console.log(2222);
 
-        getRequests();
-        setLogged(false);
-    }
+    //     try {
+    //         if (typeof id === 'string') {
+    //             console.log(3333);
+
+    //             // const user = await getProfile(id);
+    //             setData(user);
+    //         }
+    //     } catch (error: any) {
+    //         setError(error.message);
+    //     }
+    // };
+    // if (logged && typeof id === 'string') {
+    //     console.log(1111);
+
+    //     getRequests();
+    //     setLogged(false);
+    // }
 
     const editHandler = (event: React.MouseEvent<HTMLHeadingElement>) => {
         setToggle(false);
@@ -47,15 +52,17 @@ const Profile: React.FC = (): JSX.Element => {
             {toggle ? (
                 <>
                     <Current
-                        id={data?.id}
-                        name={data?.name}
-                        surname={data?.surname}
-                        phoneNumber={data?.phoneNumber}
-                        email={data?.email}
-                        occupation={data?.occupation}
-                        imageName={data?.imageName}
-                        address={data?.addressDto}
+                        id={user?.id}
+                        name={user?.name}
+                        surname={user?.surname}
+                        phoneNumber={user?.phoneNumber}
+                        email={user?.email}
+                        occupation={user?.occupation}
+                        imageName={user?.imageName}
+                        address={user?.addressDto}
+                        imageSrc={user?.imageSrc}
                         error={error}
+
                     />
                     <div className={style.bottom}>
                         <div onClick={editHandler} id={id} className={style.edit}>
@@ -66,14 +73,15 @@ const Profile: React.FC = (): JSX.Element => {
             ) : (
                 <>
                     <Edit
-                        id={data?.id}
-                        name={data?.name}
-                        surname={data?.surname}
-                        phoneNumber={data?.phoneNumber}
-                        email={data?.email}
-                        occupation={data?.occupation}
-                        imageName={data?.imageName}
-                        address={data?.addressDto}
+                        id={user?.id}
+                        name={user?.name}
+                        surname={user?.surname}
+                        phoneNumber={user?.phoneNumber}
+                        email={user?.email}
+                        occupation={user?.occupation}
+                        imageName={user?.imageName}
+                        address={user?.addressDto}
+                        imageSrc={user?.imageSrc}
                         error={error}
                     />
                 </>

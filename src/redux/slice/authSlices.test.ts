@@ -5,27 +5,33 @@ describe('authSlice', () => {
         const result = reducer(undefined, { type: '' });
         expect(result).toEqual({ isLoggedIn: false });
     });
+
     test('returns user signup is fail', () => {
         const initState = { isLoggedIn: true } as AuthState;
         const newState = reducer(initState, registerFail('string'));
         expect(newState).toEqual({ isLoggedIn: false, error: 'string' });
     });
 
+    const testToken = { token: 'user', refreshToken: 'user' };
+
     test('returns user is logged', () => {
         const initState = { isLoggedIn: false } as AuthState;
-        const newState = reducer(initState, loginSuccess(user));
-        expect(newState).toEqual({ isLoggedIn: true, user: user });
+        const newState = reducer(initState, loginSuccess(testToken));
+        expect(newState).toEqual({ isLoggedIn: true, token: testToken.token, refreshToken: testToken.refreshToken });
     });
+
     test('returns logging is fail', () => {
         const initState = { isLoggedIn: false } as AuthState;
         const newState = reducer(initState, loginFail('string'));
         expect(newState).toEqual({ isLoggedIn: false, error: 'string' });
     });
+
     test('returns user is removed', () => {
         const initState = { isLoggedIn: false } as AuthState;
         const newState = reducer(initState, userLogout());
-        expect(newState).toEqual({ isLoggedIn: false, user: null });
+        expect(newState).toEqual({ isLoggedIn: false, token: '', refreshToken: '' });
     });
+
     test('returns user is removed', () => {
         const initState = { isLoggedIn: false } as AuthState;
         const newState = reducer(initState, changeRefreshToken({ token: 'string', refreshToken: 'string' }));
@@ -33,7 +39,7 @@ describe('authSlice', () => {
     });
 });
 
-let user = {
+const user = {
     $id: 'string',
     token: 'string',
     refreshToken: 'string',

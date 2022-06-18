@@ -27,6 +27,16 @@
             }
 
         }
+
+        img {
+            top: -2px;
+            left: -1px;
+            position: absolute;
+            height: 200px;
+            width: 200px;
+            object-fit: cover;
+            z-index: -1;
+        }
     }
 
     .imageError {

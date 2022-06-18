@@ -13,10 +13,14 @@ const userSlice = createSlice({
             };
         },
         updateProfile: (state, action: PayloadAction<User>) => {
-            return {
-                ...state,
-                ...action.payload
-            };
+            {
+                const addressDto = state.addressDto;
+                return {
+                    ...state,
+                    ...action.payload,
+                    addressDto
+                };
+            }
         }
     }
 });

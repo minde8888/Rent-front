@@ -7,22 +7,26 @@ import { TextField } from '../../validation/textField';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import UploadImage from './uploadImage';
-import { imageResize } from '../../../helper/imageResize.helper';
+import { imageResize } from '../../../helpers/imageResize.helper';
+import { updateUser } from '../../../services/user.services/user.services';
+import { updateProfile } from '../../../redux/slice/userSlice';
 
 interface MyFormProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
-interface FormValues extends Props {}
+interface FormValues extends Props { }
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
-    const { error, errors } = props;
+    const { error, errors, imageSrc } = props;
 
     const passData = async (file: File): Promise<void> => {
+
+        props.setFieldValue('imageFile', file);
+        props.setFieldValue('imageName', file.name);
         const image = await imageResize(file, 'Profile_image');
         props.setFieldValue('width', image?.width);
         props.setFieldValue('height', image?.height);
-        props.setFieldValue('image', file);
     };
 
     return (
@@ -46,7 +50,7 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                             </div>
                         </div>
                     </div>
-                    <UploadImage getImage={passData} errors={errors.image} />
+                    <UploadImage getImage={passData} errors={errors.imageFile} imageSrc={imageSrc} />
                     <div className={style.image}>
                         <img src={userImage} alt={'imageName'} />
                         {error && <div className={style.profileError}>{'error'}</div>}
@@ -89,64 +93,43 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             email: props.email || '',
             occupation: props.occupation || '',
             imageName: props.imageName || '',
-            error: props.error || '',
             $id: props.address?.$id || '',
             city: props.address?.city || '',
             companyCode: props.address?.companyCode || '',
             country: props.address?.country || '',
             street: props.address?.street || '',
             zip: props.address?.zip || '',
-            image: props.image || undefined,
+            imageFile: props.imageFile || undefined,
             height: props.height || '',
             width: props.width || ''
         };
     },
     validationSchema: Yup.object().shape({
         email: Yup.string().email('Email not valid').required('Email is required'),
-        image: Yup.mixed()
-            .test('fileSize', 'File size too large, max file size is 10 Mb', (file) => file && file.size <= 11000000)
+        imageFile: Yup.mixed()
             .test('fileType', 'Incorrect file type', (file) => file && ['image/png', 'image/jpg', 'image/jpeg'].includes(file.type))
+            .test('fileSize', 'File size too large, max file size is 1 Mb', (file) => file && file.size <= 1100000)
+
     }),
     handleSubmit: async (values, { props }) => {
-        // console.log(props);
-        let obj = {
-            name: values.name,
-            surname: values.surname,
-            phoneNumber: values.phoneNumber,
-            email: values.email,
-            occupation: values.occupation,
-            ImageFile: values.image,
-            height: values.height,
-            width: values.width
-        };
 
         let formData = new FormData();
-
         Object.entries(values).forEach(([key, value]) => {
             if (value !== undefined) formData.append(key, value);
         });
-        // if (values.address !== undefined)
-        //     Object.entries(values.address).forEach(([key, value]) => {
-        //         if (value !== undefined) formData.append(key, value);
-        //     });
-        // console.log(values);
-        console.log(Object.fromEntries(formData));
 
         try {
-            // const user = await login(values.email, values.password);
-            // if (!(user instanceof Error)) {
-            //     props.dispatch(getUserProfile(user));
-            //     if (typeof user.token === 'string' && typeof user.refreshToken === 'string') {
-            //         props.dispatch(loginSuccess({ token: user.token, refreshToken: user.refreshToken }));
-            //     }
-            // }
+            if (values.id !== undefined) {
+                const user = await updateUser(formData, values.id);
+                props.dispatch(updateProfile(user));
+            }
         } catch (error: any) {
             // props.dispatch(loginFail(error.message));
         }
     }
 })(ProfileEdit);
 
-const Edit = ({ error, id, name, surname, phoneNumber, email, occupation, imageName, address }: Props) => (
+const Edit = ({ error, id, name, surname, phoneNumber, email, occupation, imageName, address, imageSrc }: Props) => (
     <div className={style.container}>
         <div className={style.auth}>
             <MyForm
@@ -160,6 +143,7 @@ const Edit = ({ error, id, name, surname, phoneNumber, email, occupation, imageN
                 address={address}
                 error={error}
                 dispatch={useAppDispatch()}
+                imageSrc={imageSrc}
             />
         </div>
     </div>

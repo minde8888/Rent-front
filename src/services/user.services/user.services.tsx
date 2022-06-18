@@ -11,6 +11,8 @@ export const getProfile = async (id: string): Promise<User> => {
         console.log(444444);
         const { data } = await api.get<User>(SELLER_URL + 'id?id=' + id);
         if (!(Object.keys(data).length !== 0)) throw Error('no user found');
+        console.log(data);
+
         return data;
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
@@ -23,3 +25,9 @@ export const getProfile = async (id: string): Promise<User> => {
         throw error;
     }
 };
+
+export const updateUser = async (formData: FormData, id: string): Promise<User> => {
+    console.log(Object.fromEntries(formData));
+    const { data } = await api.put<User>(SELLER_URL + 'update/' + id, formData);
+    return data;
+}

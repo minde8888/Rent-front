@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import AuthError from '../handleServerError/AuthServerError';
 import { User } from '../../models/user.model';
-import { Response, ServerError } from '../typings';
+import { ServerError } from '../typings';
 import RegisterError from '../handleServerError/RegisterError';
 import api from '../api.services/instanceApi.service';
 
@@ -9,12 +9,14 @@ const AUTH_URL = 'auth/';
 
 export const login = async (email: string, password: string): Promise<User> => {
     try {
-        const { data } = await api.post<Response<User>>(AUTH_URL + 'login', {
+        const { data } = await api.post<User>(AUTH_URL + 'login', {
             email: email,
             password: password
         });
-        if (!(data.$values.length !== 0)) throw Error('no user found');
-        return data.$values[0];
+        if (!(Object.keys(data).length !== 0)) throw Error('no user found');
+        // console.log(data);
+
+        return data;
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
