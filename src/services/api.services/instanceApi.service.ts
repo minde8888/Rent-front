@@ -30,8 +30,6 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config: AxiosRequestConfig): AxiosRequestConfig => {
-        console.log(666666);
-
         if (!config) throw new Error(`Expected 'config' not to be undefined`);
         if (!config?.headers) throw new Error(`Expected 'config.headers' not to be undefined`);
         const newHeader = { ...config.headers, ...authHeader() };

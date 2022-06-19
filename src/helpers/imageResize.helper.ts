@@ -38,7 +38,7 @@ export async function imageResize(imageFile: File, type: string): Promise<{ heig
                     maxHeight = 228;
                     break;
                 default:
-                    console.log(`Couldn't find: ${type}.`);
+                    throw new Error(`Couldn't find: ${type}.`);
             }
             if (maxWidth !== undefined && maxHeight !== undefined) {
                 const ratio = Math.min(maxWidth / image.width, maxHeight / image.height);

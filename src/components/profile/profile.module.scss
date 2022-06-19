@@ -31,6 +31,11 @@ $error: rgba(241, 83, 83, 0.171);
             width: 33%;
             line-height: 25px;
             font-size: 18px;
+
+            div {
+                margin: 10px 0 0 0;
+            }
+
         }
 
         .details {
@@ -55,6 +60,7 @@ $error: rgba(241, 83, 83, 0.171);
                 div {
 
                     text-align: right;
+
                 }
 
                 h3 {
@@ -72,10 +78,17 @@ $error: rgba(241, 83, 83, 0.171);
                 height: 200px;
                 width: 200px;
                 object-fit: cover;
+                border-radius: 20%;
             }
 
             .profileError {
+                position: absolute;
                 background-color: $error;
+                margin-top: 20px;
+                line-height: 30px;
+                font-size: 20px;
+                text-align: center;
+                width: 100%;
             }
         }
     }
@@ -102,6 +115,21 @@ $error: rgba(241, 83, 83, 0.171);
             background-color: $bottom-color-hover;
         }
 
+        .arrowBack {
+            width: 20%;
+            line-height: 26px;
+            letter-spacing: 2px;
+
+            img {
+                top: 5px;
+                margin: 0 10px 0 0;
+            }
+        }
+
+        .arrowBack:hover {
+            color: $bottom-color;
+            cursor: pointer;
+        }
     }
 
     form {

@@ -5,14 +5,15 @@ import style from './uploadImage.module.scss';
 
 interface Image {
     getImage: (file: File) => void;
-    errors?: string;
     imageSrc?: ProfileImage;
 }
 export interface ImageError {
     imageFile: string;
 }
 
-const UploadImage = ({ getImage, errors, imageSrc }: Image) => {
+
+const UploadImage = ({ getImage, imageSrc }: Image) => {
+
 
     const [images, setImages] = React.useState([]);
 
@@ -24,9 +25,10 @@ const UploadImage = ({ getImage, errors, imageSrc }: Image) => {
     };
     return (
         <div className={style.imageBottom}>
-            <ImageUploading value={images} onChange={onChange} dataURLKey="data_url">
+            <ImageUploading value={images} onChange={onChange} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']}
+                maxFileSize={1100000} >
 
-                {({ imageList, onImageUpload, isDragging, dragProps }) => (
+                {({ imageList, onImageUpload, isDragging, dragProps, errors }) => (
 
                     <div className={style.clickDrop}>
                         {imageSrc?.$values !== undefined && imageSrc?.$values.length > 0 ? <img src={imageSrc?.$values.toString().replaceAll(',', '')} alt="imageName" /> : null}
@@ -38,10 +40,15 @@ const UploadImage = ({ getImage, errors, imageSrc }: Image) => {
                                 <img src={image['data_url']} alt="" width="180" />
                             </div>
                         ))}
+                        {errors && <div>
+                            {errors.acceptType && <div className={style.profileError}>Your selected file type is not allow</div>}
+                            {errors.maxFileSize && <div className={style.profileError}>File size too large, max file size is 1 Mb</div>}
+                        </div>}
                     </div>
+
                 )}
             </ImageUploading>
-            {errors && <div className={style.imageError}>{errors}</div>}
+
         </div>
     );
 };

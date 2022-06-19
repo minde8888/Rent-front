@@ -72,7 +72,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     );
 };
 
-interface MyFormProps {
+interface SignupFormProps {
     initName?: string;
     initSurname?: string;
     initMobile?: string;
@@ -83,7 +83,7 @@ interface MyFormProps {
     navigate: NavigateFunction;
 }
 
-const MyForm = withFormik<MyFormProps, FormValues>({
+const SignupForm = withFormik<SignupFormProps, FormValues>({
     mapPropsToValues: (props) => {
         return {
             name: props.initName || '',
@@ -127,7 +127,9 @@ const MyForm = withFormik<MyFormProps, FormValues>({
 const SignUp = () => (
     <div className={style.container}>
         <div className={style.auth}>
-            <MyForm message="Sign up" dispatch={useAppDispatch()} navigate={useNavigate()} />
+            <SignupForm message="Sign up"
+                dispatch={useAppDispatch()}
+                navigate={useNavigate()} />
         </div>
     </div>
 );

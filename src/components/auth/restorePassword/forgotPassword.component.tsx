@@ -34,8 +34,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     //     email: params.get("email")
     // });
 
-    const [error, setError] = useState('');
-    console.log(error);
+    const [error, setError] = useState<string>('');
 
     const { isSubmitting, message } = props;
     const { email } = props.values;
@@ -70,7 +69,6 @@ const MyForm = withFormik<MyFormProps, FormValues>({
         try {
             await sendPasswordToEmail(values.email);
         } catch (error: any) {
-            console.log(props);
             props.setError(error.message);
         }
     }

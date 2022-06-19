@@ -8,10 +8,8 @@ const SELLER_URL = 'Seller/';
 
 export const getProfile = async (id: string): Promise<User> => {
     try {
-        console.log(444444);
         const { data } = await api.get<User>(SELLER_URL + 'id?id=' + id);
         if (!(Object.keys(data).length !== 0)) throw Error('no user found');
-        console.log(data);
 
         return data;
     } catch (error: any) {

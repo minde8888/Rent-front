@@ -14,8 +14,6 @@ export const login = async (email: string, password: string): Promise<User> => {
             password: password
         });
         if (!(Object.keys(data).length !== 0)) throw Error('no user found');
-        // console.log(data);
-
         return data;
     } catch (error: any) {
         if (axios.isAxiosError(error)) {

@@ -10,23 +10,29 @@ import UploadImage from './uploadImage';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import { updateUser } from '../../../services/user.services/user.services';
 import { updateProfile } from '../../../redux/slice/userSlice';
+import left from '../../../svg/7122550_arrow_left_icon.svg'
 
-interface MyFormProps extends Props {
+interface EditProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
 interface FormValues extends Props { }
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
-    const { error, errors, imageSrc } = props;
+    const { errors, imageSrc, isSubmitting } = props;
+
+    const goBack = (): void => {
+        props.passToggle();
+    }
 
     const passData = async (file: File): Promise<void> => {
-
-        props.setFieldValue('imageFile', file);
-        props.setFieldValue('imageName', file.name);
-        const image = await imageResize(file, 'Profile_image');
-        props.setFieldValue('width', image?.width);
-        props.setFieldValue('height', image?.height);
+        if (Object.keys(file).length === 0) {
+            props.setFieldValue('imageFile', file);
+            props.setFieldValue('imageName', file.name);
+            const image = await imageResize(file, 'Profile_image');
+            props.setFieldValue('width', image?.width);
+            props.setFieldValue('height', image?.height);
+        }
     };
 
     return (
@@ -50,10 +56,10 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                             </div>
                         </div>
                     </div>
-                    <UploadImage getImage={passData} errors={errors.imageFile} imageSrc={imageSrc} />
+                    <UploadImage getImage={passData} imageSrc={imageSrc} />
                     <div className={style.image}>
                         <img src={userImage} alt={'imageName'} />
-                        {error && <div className={style.profileError}>{'error'}</div>}
+                        {errors && <div className={style.profileError}>{errors.message}</div>}
                     </div>
                     <div className={style.details}>
                         <div>
@@ -74,16 +80,20 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                     </div>
                 </div>
                 <div className={style.bottom}>
-                    <button className={style.edit} type="submit">
+                    <button className={style.edit} type="submit" disabled={isSubmitting}>
                         Save
                     </button>
+                    <div className={style.arrowBack} onClick={goBack}>
+                        <img src={left} alt="" />
+                        Go back
+                    </div>
                 </div>
             </Form>
         </div>
     );
 };
 
-const MyForm = withFormik<MyFormProps, FormValues>({
+const EditForm = withFormik<EditProps, FormValues>({
     mapPropsToValues: (props) => {
         return {
             id: props.id || '',
@@ -99,19 +109,32 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             country: props.address?.country || '',
             street: props.address?.street || '',
             zip: props.address?.zip || '',
-            imageFile: props.imageFile || undefined,
             height: props.height || '',
-            width: props.width || ''
+            width: props.width || '',
+            passToggle: props.passToggle || ''
+
         };
     },
     validationSchema: Yup.object().shape({
-        email: Yup.string().email('Email not valid').required('Email is required'),
-        imageFile: Yup.mixed()
-            .test('fileType', 'Incorrect file type', (file) => file && ['image/png', 'image/jpg', 'image/jpeg'].includes(file.type))
-            .test('fileSize', 'File size too large, max file size is 1 Mb', (file) => file && file.size <= 1100000)
+        name: Yup.string()
+            .max(20, 'Must be 20 characters or less'),
+        surname: Yup.string()
+            .max(20, 'Must be 20 characters or less'),
+        phoneNumber: Yup.string()
+            .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
+                'Phone number is not valid')
+            .max(11, 'Must be 10 characters'),
+        email: Yup.string().email(),
+        occupation: Yup.string(),
+        city: Yup.string(),
+        companyCode: Yup.string(),
+        country: Yup.string(),
+        street: Yup.string(),
+        zip: Yup.string()
+
 
     }),
-    handleSubmit: async (values, { props }) => {
+    handleSubmit: async (values, { setErrors, props }) => {
 
         let formData = new FormData();
         Object.entries(values).forEach(([key, value]) => {
@@ -122,17 +145,19 @@ const MyForm = withFormik<MyFormProps, FormValues>({
             if (values.id !== undefined) {
                 const user = await updateUser(formData, values.id);
                 props.dispatch(updateProfile(user));
+
+                if ((Object.keys(user).length !== 0)) props.passToggle()
             }
         } catch (error: any) {
-            // props.dispatch(loginFail(error.message));
+            setErrors(error)
         }
     }
 })(ProfileEdit);
 
-const Edit = ({ error, id, name, surname, phoneNumber, email, occupation, imageName, address, imageSrc }: Props) => (
+const Edit = ({ passToggle, id, name, surname, phoneNumber, email, occupation, imageName, address, imageSrc }: Props) => (
     <div className={style.container}>
         <div className={style.auth}>
-            <MyForm
+            <EditForm
                 id={id}
                 name={name}
                 surname={surname}
@@ -141,7 +166,7 @@ const Edit = ({ error, id, name, surname, phoneNumber, email, occupation, imageN
                 occupation={occupation}
                 imageName={imageName}
                 address={address}
-                error={error}
+                passToggle={passToggle}
                 dispatch={useAppDispatch()}
                 imageSrc={imageSrc}
             />

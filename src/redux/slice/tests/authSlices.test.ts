@@ -1,4 +1,5 @@
-import reducer, { AuthState, changeRefreshToken, loginFail, loginSuccess, registerFail, userLogout } from './authSlice';
+import { User } from '../../../models/user.model';
+import reducer, { AuthState, changeRefreshToken, loginFail, loginSuccess, registerFail, userLogout } from '../authSlice';
 
 describe('authSlice', () => {
     test('returns initial state', () => {
@@ -39,7 +40,7 @@ describe('authSlice', () => {
     });
 });
 
-const user = {
+export const user: User = {
     $id: 'string',
     token: 'string',
     refreshToken: 'string',
@@ -51,16 +52,16 @@ const user = {
     occupation: 'string',
     roles: 'string',
     imageName: 'string',
-    address: {
+    addressDto: {
         $id: '3',
         addressId: '3cce4d1e-db61-4ef9-8f46-0fa6f92df5ed',
-        city: null,
-        companyCode: null,
-        country: null,
-        customerId: null,
+        city: undefined,
+        companyCode: undefined,
+        country: undefined,
+        customerId: undefined,
         sellerId: '652f41d6-8d66-47a2-82c3-9e50d1f7df4a',
-        shopId: null,
-        street: null,
-        zip: null
+        shopId: undefined,
+        street: undefined,
+        zip: undefined
     }
 };

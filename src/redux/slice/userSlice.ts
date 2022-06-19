@@ -14,11 +14,9 @@ const userSlice = createSlice({
         },
         updateProfile: (state, action: PayloadAction<User>) => {
             {
-                const addressDto = state.addressDto;
                 return {
                     ...state,
-                    ...action.payload,
-                    addressDto
+                    ...action.payload
                 };
             }
         }
