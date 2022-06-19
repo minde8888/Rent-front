@@ -7,7 +7,7 @@ import { userLogout } from '../../redux/slice/authSlice';
 import { logout } from '../../services/auth.services/auth.services';
 import './nav.scss';
 
-interface INavBar {}
+interface INavBar { }
 
 const NavBar: FunctionComponent<INavBar> = () => {
     const dispatch = useAppDispatch();
@@ -25,20 +25,20 @@ const NavBar: FunctionComponent<INavBar> = () => {
     };
 
     return (
-        <div className="navBar">
+        <div role="navBar" className="navBar">
             <div className="menu" onClick={toggleClickHandler}>
                 <div className="nav_button">
                     <NavLink className="nav_link" to={'/'}></NavLink>
                 </div>
-                <span className="home nav">home home home</span>
+                <span className="home nav">home</span>
                 <div className="nav_button">
                     <NavLink className="nav_link" to={'/products'}></NavLink>
                 </div>
-                <span className="home1 nav">products products</span>
+                <span className="home1 nav">products</span>
                 <div className="nav_button">
-                    <NavLink className="nav_link" to={'/'}></NavLink>
+                    <NavLink className="nav_link" to={'/add-products'}></NavLink>
                 </div>
-                <span className="home2 nav">home2</span>
+                <span className="home2 nav">add products</span>
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
