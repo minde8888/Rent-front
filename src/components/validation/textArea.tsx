@@ -9,12 +9,10 @@ export const TextArea = ({ label, ...props }: PropsType) => {
     const [field, meta] = useField(props);
 
     return (
-        <>
-            <label htmlFor={props.id || props.name}>{label}</label>
+        <div>
             <textarea className="text-area" {...field} {...props} />
-            {meta.touched && meta.error ? (
-                <div className="error">{meta.error}</div>
-            ) : null}
-        </>
+            {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
+            <ErrorMessage component="div" name={field.name} className="alert alert-danger" />
+        </div>
     );
-}
+};

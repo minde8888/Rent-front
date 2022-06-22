@@ -8,87 +8,88 @@ import { imageResize } from '../../../helpers/imageResize.helper';
 import { updateUser } from '../../../services/user.services/user.services';
 import { updateProfile } from '../../../redux/slice/userSlice';
 import { TextArea } from '../../validation/textArea';
-import style from './addProduct.module.scss'
+import style from './addProduct.module.scss';
+import { SelectField } from '../../validation/selectField';
+import UploadProductImages from '../addProduct/uploadImages/uploadProductImages';
+import { Product, ImageData } from '../typings';
 
-interface ProductProps {
+interface ProductProps extends Product {
     dispatch: Dispatch<AnyAction>;
 }
 
-interface FormValues { }
+interface FormValues extends Product {}
 
 const ProfileEdit = (props: ProductProps & FormikProps<FormValues>) => {
-    const { errors, isSubmitting } = props;
+    const { errors, isSubmitting, setFieldValue } = props;
 
-    const goBack = (): void => {
-        // props.passToggle();
-    }
-
-    const passData = async (file: File): Promise<void> => {
-        // if (Object.keys(file).length === 0) {
-        //     props.setFieldValue('imageFile', file);
-        //     props.setFieldValue('imageName', file.name);
-        //     const image = await imageResize(file, 'Profile_image');
-        //     props.setFieldValue('width', image?.width);
-        //     props.setFieldValue('height', image?.height);
-        // }
+    const getImagesData = async (files: [ImageData]): Promise<void> => {
+        if (Object.keys(files).length !== 0) {
+            setFieldValue('images', files);
+        }
     };
+
+    const cat = ['Roles.user', 'Roles.customer'];
+    const CategoryOptions = cat.map((r, key) => (
+        <option value={r} key={key}>
+            {r}
+        </option>
+    ));
 
     return (
         <div className={style.container}>
             <Form>
                 <div className={style.columns}>
-                    <div className={style.address}>
-                        <div>
-                            <h3>Address</h3>
-                            <div>
-                                <label htmlFor="country">country</label>
-                                <TextField className={style.profileUpdate} id="country" name="country" placeholder="country" />
-                                <label htmlFor="city">city</label>
-                                <TextField className={style.profileUpdate} id="city" name="city" placeholder="city" />
-                                <label htmlFor="street">street</label>
-                                <TextField className={style.profileUpdate} id="street" name="street" placeholder="street" />
-                                <label htmlFor="zip">zip</label>
-                                <TextField className={style.profileUpdate} id="zip" name="zip" placeholder="zip" />
-                                <label htmlFor="companyCode">company code</label>
-                                <TextField className={style.profileUpdate} id="companyCode" name="companyCode" placeholder="companyCode" />
-                            </div>
-                        </div>
-                    </div>
-                    {/* <UploadImage getImage={passData} imageSrc={imageSrc} /> */}
-                    <div className={style.image}>
-                        {/* <img src={userImage} alt={'imageName'} /> */}
-                        {/* {errors && <div className={style.profileError}>{errors.message}</div>} */}
-                    </div>
-                    <div className={style.details}>
-                        <div>
-                            <h3>Details</h3>
-                            <div>
-                                <label htmlFor="occupation">occupation</label>
-                                <TextField className={style.profileUpdate} id="occupation" name="occupation" placeholder="occupation" />
-                                <label htmlFor="name">name</label>
-                                <TextField className={style.profileUpdate} id="name" name="name" placeholder="name" />
-                                <label htmlFor="surname">surname</label>
-                                <TextArea
-                                    label="Product description"
-                                    name="Product"
-                                    rows="20"
-                                    placeholder="Once upon a time there was a princess who lived at the top of a glass hill."
-                                />
-                                <TextField className={style.profileUpdate} id="surname" name="surname" placeholder="surname" />
-                                <label htmlFor="phoneNumber">phone number</label>
-                                <TextField className={style.profileUpdate} id="phoneNumber" name="phoneNumber" placeholder="phoneNumber" />
-                                <label htmlFor="email">email</label>
-                                <TextField className={style.profileUpdate} id="email" name="email" placeholder="email" />
-                            </div>
-                        </div>
+                    <UploadProductImages getImages={getImagesData} />
+                    <h3>Product</h3>
+                    <div>
+                        <label htmlFor="productName">Product name</label>
+                        <TextField className={style.profileUpdate} id="productName" name="productName" placeholder="productName" />
+                        <label htmlFor="description">Product description</label>
+                        <TextArea label="Product description" name="description" rows="20" placeholder="Once upon a time there was a princess who lived at the top of a glass hill." />
+                        <label htmlFor="quantityPerUnit">Quantity Per Unit</label>
+                        <TextField className={style.profileUpdate} id="quantityPerUnit" name="quantityPerUnit" placeholder="quantityPerUnit" />
+                        <label htmlFor="unitPrice">Price</label>
+                        <TextField className={style.profileUpdate} id="unitPrice" name="unitPrice" placeholder="unitPrice" />
+                        <label htmlFor="unitsInStock">Units In Stock</label>
+                        <TextField className={style.profileUpdate} id="unitsInStock" name="unitsInStock" placeholder="unitsInStock" />
+                        <label htmlFor="warehousePlace">Warehouse Place</label>
+                        <TextField className={style.profileUpdate} id="warehousePlace" name="warehousePlace" placeholder="warehousePlace" />
+                        <SelectField name="categories" as="select" value={'categories'}>
+                            <option>Choice Category</option>
+                            {CategoryOptions}
+                        </SelectField>
                     </div>
                 </div>
+                <div className={style.columns}>
+                    <h3>Specifications</h3>
+                    <div>
+                        <label htmlFor="maxLoad">MaxLoad</label>
+                        <TextField className={style.profileUpdate} id="maxLoad" name="maxLoad" placeholder="maxLoad" />
+                        <label htmlFor="Weight">Weight</label>
+                        <TextField className={style.profileUpdate} id="weight" placeholder="weight" name="weight" />
+                        <label htmlFor="LiftingHeight">Lifting Height</label>
+                        <TextField className={style.profileUpdate} id="liftingHeight" name="liftingHeight" placeholder="liftingHeight" />
+                        <label htmlFor="capacity">Capacity</label>
+                        <TextField className={style.profileUpdate} id="capacity" name="capacity" placeholder="capacity" />
+                        <label htmlFor="energySource">Energy Source</label>
+                        <TextField className={style.profileUpdate} id="energySource" name="energySource" placeholder="energySource" />
+                        <label htmlFor="speed">Speed</label>
+                        <TextField className={style.profileUpdate} id="speed" name="speed" placeholder="speed" />
+                        <label htmlFor="length">Length</label>
+                        <TextField className={style.profileUpdate} id="length" name="length" placeholder="length" />
+                        <label htmlFor="productWidth">Product Width</label>
+                        <TextField className={style.profileUpdate} id="productWidth" name="productWidth" placeholder="productWidth" />
+                        <label htmlFor="productHeight">Product Height</label>
+                        <TextField className={style.profileUpdate} id="productHeight" name="productHeight" placeholder="productHeight" />
+                    </div>
+                </div>
+
                 <div className={style.bottom}>
                     <button className={style.edit} type="submit" disabled={isSubmitting}>
                         Save
                     </button>
-                    <div className={style.arrowBack} onClick={goBack}>
-                        <img src={""} alt="" />
+                    <div className={style.arrowBack}>
+                        <img src={''} alt="" />
                         Go back
                     </div>
                 </div>
@@ -100,35 +101,42 @@ const ProfileEdit = (props: ProductProps & FormikProps<FormValues>) => {
 const ProductForm = withFormik<ProductProps, FormValues>({
     mapPropsToValues: (props) => {
         return {
-
-
+            productName: props.productName || '',
+            description: props.description || '',
+            attachments: props.imageFile || undefined,
+            imageName: props.imageName || '',
+            height: props.height || '',
+            width: props.width || '',
+            quantityPerUnit: props.quantityPerUnit || '',
+            unitPrice: props.unitPrice || '',
+            unitsInStock: props.unitsInStock || '',
+            warehousePlace: props.warehousePlace || '',
+            categories: props.categories || '',
+            maxLoad: props.maxLoad || '',
+            weight: props.weight || '',
+            liftingHeight: props.liftingHeight || '',
+            capacity: props.capacity || '',
+            energySource: props.energySource || '',
+            speed: props.speed || '',
+            length: props.length || '',
+            productWidth: props.productWidth || '',
+            productHeight: props.productHeight || ''
         };
     },
     validationSchema: Yup.object().shape({
-        name: Yup.string()
-            .max(20, 'Must be 20 characters or less'),
-        surname: Yup.string()
-            .max(20, 'Must be 20 characters or less'),
-        phoneNumber: Yup.string()
-            .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
-                'Phone number is not valid')
-            .max(11, 'Must be 10 characters'),
-        email: Yup.string().email(),
-        occupation: Yup.string(),
-        city: Yup.string(),
-        companyCode: Yup.string(),
-        country: Yup.string(),
-        street: Yup.string(),
-        zip: Yup.string()
-
-
+        capacity: Yup.string(),
+        energySource: Yup.string(),
+        speed: Yup.number(),
+        length: Yup.number(),
+        productWidth: Yup.number(),
+        productHeight: Yup.number()
     }),
     handleSubmit: async (values, { setErrors, props }) => {
-
-        let formData = new FormData();
-        Object.entries(values).forEach(([key, value]) => {
-            if (value !== undefined) formData.append(key, value);
-        });
+        // let formData = new FormData();
+        // Object.entries(values).forEach(([key, value]) => {
+        //     if (value !== undefined) formData.append(key, value);
+        // });
+        console.log(values);
 
         // try {
         //     if (values.id !== undefined) {
@@ -143,26 +151,10 @@ const ProductForm = withFormik<ProductProps, FormValues>({
     }
 })(ProfileEdit);
 
-const AddProduct = ({ }) => (
-    <div className={style.container}>
-        <div className={style.auth}>
-            <ProductForm
-                // id={id}
-                // name={name}
-                // surname={surname}
-                // phoneNumber={phoneNumber}
-                // email={email}
-                // occupation={occupation}
-                // imageName={imageName}
-                // address={address}
-                // passToggle={passToggle}
-                dispatch={useAppDispatch()}
-            // imageSrc={imageSrc}
-            />
-        </div>
+const AddProduct = () => (
+    <div className={style.auth}>
+        <ProductForm dispatch={useAppDispatch()} productName={''} />
     </div>
 );
 
 export default AddProduct;
-
-

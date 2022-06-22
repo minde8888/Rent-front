@@ -5,11 +5,9 @@ import AccessDenied from '../auth/login/accessDenied/accessDenied.component';
 interface Props {
     role: Array<string>;
     component: React.ComponentType;
-    path?: string;
 }
 
 export const ProtectedRoute: React.FC<Props> = ({ role, component: Component }) => {
-
     let { isLoggedIn } = useAppSelector((state) => state.data.auth);
     let { roles } = useAppSelector((state) => state.data.user);
 

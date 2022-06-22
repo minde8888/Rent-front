@@ -1,4 +1,4 @@
-import { Props } from '../current.component';
+import { Props } from '../currentProfile.component';
 import * as Yup from 'yup';
 import { Form, FormikProps, withFormik } from 'formik';
 import style from '../profile.module.scss';
@@ -6,32 +6,32 @@ import userImage from '../../../svg/add-image-frame-svgrepo-com.svg';
 import { TextField } from '../../validation/textField';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
-import UploadImage from './uploadImage';
+import UploadImage from './uploadImage/uploadImage';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import { updateUser } from '../../../services/user.services/user.services';
 import { updateProfile } from '../../../redux/slice/userSlice';
-import left from '../../../svg/7122550_arrow_left_icon.svg'
+import left from '../../../svg/7122550_arrow_left_icon.svg';
 
 interface EditProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
-interface FormValues extends Props { }
+interface FormValues extends Props {}
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
-    const { errors, imageSrc, isSubmitting } = props;
+    const { errors, imageSrc, isSubmitting, setFieldValue } = props;
 
     const goBack = (): void => {
         props.passToggle();
-    }
+    };
 
     const passData = async (file: File): Promise<void> => {
         if (Object.keys(file).length === 0) {
-            props.setFieldValue('imageFile', file);
-            props.setFieldValue('imageName', file.name);
+            setFieldValue('imageFile', file);
+            setFieldValue('imageName', file.name);
             const image = await imageResize(file, 'Profile_image');
-            props.setFieldValue('width', image?.width);
-            props.setFieldValue('height', image?.height);
+            setFieldValue('width', image?.width);
+            setFieldValue('height', image?.height);
         }
     };
 
@@ -112,17 +112,13 @@ const EditForm = withFormik<EditProps, FormValues>({
             height: props.height || '',
             width: props.width || '',
             passToggle: props.passToggle || ''
-
         };
     },
     validationSchema: Yup.object().shape({
-        name: Yup.string()
-            .max(20, 'Must be 20 characters or less'),
-        surname: Yup.string()
-            .max(20, 'Must be 20 characters or less'),
+        name: Yup.string().max(20, 'Must be 20 characters or less'),
+        surname: Yup.string().max(20, 'Must be 20 characters or less'),
         phoneNumber: Yup.string()
-            .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
-                'Phone number is not valid')
+            .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/, 'Phone number is not valid')
             .max(11, 'Must be 10 characters'),
         email: Yup.string().email(),
         occupation: Yup.string(),
@@ -131,11 +127,8 @@ const EditForm = withFormik<EditProps, FormValues>({
         country: Yup.string(),
         street: Yup.string(),
         zip: Yup.string()
-
-
     }),
     handleSubmit: async (values, { setErrors, props }) => {
-
         let formData = new FormData();
         Object.entries(values).forEach(([key, value]) => {
             if (value !== undefined) formData.append(key, value);
@@ -146,10 +139,10 @@ const EditForm = withFormik<EditProps, FormValues>({
                 const user = await updateUser(formData, values.id);
                 props.dispatch(updateProfile(user));
 
-                if ((Object.keys(user).length !== 0)) props.passToggle()
+                if (Object.keys(user).length !== 0) props.passToggle();
             }
         } catch (error: any) {
-            setErrors(error)
+            setErrors(error);
         }
     }
 })(ProfileEdit);
