@@ -3,6 +3,8 @@ import ImageUploading, { ImageListType } from 'react-images-uploading';
 import { ProfileImage } from '../../../../models/user.model';
 import { ImageData } from '../../typings';
 import style from '../uploadImages/uploadProductImages.module.scss';
+import close from '../../../../svg/3830967_close_closed_cross_delete_remove_icon.svg';
+import upload from '../../../../svg/1904676_arrow_backup_cloud_hosting_storage_icon.svg';
 
 interface Images {
     getImages: (ImageData: [ImageData]) => void;
@@ -27,21 +29,22 @@ const UploadProductImages = ({ getImages }: Images) => {
     return (
         <div className={style.image}>
             <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']} maxFileSize={1100000}>
-                {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
+                {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
                     // write your building UI
                     <div className={style.upload_image}>
                         <div className={style.clickDrop} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
                             Click or Drop here
                         </div>
-                        <div className={style.removeImages} onClick={onImageRemoveAll}>
-                            Remove all images
-                        </div>
                         {imageList.map((image, index) => (
-                            <div key={index} className="image-item">
-                                <img src={image['data_url']} alt="" width="100" />
+                            <div key={index} className={style.image_item}>
+                                <img className={style.image_show} src={image['data_url']} alt="" width="100" />
                                 <div className="image-item__btn-wrapper">
-                                    <div onClick={() => onImageUpdate(index)}>Update</div>
-                                    <div onClick={() => onImageRemove(index)}>Remove</div>
+                                    <span onClick={() => onImageUpdate(index)}>
+                                        <img src={upload} />
+                                    </span>
+                                    <span onClick={() => onImageRemove(index)}>
+                                        <img src={close} />
+                                    </span>
                                 </div>
                             </div>
                         ))}

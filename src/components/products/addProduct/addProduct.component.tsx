@@ -40,7 +40,7 @@ const ProfileEdit = (props: ProductProps & FormikProps<FormValues>) => {
             <Form>
                 <div className={style.columns}>
                     <UploadProductImages getImages={getImagesData} />
-                    <h3>Product</h3>
+                    {/* <h3>Product</h3>
                     <div>
                         <label htmlFor="productName">Product name</label>
                         <TextField className={style.profileUpdate} id="productName" name="productName" placeholder="productName" />
@@ -58,9 +58,9 @@ const ProfileEdit = (props: ProductProps & FormikProps<FormValues>) => {
                             <option>Choice Category</option>
                             {CategoryOptions}
                         </SelectField>
-                    </div>
+                    </div> */}
                 </div>
-                <div className={style.columns}>
+                {/* <div className={style.columns}>
                     <h3>Specifications</h3>
                     <div>
                         <label htmlFor="maxLoad">MaxLoad</label>
@@ -82,7 +82,7 @@ const ProfileEdit = (props: ProductProps & FormikProps<FormValues>) => {
                         <label htmlFor="productHeight">Product Height</label>
                         <TextField className={style.profileUpdate} id="productHeight" name="productHeight" placeholder="productHeight" />
                     </div>
-                </div>
+                </div> */}
 
                 <div className={style.bottom}>
                     <button className={style.edit} type="submit" disabled={isSubmitting}>
