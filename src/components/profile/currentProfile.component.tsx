@@ -1,6 +1,6 @@
 import { Address, ProfileImage } from '../../models/user.model';
 import userImage from '../../svg/325966_user_account_avatar_human_male_icon.svg';
-import { ImageError } from './editProfile/uploadImage';
+import { ImageError } from './editProfile/uploadImage/uploadImage';
 import style from './profile.module.scss';
 
 export interface Props {
@@ -21,10 +21,7 @@ export interface Props {
     passToggle: () => void;
 }
 
-
-
-const Current = ({ name, surname, phoneNumber, email, occupation, imageName, address, imageSrc }: Props): JSX.Element => {
-
+const CurrentProfile = ({ name, surname, phoneNumber, email, occupation, imageName, address, imageSrc }: Props): JSX.Element => {
     return (
         <div className={style.columns}>
             <div className={style.address}>
@@ -54,4 +51,4 @@ const Current = ({ name, surname, phoneNumber, email, occupation, imageName, add
         </div>
     );
 };
-export default Current;
+export default CurrentProfile;

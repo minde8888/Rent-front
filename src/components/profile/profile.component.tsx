@@ -1,12 +1,11 @@
 import { useParams } from 'react-router-dom';
 import React, { useState } from 'react';
 import style from './profile.module.scss';
-import Current from './current.component';
+import CurrentProfile from './currentProfile.component';
 import Edit from './editProfile/profileEdit.component';
 import { useAppSelector } from '../../hooks/redux.hooks';
 
 const Profile: React.FC = (): JSX.Element => {
-
     const [toggle, setToggle] = useState<boolean>(true);
     const { id } = useParams();
     const { user } = useAppSelector((state) => state.data);
@@ -18,13 +17,14 @@ const Profile: React.FC = (): JSX.Element => {
     const editHandler = (event: React.MouseEvent<HTMLHeadingElement>) => {
         setToggle(false);
     };
+    console.log('profile');
 
     return (
         <div className={style.container}>
             <h2>Profile</h2>
             {toggle ? (
                 <>
-                    <Current
+                    <CurrentProfile
                         id={user?.id}
                         name={user?.name}
                         surname={user?.surname}
@@ -34,7 +34,8 @@ const Profile: React.FC = (): JSX.Element => {
                         imageName={user?.imageName}
                         address={user?.addressDto}
                         imageSrc={user?.imageSrc}
-                        passToggle={passToggle} />
+                        passToggle={passToggle}
+                    />
                     <div className={style.bottom}>
                         <div onClick={editHandler} id={id} className={style.edit}>
                             Edit

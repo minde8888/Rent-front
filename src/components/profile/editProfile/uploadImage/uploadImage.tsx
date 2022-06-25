@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
-import { ProfileImage } from '../../../models/user.model';
+import { ProfileImage } from '../../../../models/user.model';
 import style from './uploadImage.module.scss';
 
 interface Image {
@@ -11,10 +11,7 @@ export interface ImageError {
     imageFile: string;
 }
 
-
-const UploadImage = ({ getImage, imageSrc }: Image) => {
-
-
+const UploadProfileImage = ({ getImage, imageSrc }: Image) => {
     const [images, setImages] = React.useState([]);
 
     const onChange = (imageList: ImageListType) => {
@@ -25,11 +22,8 @@ const UploadImage = ({ getImage, imageSrc }: Image) => {
     };
     return (
         <div className={style.imageBottom}>
-            <ImageUploading value={images} onChange={onChange} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']}
-                maxFileSize={1100000} >
-
+            <ImageUploading value={images} onChange={onChange} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']} maxFileSize={1100000}>
                 {({ imageList, onImageUpload, isDragging, dragProps, errors }) => (
-
                     <div className={style.clickDrop}>
                         {imageSrc?.$values !== undefined && imageSrc?.$values.length > 0 ? <img src={imageSrc?.$values.toString().replaceAll(',', '')} alt="imageName" /> : null}
                         <div className={style.uploadImage} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
@@ -40,17 +34,17 @@ const UploadImage = ({ getImage, imageSrc }: Image) => {
                                 <img src={image['data_url']} alt="" width="180" />
                             </div>
                         ))}
-                        {errors && <div>
-                            {errors.acceptType && <div className={style.profileError}>Your selected file type is not allow</div>}
-                            {errors.maxFileSize && <div className={style.profileError}>File size too large, max file size is 1 Mb</div>}
-                        </div>}
+                        {errors && (
+                            <div>
+                                {errors.acceptType && <div className={style.profileError}>Your selected file type is not allow</div>}
+                                {errors.maxFileSize && <div className={style.profileError}>File size too large, max file size is 1 Mb</div>}
+                            </div>
+                        )}
                     </div>
-
                 )}
             </ImageUploading>
-
         </div>
     );
 };
 
-export default UploadImage;
+export default UploadProfileImage;
