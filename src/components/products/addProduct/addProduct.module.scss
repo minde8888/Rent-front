@@ -1,7 +1,105 @@
+$base_color:#aaa;
+
 .container {
     width: 100%;
 
-    .columns {
-        width: 50%;
+    form {
+        display: flex;
+
+        .columns {
+            width: 50%;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            justify-content: flex-start;
+
+            h3 {
+                margin: 10px 0 10px 0;
+            }
+
+            .items {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                width: 95%;
+
+                .profileInput,
+                .profileTextArea {
+                    width: 95%;
+                }
+
+                .numberItem,
+                .profileInput {
+                    border: 2px solid $base_color;
+                    border-radius: 4px;
+                    margin: 8px 0;
+                    outline: none;
+                    padding: 8px;
+                    box-sizing: border-box;
+                    transition: .3s;
+                }
+
+                .profileInput:focus {
+                    border-color: dodgerBlue;
+                    box-shadow: 0 0 8px 0 dodgerBlue;
+                }
+
+                .numberItems {
+                    width: 95%;
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+
+                    .profileInputNumber {
+                        margin: 20px 0 0 0;
+
+                        .numberItem:focus {
+                            position: relative;
+                            border-color: dodgerBlue;
+                            box-shadow: 0 0 8px 0 dodgerBlue;
+
+                        }
+
+                        label {
+                            position: absolute;
+                            top: -16px;
+                            text-align: 16px;
+                        }
+                    }
+                }
+
+                select {
+                    border: 2px solid $base_color;
+                    border-radius: 4px;
+                    margin: 8px 0;
+                    padding: 8px;
+                    box-sizing: border-box;
+                    color: rgb(85, 84, 84);
+                    outline: none;
+                }
+
+                select:focus {
+                    position: relative;
+                    border-color: dodgerBlue;
+                    box-shadow: 0 0 8px 0 dodgerBlue;
+                }
+
+                .profileTextArea {
+                    border: 2px solid $base_color;
+                    border-radius: 4px;
+                    outline: none;
+                }
+
+                .profileTextArea:focus {
+                    position: relative;
+                    border-color: dodgerBlue;
+                    box-shadow: 0 0 8px 0 dodgerBlue;
+                }
+            }
+        }
     }
 }

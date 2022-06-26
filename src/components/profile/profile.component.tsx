@@ -17,7 +17,6 @@ const Profile: React.FC = (): JSX.Element => {
     const editHandler = (event: React.MouseEvent<HTMLHeadingElement>) => {
         setToggle(false);
     };
-    console.log('profile');
 
     return (
         <div className={style.container}>

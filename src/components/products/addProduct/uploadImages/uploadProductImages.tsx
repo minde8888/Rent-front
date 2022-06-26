@@ -1,6 +1,5 @@
 import React from 'react';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
-import { ProfileImage } from '../../../../models/user.model';
 import { ImageData } from '../../typings';
 import style from '../uploadImages/uploadProductImages.module.scss';
 import close from '../../../../svg/3830967_close_closed_cross_delete_remove_icon.svg';
@@ -12,33 +11,39 @@ interface Images {
 export interface ImageError {
     imageFile: string;
 }
-interface ImagesFiles extends File {}
+interface ImagesFiles extends File { }
 
 const UploadProductImages = ({ getImages }: Images) => {
     const [images, setImages] = React.useState([]);
 
-    const maxNumber = 20;
+    const maxNumber = 10;
 
     const onChange = (imageList: ImageListType): void => {
         if (imageList.length !== 0) {
             setImages(imageList as []);
-            getImages(imageList.reverse() as [ImageData]);
+            getImages(imageList as [ImageData]);
         }
     };
 
     return (
         <div className={style.image}>
-            <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']} maxFileSize={1100000}>
+            <ImageUploading
+                multiple value={images}
+                onChange={onChange}
+                maxNumber={maxNumber}
+                dataURLKey="data_url"
+                acceptType={['jpg', 'gif', 'png', 'gif']}
+                maxFileSize={1100000}>
                 {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
                     // write your building UI
                     <div className={style.upload_image}>
                         <div className={style.clickDrop} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
-                            Click or Drop here
+                            Click or Drop image here
                         </div>
                         {imageList.map((image, index) => (
                             <div key={index} className={style.image_item}>
                                 <img className={style.image_show} src={image['data_url']} alt="" width="100" />
-                                <div className="image-item__btn-wrapper">
+                                <div className={style.image_btn_wrapper}>
                                     <span onClick={() => onImageUpdate(index)}>
                                         <img src={upload} />
                                     </span>

@@ -6,7 +6,7 @@
     "editor.wordWrap": "on",
     "cSpell.words": ["browserslist", "Dropzone", "fontawesome", "formik", "fortawesome", "reduxjs", "Signup", "svgrepo"],
     "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "HookyQR.beautify"
     },
     "[scss]": {
         "editor.defaultFormatter": "michelemelluso.code-beautifier"

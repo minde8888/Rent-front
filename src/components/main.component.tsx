@@ -24,7 +24,6 @@ import AddProduct from './products/addProduct/addProduct.component';
 // const AddProduct = lazy(() => import('./products/addProduct/addProduct.component'));
 
 function Main(): JSX.Element {
-    console.log(3333);
 
     return (
         <div className="main">

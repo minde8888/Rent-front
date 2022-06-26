@@ -20,7 +20,7 @@ interface OtherProps {
     message: string;
 }
 
-interface MyFormProps {
+interface LoginFormProps {
     initEmail?: string;
     message: string;
     dispatch: Dispatch<AnyAction>;
@@ -64,7 +64,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     );
 };
 
-const MyForm = withFormik<MyFormProps, FormValues>({
+const LoginForm = withFormik<LoginFormProps, FormValues>({
     mapPropsToValues: (props) => {
         return {
             email: props.initEmail || '',
@@ -96,7 +96,7 @@ const MyForm = withFormik<MyFormProps, FormValues>({
 const Login = () => (
     <div className={style.container}>
         <div className={style.auth}>
-            <MyForm message="Login" dispatch={useAppDispatch()} />
+            <LoginForm message="Login" dispatch={useAppDispatch()} />
         </div>
     </div>
 );

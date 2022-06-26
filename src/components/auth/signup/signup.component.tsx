@@ -40,7 +40,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     return (
         <Form>
             <h1>{message}</h1>
-            <p>This can be anywhere in your application</p>
+            <p>This can be your application</p>
             <TextField label="First Name" name="name" type="text" value={name} />
             <TextField label="Last Name" name="surname" type="text" value={surname} />
             <TextField label="+4712345678" name="mobile" type="phoneNumber" value={mobile} />

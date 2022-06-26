@@ -1,7 +1,6 @@
 import { ImageError } from './addProduct/uploadImages/uploadProductImages';
 
 export interface Product {
-    productName: string;
     description?: string;
     imageFile?: File | ImageError;
     imageName?: string;
@@ -21,6 +20,7 @@ export interface Product {
     length?: string;
     productWidth?: string;
     productHeight?: string;
+    productCode?: string;
 }
 
 export interface ImageData {

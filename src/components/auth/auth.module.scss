@@ -44,36 +44,38 @@ $grid-width : 100%;
 
         form {
             width: $grid-width;
+            margin: 10px 0 0 0;
+            color: $text;
 
-            div {
-                margin: 10px 0 0 0;
+            label {
+                display: none;
+            }
+
+            input {
                 color: $text;
+                line-height: $base-line-height;
+                border-radius: 999px;
+                background-color: $base-bgColor;
+                text-align: center;
                 width: $grid-width;
+                margin: 10px 0 0 0;
+            }
 
-                input {
-                    color: $text;
-                    line-height: $base-line-height;
-                    border-radius: 999px;
+            select {
+                color: $base-color;
+                background-image: linear-gradient(160deg, #1c2430 0%, #354152 100%);
+                border-radius: 999px;
+                background-color: $base-bgColor;
+                text-align: center;
+                width: $grid-width;
+                height: 35px;
+                border: 1px solid #242c37;
+                margin: 10px 0 0 0;
+
+                option {
+                    color: $base-text;
+                    height: $base-line-height;
                     background-color: $base-bgColor;
-                    text-align: center;
-                    width: $grid-width;
-                }
-
-                select {
-                    color: $base-color;
-                    background-image: linear-gradient(160deg, #1c2430 0%, #354152 100%);
-                    border-radius: 999px;
-                    background-color: $base-bgColor;
-                    text-align: center;
-                    width: $grid-width;
-                    height: 35px;
-                    border: 1px solid #242c37;
-
-                    option {
-                        color: $base-text;
-                        height: $base-line-height;
-                        background-color: $base-bgColor;
-                    }
                 }
 
                 select:hover {
