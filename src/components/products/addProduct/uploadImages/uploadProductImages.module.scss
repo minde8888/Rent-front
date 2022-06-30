@@ -15,6 +15,11 @@
             width: 100%;
             z-index: 1;
             text-align: center;
+            cursor: pointer;
+        }
+
+        .clickDrop:hover {
+            background-color: rgba(131, 128, 128, 0.452);
         }
 
         .removeImages {
@@ -57,6 +62,7 @@
                 display: flex;
                 justify-content: space-evenly;
 
+
                 img {
                     cursor: pointer;
                 }
@@ -65,6 +71,12 @@
                     background-color: rgba(131, 128, 128, 0.452);
                 }
             }
+
+            // .image_btn_wrapper {
+            //     background-color: rgba(131, 128, 128, 0.452);
+            // }
         }
+
+
     }
 }

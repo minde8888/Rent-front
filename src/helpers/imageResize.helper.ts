@@ -37,6 +37,10 @@ export async function imageResize(imageFile: File, type: string): Promise<{ heig
                     maxWidth = 290;
                     maxHeight = 228;
                     break;
+                case 'Product_image':
+                    maxWidth = 290;
+                    maxHeight = 228;
+                    break;
                 default:
                     throw new Error(`Couldn't find: ${type}.`);
             }

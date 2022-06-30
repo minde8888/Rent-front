@@ -16,7 +16,7 @@ $base_color:#aaa;
             align-items: center;
             justify-content: flex-start;
 
-            h3 {
+            summary {
                 margin: 10px 0 10px 0;
             }
 
@@ -43,8 +43,12 @@ $base_color:#aaa;
                 }
 
                 .profileInput:focus {
-                    border-color: dodgerBlue;
-                    box-shadow: 0 0 8px 0 dodgerBlue;
+                    border-color: $base_color;
+                    box-shadow: 0 0 8px 0 $base_color;
+                }
+
+                .profileInputWidth {
+                    width: 100%;
                 }
 
                 .numberItems {
@@ -55,13 +59,11 @@ $base_color:#aaa;
                     justify-content: space-between;
 
                     .profileInputNumber {
-                        margin: 20px 0 0 0;
 
                         .numberItem:focus {
                             position: relative;
-                            border-color: dodgerBlue;
-                            box-shadow: 0 0 8px 0 dodgerBlue;
-
+                            border-color: $base_color;
+                            box-shadow: 0 0 8px 0 $base_color;
                         }
 
                         label {
@@ -84,8 +86,8 @@ $base_color:#aaa;
 
                 select:focus {
                     position: relative;
-                    border-color: dodgerBlue;
-                    box-shadow: 0 0 8px 0 dodgerBlue;
+                    border-color: $base_color;
+                    box-shadow: 0 0 8px 0 $base_color;
                 }
 
                 .profileTextArea {
@@ -96,8 +98,23 @@ $base_color:#aaa;
 
                 .profileTextArea:focus {
                     position: relative;
-                    border-color: dodgerBlue;
-                    box-shadow: 0 0 8px 0 dodgerBlue;
+                    border-color: $base_color;
+                    box-shadow: 0 0 8px 0 $base_color;
+                }
+            }
+
+            .saveProduct {
+                margin: 10px 0 0 0;
+
+                button {
+                    padding: 8px 69px;
+                    cursor: pointer;
+                    border: 2px solid $base_color;
+                    border-radius: 4px;
+                }
+
+                button:hover {
+                    background-color: rgba(131, 128, 128, 0.452);
                 }
             }
         }

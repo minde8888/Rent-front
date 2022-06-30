@@ -10,10 +10,10 @@ interface Props {
     unitsInStock?: string;
     warehousePlace?: string;
     productCode?: string;
+    addCategory?: string;
 }
 
-const ProductDescription = ({ productName, quantityPerUnit, unitPrice, unitsInStock, warehousePlace, productCode }: Props) => {
-
+const ProductDescription = ({ productName, quantityPerUnit, unitPrice, unitsInStock, warehousePlace, productCode, addCategory }: Props) => {
     const cat = ['Roles.user', 'Roles.customer'];
     const CategoryOptions = cat.map((r, key) => (
         <option value={r} key={key}>
@@ -42,13 +42,14 @@ const ProductDescription = ({ productName, quantityPerUnit, unitPrice, unitsInSt
                     </div>
                 </div>
                 <TextField label="Warehouse Place" className={style.profileInput} id="warehousePlace" name="warehousePlace" placeholder="warehousePlace" value={warehousePlace} />
+                <TextField label="Add Category" className={style.profileInput} id="addCategory" name="addCategory" placeholder="addCategory" value={addCategory} />
                 <SelectField name="categories" as="select" value={'categories'}>
                     <option>Choice Category</option>
                     {CategoryOptions}
                 </SelectField>
             </div>
         </>
-    )
-}
+    );
+};
 
 export default ProductDescription;

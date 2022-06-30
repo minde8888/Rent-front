@@ -21,6 +21,7 @@ export interface Product {
     productWidth?: string;
     productHeight?: string;
     productCode?: string;
+    addCategory?: string;
 }
 
 export interface ImageData {

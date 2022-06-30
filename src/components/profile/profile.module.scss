@@ -133,6 +133,30 @@ $error: rgba(241, 83, 83, 0.171);
     form {
         width: 100%;
 
+        .address {
+            div {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+
+                input {
+                    width: 33%;
+                }
+            }
+        }
+
+        .details {
+            div {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                input {
+                    width: 33%;
+                }
+            }
+        }
+
         .profileUpdate {
             border-radius: 10px;
             border: 1px solid #eee;

@@ -4,6 +4,7 @@ import { ImageData } from '../../typings';
 import style from '../uploadImages/uploadProductImages.module.scss';
 import close from '../../../../svg/3830967_close_closed_cross_delete_remove_icon.svg';
 import upload from '../../../../svg/1904676_arrow_backup_cloud_hosting_storage_icon.svg';
+import add_img from '../../../../svg/add-image-frame-svgrepo-com.svg';
 
 interface Images {
     getImages: (ImageData: [ImageData]) => void;
@@ -11,7 +12,7 @@ interface Images {
 export interface ImageError {
     imageFile: string;
 }
-interface ImagesFiles extends File { }
+interface ImagesFiles extends File {}
 
 const UploadProductImages = ({ getImages }: Images) => {
     const [images, setImages] = React.useState([]);
@@ -27,13 +28,7 @@ const UploadProductImages = ({ getImages }: Images) => {
 
     return (
         <div className={style.image}>
-            <ImageUploading
-                multiple value={images}
-                onChange={onChange}
-                maxNumber={maxNumber}
-                dataURLKey="data_url"
-                acceptType={['jpg', 'gif', 'png', 'gif']}
-                maxFileSize={1100000}>
+            <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']} maxFileSize={1100000}>
                 {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
                     // write your building UI
                     <div className={style.upload_image}>

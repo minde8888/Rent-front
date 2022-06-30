@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
 import { Form, FormikProps, withFormik } from 'formik';
-import userImage from '../../../svg/add-image-frame-svgrepo-com.svg';
 
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
@@ -25,18 +24,25 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
     const { errors, isSubmitting, setFieldValue } = props;
 
     const getImagesData = async (files: [ImageData]): Promise<void> => {
+        let arrayImageWidth: number[] = [];
+        let arrayImageHeight: number[] = [];
+
         if (Object.keys(files).length !== 0) {
             setFieldValue('attachments', files);
+
+            files.map(async (e) => {
+                const image = await imageResize(e.file, 'Product_image');
+                if (image?.width !== undefined && image?.height !== undefined) {
+                    arrayImageWidth.push(image.width);
+                    arrayImageHeight.push(image.height);
+                    setFieldValue('width', arrayImageWidth.toString());
+                    setFieldValue('height', arrayImageHeight.toString());
+                }
+            });
         }
     };
 
-    const { productName,
-        quantityPerUnit,
-        unitPrice,
-        unitsInStock,
-        warehousePlace,
-        productCode } = props.values
-
+    const { productName, quantityPerUnit, unitPrice, unitsInStock, warehousePlace, productCode, addCategory } = props.values;
 
     const toggle = (event: React.MouseEvent<HTMLHeadingElement>) => {
         // console.log(event.target.children[0].classList.value);
@@ -57,10 +63,12 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
                         unitPrice={unitPrice}
                         unitsInStock={unitsInStock}
                         warehousePlace={warehousePlace}
-                        productCode={productCode} />
+                        productCode={productCode}
+                        addCategory={addCategory}
+                    />
                     <ProductSpecifications />
-                    <div className={style.bottom}>
-                        <button className={style.edit} type="submit" disabled={isSubmitting}>
+                    <div className={style.saveProduct}>
+                        <button type="submit" disabled={isSubmitting}>
                             Save
                         </button>
                     </div>
@@ -74,7 +82,6 @@ const ProductForm = withFormik<ProductProps, FormValues>({
     mapPropsToValues: (props) => {
         return {
             productName: props.productName || '',
-            description: props.description || '',
             attachments: props.imageFile || undefined,
             imageName: props.imageName || '',
             height: props.height || '',
@@ -93,38 +100,47 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             length: props.length || '',
             productWidth: props.productWidth || '',
             productHeight: props.productHeight || '',
-            productCode: props.productCode || ''
-
+            productCode: props.productCode || '',
+            addCategory: props.addCategory || ''
         };
     },
     validationSchema: Yup.object().shape({
         productName: Yup.string(),
-        description: Yup.string(),
         imageName: Yup.string(),
         warehousePlace: Yup.string(),
         categories: Yup.string(),
         energySource: Yup.string(),
         productCode: Yup.string(),
-        speed: Yup.number(),
-        length: Yup.number(),
-        height: Yup.number(),
-        width: Yup.number(),
+        speed: Yup.string(),
+        length: Yup.string(),
+        height: Yup.string(),
+        width: Yup.string(),
         quantityPerUnit: Yup.number(),
         unitPrice: Yup.number(),
         unitsInStock: Yup.number(),
-        maxLoad: Yup.number(),
-        weight: Yup.number(),
-        liftingHeight: Yup.number(),
-        capacity: Yup.number(),
-        productWidth: Yup.number(),
-        productHeight: Yup.number(),
+        addCategory: Yup.string(),
+        maxLoad: Yup.string(),
+        weight: Yup.string(),
+        liftingHeight: Yup.string(),
+        capacity: Yup.string(),
+        productWidth: Yup.string(),
+        productHeight: Yup.string()
     }),
     handleSubmit: async (values, { setErrors, props }) => {
-        // let formData = new FormData();
-        // Object.entries(values).forEach(([key, value]) => {
-        //     if (value !== undefined) formData.append(key, value);
-        // });
-        console.log(values);
+        let formData = new FormData();
+        Object.entries(values).forEach(([key, value]) => {
+            if (value !== undefined) formData.append(key, value);
+            if (Array.isArray(value)) {
+                for (const key in value) {
+                    if (Object.prototype.hasOwnProperty.call(value, key)) {
+                        formData.append('image' + key, value[key].file);
+                    }
+                }
+                // console.log(value);
+            }
+        });
+        console.log(Object.fromEntries(formData));
+        // console.log(values);
 
         // try {
         //     if (values.id !== undefined) {
