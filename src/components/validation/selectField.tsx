@@ -1,7 +1,7 @@
 import { useField } from 'formik';
+import { HTMLProps } from 'react';
 
-interface PropsType {
-    [x: string]: any;
+interface PropsType extends HTMLProps<HTMLSelectElement> {
     name: string;
 }
 

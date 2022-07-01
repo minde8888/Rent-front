@@ -19,11 +19,12 @@ export interface Props {
     address?: Address;
     message?: string;
     passToggle: () => void;
+    'data-testid'?: string;
 }
 
-const CurrentProfile = ({ name, surname, phoneNumber, email, occupation, imageName, address, imageSrc }: Props): JSX.Element => {
+const CurrentProfile = ({ name, surname, phoneNumber, email, occupation, imageName, address, imageSrc, 'data-testid': dataTestId }: Props): JSX.Element => {
     return (
-        <div className={style.columns}>
+        <div className={style.columns} data-testid={dataTestId}>
             <div className={style.address}>
                 <div>
                     <h3>Address</h3>

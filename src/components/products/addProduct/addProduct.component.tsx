@@ -10,6 +10,7 @@ import UploadProductImages from '../addProduct/uploadImages/uploadProductImages'
 import { Product, ImageData } from '../typings';
 import ProductDescription from './productDescription';
 import ProductSpecifications from './productSpecifications';
+import { addProduct } from '../../../services/product.services/product.services';
 
 interface ProductProps extends Product {
     productName?: string;
@@ -133,18 +134,18 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             if (Array.isArray(value)) {
                 for (const key in value) {
                     if (Object.prototype.hasOwnProperty.call(value, key)) {
-                        formData.append('image' + key, value[key].file);
+                        formData.append('attachments[' + key + ']', value[key].file);
                     }
                 }
                 // console.log(value);
             }
         });
-        console.log(Object.fromEntries(formData));
+
         // console.log(values);
 
         // try {
         //     if (values.id !== undefined) {
-        //         const user = await updateUser(formData, values.id);
+        const user = await addProduct(formData);
         //         props.dispatch(updateProfile(user));
 
         //         if ((Object.keys(user).length !== 0)) props.passToggle()

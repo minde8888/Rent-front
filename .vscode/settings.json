@@ -4,11 +4,24 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.wordWrap": "on",
-    "cSpell.words": ["browserslist", "Dropzone", "fontawesome", "formik", "fortawesome", "reduxjs", "Signup", "svgrepo"],
+    "cSpell.words": [
+        "browserslist",
+        "Dropzone",
+        "fontawesome",
+        "formik",
+        "fortawesome",
+        "reduxjs",
+        "Signup",
+        "svgrepo",
+        "testid"
+    ],
     "[jsonc]": {
         "editor.defaultFormatter": "HookyQR.beautify"
     },
     "[scss]": {
         "editor.defaultFormatter": "michelemelluso.code-beautifier"
+    },
+    "[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml"
     }
 }
