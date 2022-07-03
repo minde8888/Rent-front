@@ -1,8 +1,8 @@
 $base-bgColor : #e6e6e7;
 $base-color : #7e8ba3;
 $base-text : #484942;
-$bottom-color : #9f9fa0;
-$bottom-color-hover : #757575;
+$button-color : #9f9fa0;
+$button-color-hover : #757575;
 $text : #fff;
 $error: rgba(241, 83, 83, 0.171);
 
@@ -91,13 +91,13 @@ $error: rgba(241, 83, 83, 0.171);
         }
     }
 
-    .bottom {
+    .button {
         text-align: center;
         margin: 20px 0 0 0;
 
         .edit {
             box-shadow: 0px 15px 24px -5px #818580;
-            background-color: $bottom-color;
+            background-color: $button-color;
             border-radius: 12px;
             border: 1px solid #7f857c;
             display: inline-block;
@@ -110,25 +110,12 @@ $error: rgba(241, 83, 83, 0.171);
         }
 
         .edit:hover {
-            background-color: $bottom-color-hover;
+            background-color: $button-color-hover;
         }
 
-        .arrowBack {
-            width: 20%;
-            line-height: 26px;
-            letter-spacing: 2px;
 
-            img {
-                top: 5px;
-                margin: 0 10px 0 0;
-            }
-        }
-
-        .arrowBack:hover {
-            color: $bottom-color;
-            cursor: pointer;
-        }
     }
+
 
     form {
         width: 100%;
@@ -184,6 +171,25 @@ $error: rgba(241, 83, 83, 0.171);
             }
         }
     }
+
+    .arrowBack {
+        width: 20%;
+        line-height: 26px;
+        letter-spacing: 2px;
+        border: none;
+        background-color: $base-bgColor;
+
+        img {
+            top: 5px;
+            margin: 0 10px 0 0;
+        }
+    }
+
+    .arrowBack:hover {
+        color: $button-color;
+        cursor: pointer;
+    }
+
 }
 
 @media (max-width: 700px) {
@@ -234,7 +240,7 @@ $error: rgba(241, 83, 83, 0.171);
             }
         }
 
-        .bottom {
+        .button {
             margin: 20px 0 40px 0;
 
         }

@@ -43,7 +43,7 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
         }
     };
 
-    const { productName, quantityPerUnit, unitPrice, unitsInStock, warehousePlace, productCode, addCategory } = props.values;
+    const { productName, quantityPerUnit, unitPrice, unitsInStock, warehousePlace, productCode, addCategory, id } = props.values;
 
     const toggle = (event: React.MouseEvent<HTMLHeadingElement>) => {
         // console.log(event.target.children[0].classList.value);
@@ -102,7 +102,8 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             productWidth: props.productWidth || '',
             productHeight: props.productHeight || '',
             productCode: props.productCode || '',
-            addCategory: props.addCategory || ''
+            addCategory: props.addCategory || '',
+            id: '6a971eeb-377e-47e2-9ccd-0f6a039e1004' || ''
         };
     },
     validationSchema: Yup.object().shape({
@@ -128,13 +129,16 @@ const ProductForm = withFormik<ProductProps, FormValues>({
         productHeight: Yup.string()
     }),
     handleSubmit: async (values, { setErrors, props }) => {
+
         let formData = new FormData();
+        formData.append("sellerId", values.id);
         Object.entries(values).forEach(([key, value]) => {
             if (value !== undefined) formData.append(key, value);
             if (Array.isArray(value)) {
                 for (const key in value) {
                     if (Object.prototype.hasOwnProperty.call(value, key)) {
-                        formData.append('attachments[' + key + ']', value[key].file);
+                        formData.append(`attachments[${key}]`, value[key].file);
+                        formData.append(`imageName[${key}]`, value[key].file.name)
                     }
                 }
                 // console.log(value);
@@ -158,7 +162,7 @@ const ProductForm = withFormik<ProductProps, FormValues>({
 
 const AddProduct = () => (
     <div className={style.auth}>
-        <ProductForm dispatch={useAppDispatch()} />
+        <ProductForm dispatch={useAppDispatch()} id={''} />
     </div>
 );
 

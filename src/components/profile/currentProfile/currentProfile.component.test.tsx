@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { ProfileImage } from '../../models/user.model';
+import { ProfileImage } from '../../../models/user.model';
 import CurrentProfile from './currentProfile.component';
 
 describe('<CurrentProfile />', () => {
@@ -23,7 +23,6 @@ describe('<CurrentProfile />', () => {
         const image = getByAltText('imgAltText')
         expect(image).toHaveAttribute('src', svg)
     })
-
 
 });
 

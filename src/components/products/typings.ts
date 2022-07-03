@@ -1,6 +1,7 @@
 import { ImageError } from './addProduct/uploadImages/uploadProductImages';
 
 export interface Product {
+    id: string;
     description?: string;
     imageFile?: File | ImageError;
     imageName?: string;

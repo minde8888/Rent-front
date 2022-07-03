@@ -7,7 +7,7 @@ import { userLogout } from '../../redux/slice/authSlice';
 import { logout } from '../../services/auth.services/auth.services';
 import './nav.scss';
 
-interface INavBar {}
+interface INavBar { }
 
 const NavBar: FunctionComponent<INavBar> = () => {
     const dispatch = useAppDispatch();

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import React, { MouseEventHandler, useState } from 'react';
 import style from './profile.module.scss';
-import CurrentProfile from './currentProfile.component';
+import CurrentProfile from './currentProfile/currentProfile.component';
 import Edit from './editProfile/profileEdit.component';
 import { useAppSelector } from '../../hooks/redux.hooks';
 
@@ -37,7 +37,7 @@ const Profile: React.FC = (): JSX.Element => {
                         imageSrc={user?.imageSrc}
                         passToggle={passToggle}
                     />
-                    <div className={style.bottom}>
+                    <div className={style.button}>
                         <button onClick={editHandler} id={id} className={style.edit}>
                             Edit
                         </button>

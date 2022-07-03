@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
-import { ProfileImage } from '../../../../models/user.model';
+import { ProfileImage } from '../../../models/user.model';
 import style from './uploadImage.module.scss';
 
 interface Image {
