@@ -36,7 +36,7 @@ const Profile: React.FC = (): JSX.Element => {
                         imageSrc={user?.imageSrc}
                         passToggle={passToggle}
                     />
-                    <div className={style.bottom}>
+                    <div className={style.button}>
                         <button onClick={editHandler} id={id} className={style.edit}>
                             Edit
                         </button>

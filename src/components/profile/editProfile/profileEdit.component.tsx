@@ -6,7 +6,7 @@ import userImage from '../../../svg/add-image-frame-svgrepo-com.svg';
 import { TextField } from '../../validation/textField';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
-import UploadImage from './uploadImage/uploadImage';
+import UploadImage from '../uploadImage/uploadImage';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import { updateUser } from '../../../services/user.services/user.services';
 import { updateProfile } from '../../../redux/slice/userSlice';
@@ -74,15 +74,15 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                     </div>
                 </div>
             </div>
-            <div className={style.bottom}>
+            <div className={style.button}>
                 <button className={style.edit} type="submit" disabled={isSubmitting}>
                     Save
                 </button>
-                <button className={style.arrowBack} onClick={goBack}>
-                    <img src={left} alt="" />
-                    Go back
-                </button>
             </div>
+            <button className={style.arrowBack} onClick={goBack}>
+                <img src={left} alt="" />
+                Go back
+            </button>
         </Form>
     );
 };

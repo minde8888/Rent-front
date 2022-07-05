@@ -1,6 +1,6 @@
 import { Address, ProfileImage } from '../../../models/user.model';
 import userImage from '../../../svg/325966_user_account_avatar_human_male_icon.svg';
-import { ImageError } from '../editProfile/uploadImage/uploadImage';
+import { ImageError } from '../uploadImage/uploadImage';
 import style from '../profile.module.scss';
 
 export interface Props {
