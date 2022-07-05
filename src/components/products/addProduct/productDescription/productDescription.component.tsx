@@ -1,7 +1,7 @@
-import { TextArea } from '../../validation/textArea';
-import { SelectField } from '../../validation/selectField';
-import { TextField } from '../../validation/textField';
-import style from './addProduct.module.scss';
+import { TextArea } from '../../../validation/textArea';
+import { SelectField } from '../../../validation/selectField';
+import { TextField } from '../../../validation/textField';
+import style from '../addProduct.module.scss';
 
 interface Props {
     productName: string;

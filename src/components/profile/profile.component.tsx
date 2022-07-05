@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import React, { MouseEventHandler, useState } from 'react';
 import style from './profile.module.scss';
-import CurrentProfile from './currentProfile.component';
+import CurrentProfile from './currentProfile/currentProfile.component';
 import Edit from './editProfile/profileEdit.component';
 import { useAppSelector } from '../../hooks/redux.hooks';
 
@@ -13,7 +13,6 @@ const Profile: React.FC = (): JSX.Element => {
     const passToggle = (): void => {
         setToggle(true);
     };
-
 
     const editHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
         setToggle(false);

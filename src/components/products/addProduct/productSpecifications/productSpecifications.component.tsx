@@ -1,5 +1,5 @@
-import { TextField } from '../../validation/textField';
-import style from './addProduct.module.scss';
+import { TextField } from '../../../validation/textField';
+import style from '../addProduct.module.scss';
 
 const ProductSpecifications = () => {
     return (
