@@ -1,14 +1,29 @@
+import { ComponentProps } from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import ProductDescription from './productDescription.component';
-// import * as formik from 'formik';
 import { FormikProvider, useFormik } from 'formik';
 
-describe('<ProductDescription />', () => {
-    xtest('renders', async () => {
-        const component = render(
+const setup = (properties: ComponentProps<typeof ProductDescription>) => {
+    const Wrapper = () => {
+        const formik = useFormik({
+            onSubmit: jest.fn(),
+            initialValues: {
+                productName: 'product for test'
+            }
+        });
+
+        return (
             <FormikProvider value={formik}>
-                <ProductDescription productName={''} />
+                <ProductDescription {...properties} />
             </FormikProvider>
         );
+    };
+
+    return render(<Wrapper />);
+};
+
+describe('<ProductDescription />', () => {
+    test('renders', async () => {
+        setup({ productName: 'product' });
     });
 });

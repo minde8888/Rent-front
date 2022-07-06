@@ -4,7 +4,7 @@ import { store } from '../redux/store';
 import { render } from '@testing-library/react';
 
 export function renderBrowserWithContext(element: React.ReactElement) {
-    render(
+    return render(
         <BrowserRouter>
             <Provider store={store}>{element}</Provider>
         </BrowserRouter>
@@ -12,5 +12,5 @@ export function renderBrowserWithContext(element: React.ReactElement) {
 }
 
 export function renderWithContext(element: React.ReactElement) {
-    render(<Provider store={store}>{element}</Provider>);
+    return render(<Provider store={store}>{element}</Provider>);
 }

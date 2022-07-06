@@ -21,7 +21,6 @@ describe('<Profile />', () => {
         );
         const currentProfile = getByTestId('current-profile');
         expect(currentProfile).toBeVisible();
-        // const editButton = getByLabelText('Edit')
         const editButton = getByRole('button');
         fireEvent.click(editButton);
         const editProfile = getByTestId('edit-profile');

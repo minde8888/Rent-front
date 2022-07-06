@@ -1,10 +1,12 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { store } from '../../redux/store';
 import NavBar from './navbar.component';
 import { loginSuccess } from '../../redux/slice/authSlice';
 import { renderBrowserWithContext } from '../../helpers/renderWithContext.helper';
+import { getUserProfile } from '../../redux/slice/userSlice';
+import { User } from '../../models/user.model';
 
 describe('<NavBar />', () => {
     test('renders', () => {
@@ -29,28 +31,15 @@ describe('<NavBar />', () => {
         expect(links[4].href).toContain('/signup');
         expect(links[4].textContent).toEqual('Sign Up');
     });
-    test('logout', () => {
+    test('logout and profile link', () => {
         const payload = { token: 'string1', refreshToken: 'string2' };
+        const slug = '123';
         store.dispatch(loginSuccess(payload));
-        renderBrowserWithContext(<NavBar />);
+        store.dispatch(getUserProfile({ id: slug, name: 'Tester1', surname: 'Tester2' } as unknown as User));
 
-        const logoutButton = screen.getByText('Logout');
-        expect(logoutButton).toBeVisible();
-        fireEvent.click(logoutButton);
-        expect(screen.getByText('Login')).toBeInTheDocument();
+        const { getByText, container } = renderBrowserWithContext(<NavBar />);
+        expect(container.querySelector('.profile')).toHaveAttribute('href', `/profile/${slug}`);
+        fireEvent.click(getByText('Logout'));
+        expect(getByText('Login')).toBeInTheDocument();
     });
-    // test('render profile link', () => {
-    //     const { debug } = render(
-    //         <BrowserRouter>
-    //             <Provider store={store}>
-    //                 <NavBar />
-    //             </Provider>
-    //         </BrowserRouter>
-    //     );
-
-    //     //    {
-    //     //       route: '/profile/ABC123',
-    //     //       path: '/profile/:id'
-    //     //   }
-    // });
 });
