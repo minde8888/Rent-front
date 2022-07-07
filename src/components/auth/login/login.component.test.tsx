@@ -28,21 +28,21 @@ describe('<Login />', () => {
         expect(links[1].href).toContain('/forgot-password');
         expect(links[1].textContent).toEqual('Forgot Password ?');
     });
-    // test('login', async () => {
-    //     const handleSubmit = jest.fn();
-    //     renderBrowserWithContext(<Login  InnerForm={InnerForm} />);
-    //     const user = userEvent.setup();
-    //     await user.type(screen.getByPlaceholderText('Email'), 'string');
-    //     await user.type(screen.getByPlaceholderText('Password'), 'string');
-    //     screen.debug();
-    //     const loginButton = screen.getByRole('button');
-    //     // await user.click(screen.getByRole('button', { name: /submit/i }));
+    test('login', async () => {
+        const handleSubmit = jest.fn();
+        renderBrowserWithContext(<Login />);
+        const user = userEvent.setup();
+        await user.type(screen.getByPlaceholderText('Email'), 'string');
+        await user.type(screen.getByPlaceholderText('Password'), 'string');
+        screen.debug();
+        const loginButton = screen.getByRole('button');
+        // await user.click(screen.getByRole('button', { name: /submit/i }));
 
-    //     await waitFor(() =>
-    //         expect(loginButton).toHaveBeenCalledWith({
-    //             email: 'string',
-    //             password: 'string'
-    //         })
-    //     );
-    // });
+        await waitFor(() =>
+            expect(loginButton).toHaveBeenCalledWith({
+                email: 'string',
+                password: 'string'
+            })
+        );
+    });
 });
