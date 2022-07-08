@@ -5,16 +5,17 @@ import { store } from "../../redux/store";
 import NavBar from "./navbar.component";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
+import { userLogout } from "../../redux/slice/authSlice";
 
 
-const server = setupServer(rest.get("/api", (req, res, ctx) => {
-    return rest(ctx.json({ isLoggedIn: true }));
-}));
+// const server = setupServer(rest.get("/api", (_req, _res, ctx) => {
+//     return rest(ctx.json({ isLoggedIn: true }));
+// }));
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
+// beforeAll(() => server.listen());
+// afterEach(() => server.resetHandlers());
+// afterAll(() => server.close());
+//mocking mswjs.io
 describe('<Navbar />', () => {
 
     test('renders', () => {
@@ -34,8 +35,10 @@ describe('<Navbar />', () => {
         expect(links[4].href).toContain("/signup");
         expect(links[4].textContent).toEqual("Sign Up");
 
+
         // expect(links[6].href).toContain("/logout");
         // expect(links[6].textContent).toEqual("Logout");
 
     })
+
 })
