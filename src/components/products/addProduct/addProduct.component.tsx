@@ -8,8 +8,8 @@ import { imageResize } from '../../../helpers/imageResize.helper';
 import style from './addProduct.module.scss';
 import UploadProductImages from '../addProduct/uploadImages/uploadProductImages';
 import { Product, ImageData } from '../typings';
-import ProductDescription from './productDescription';
-import ProductSpecifications from './productSpecifications';
+import ProductDescription from './productDescription/productDescription.component';
+import ProductSpecifications from './productSpecifications/productSpecifications.component';
 import { addProduct } from '../../../services/product.services/product.services';
 
 interface ProductProps extends Product {

@@ -26,7 +26,7 @@ interface LoginFormProps {
     dispatch: Dispatch<AnyAction>;
 }
 
-const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
+export const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     const { isSubmitting, message } = props;
     const { email } = props.values;
     const { isLoggedIn, error } = useAppSelector((state) => state.data.auth);

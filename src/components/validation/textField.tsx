@@ -10,8 +10,8 @@ export const TextField = ({ label, ...props }: PropsType) => {
 
     return (
         <>
-            <label htmlFor={field.name}>{ }</label>
-            <input  {...field} {...props} autoComplete="off" placeholder={label} />
+            <label htmlFor={field.name}>{}</label>
+            <input {...field} {...props} autoComplete="off" placeholder={label} />
             <ErrorMessage component="div" name={field.name} className="alert alert-danger" />
         </>
     );

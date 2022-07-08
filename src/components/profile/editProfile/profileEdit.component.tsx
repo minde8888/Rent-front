@@ -16,7 +16,7 @@ interface EditProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
-interface FormValues extends Props { }
+interface FormValues extends Props {}
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
     const { errors, imageSrc, isSubmitting, setFieldValue } = props;
@@ -55,7 +55,7 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                 </div>
                 <UploadImage getImage={passData} imageSrc={imageSrc} />
                 <div className={style.image}>
-                    <img src={userImage} alt={'imageName'} />
+                    <img src={userImage} alt={'editAltImageName'} />
                     {errors && <div className={style.profileError}>{errors.message}</div>}
                 </div>
                 <div className={style.details}>
@@ -142,7 +142,7 @@ const EditForm = withFormik<EditProps, FormValues>({
 })(ProfileEdit);
 
 const Edit = ({ passToggle, id, name, surname, phoneNumber, email, occupation, imageName, address, imageSrc, 'data-testid': dataTestId }: Props) => (
-    <div className={style.container} data-testid={dataTestId} >
+    <div className={style.container} data-testid={dataTestId}>
         <div className={style.auth}>
             <EditForm
                 id={id}
@@ -158,7 +158,7 @@ const Edit = ({ passToggle, id, name, surname, phoneNumber, email, occupation, i
                 imageSrc={imageSrc}
             />
         </div>
-    </div >
+    </div>
 );
 
 export default Edit;

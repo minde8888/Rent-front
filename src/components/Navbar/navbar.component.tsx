@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, MouseEventHandler } from 'react';
 import { Outlet } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
@@ -14,7 +14,7 @@ const NavBar: FunctionComponent<INavBar> = () => {
     let { isLoggedIn } = useAppSelector((state) => state.data.auth);
     let { surname, name, id } = useAppSelector((state) => state.data.user);
 
-    const toggleClickHandler = (event: React.MouseEvent<HTMLHeadingElement>) => {
+    const toggleClickHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.stopPropagation();
         event.currentTarget.classList.toggle('open');
     };
@@ -25,8 +25,8 @@ const NavBar: FunctionComponent<INavBar> = () => {
     };
 
     return (
-        <div role="navBar" className="navBar">
-            <div className="menu" onClick={toggleClickHandler}>
+        <div className="navBar">
+            <button className="menu" onClick={toggleClickHandler}>
                 <div className="nav_button">
                     <NavLink className="nav_link" to={'/'}></NavLink>
                 </div>
@@ -44,7 +44,7 @@ const NavBar: FunctionComponent<INavBar> = () => {
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
-            </div>
+            </button>
             <div className="links">
                 {!isLoggedIn ? (
                     <>
@@ -60,9 +60,9 @@ const NavBar: FunctionComponent<INavBar> = () => {
                         <NavLink to={`profile/${id}`} className="profile">
                             {name} {surname}
                         </NavLink>
-                        <div onClick={onLogout} className="logout">
+                        <button onClick={onLogout} className="userLogout">
                             Logout
-                        </div>
+                        </button>
                     </div>
                 )}
             </div>

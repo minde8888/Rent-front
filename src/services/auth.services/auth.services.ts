@@ -13,6 +13,7 @@ export const login = async (email: string, password: string): Promise<User> => {
             email: email,
             password: password
         });
+
         if (!(Object.keys(data).length !== 0)) throw Error('no user found');
         return data;
     } catch (error: any) {
