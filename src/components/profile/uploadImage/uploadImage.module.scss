@@ -13,18 +13,21 @@ $error: rgba(241, 83, 83, 0.171);
             top: 4px;
             z-index: 2;
             text-align: center;
+
+            img {
+                width: 199px;
+            }
         }
 
         .imageItem {
-            left: 0;
             top: -2px;
             position: absolute;
             height: 200px;
             width: 200px;
 
             img {
-                height: 200px;
-                width: 200px;
+                height: 203px;
+                width: 203px;
                 object-fit: cover;
                 border-radius: 20%;
             }
@@ -32,7 +35,6 @@ $error: rgba(241, 83, 83, 0.171);
 
         img {
             top: -2px;
-            left: -1px;
             position: absolute;
             height: 200px;
             width: 200px;

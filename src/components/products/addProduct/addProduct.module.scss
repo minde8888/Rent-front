@@ -104,13 +104,14 @@ $base_color:#aaa;
             }
 
             .saveProduct {
-                margin: 10px 0 0 0;
+                margin: 10px 0 30px 0;
 
                 button {
                     padding: 8px 69px;
                     cursor: pointer;
                     border: 2px solid $base_color;
                     border-radius: 4px;
+                    background-color: #9f9fa0;
                 }
 
                 button:hover {
