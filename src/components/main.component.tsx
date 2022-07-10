@@ -34,13 +34,15 @@ function Main(): JSX.Element {
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="*" element={<p>There's nothing here: 404!</p>} />
-                    <Route path="/" element={<ProtectedRoute role={[Roles.user, Roles.admin]} component={Home} />} />
-                    <Route path="/products" element={<ProtectedRoute role={[Roles.user, Roles.admin]} component={Products} />} />
-                    <Route path="/add-products" element={<ProtectedRoute role={[Roles.user, Roles.admin]} component={AddProduct} />} />
-                    <Route path="/profile/:id" element={<ProtectedRoute role={[Roles.user, Roles.admin]} component={Profile} />} />
+                    <Route element={<ProtectedRoute role={[Roles.user, Roles.admin]} />} >
+                        <Route path="/" element={<Home />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/add-products" element={<AddProduct />} />
+                        <Route path="/profile/:id" element={<Profile />} />
+                    </Route>
                 </Routes>
             </Suspense>
-        </div>
+        </div >
     );
 }
 

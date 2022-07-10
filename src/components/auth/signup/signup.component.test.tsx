@@ -8,19 +8,13 @@ import SignUp from './signup.component';
 
 describe('<SignUp />', () => {
     test('renders', () => {
-        const { baseElement } = render(
-            <BrowserRouter>
-                <Provider store={store}>
-                    <SignUp />
-                </Provider>
-            </BrowserRouter>
-        );
+        const { baseElement } = renderBrowserWithContext(<SignUp />);
 
         expect(baseElement).toBeVisible();
     });
     test('should link', () => {
-        renderBrowserWithContext(<SignUp />);
-        const LoginLink = screen.getByText('Login');
+        const { getByText } = renderBrowserWithContext(<SignUp />);
+        const LoginLink = getByText('Login');
         expect(LoginLink.textContent).toEqual('Login');
         expect(LoginLink).toBeInTheDocument();
     });

@@ -38,7 +38,6 @@ const CurrentProfile = ({ name, surname, phoneNumber, email, occupation, imageNa
             <div className={style.image}>
                 <img src={imageSrc?.$values !== undefined && imageSrc?.$values.length > 0 ? imageSrc?.$values.toString().replaceAll(',', '') : userImage} alt={imageName} />
             </div>
-            |
             <div className={style.details}>
                 <div>
                     <h3>Details</h3>
