@@ -3,6 +3,8 @@ import { screen } from '@testing-library/dom';
 import { renderBrowserWithContext, renderWithContext } from '../../../helpers/renderWithContext.helper';
 import Login, { InnerForm } from './login.component';
 import { ComponentProps } from 'react';
+import { Provider } from 'react-redux';
+import { store } from '../../../redux/store';
 
 describe('<Login />', () => {
     test('renders', () => {
@@ -20,13 +22,13 @@ describe('<Login />', () => {
         expect(links[1].textContent).toEqual('Forgot Password ?');
     });
 
-    const SetupForm = (properties: ComponentProps<typeof InnerForm>) => {
+    const setupForm = (properties: ComponentProps<typeof InnerForm>) => {
         return renderWithContext(<InnerForm {...properties} />);
     };
 
     test('calls on submit property when clicked', async () => {
         const mockOnSubmit = jest.fn();
-        render(<SetupForm handleSubmit={mockOnSubmit} message={''} />);
+        setupForm({ onSubmit: mockOnSubmit });
         screen.debug();
     });
 });
