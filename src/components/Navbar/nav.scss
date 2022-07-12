@@ -12,14 +12,15 @@ $background-color:#1d242d;
     justify-content: space-between;
     align-items: center;
     background-color: $background-color;
+    height: 80px;
 
     .menu {
         position: relative;
         left: 20px;
         padding: 30px;
-        background: #35415208;
         border-radius: 100%;
         cursor: pointer;
+        height: 40px;
 
         &::before,
         &::after {
@@ -29,8 +30,8 @@ $background-color:#1d242d;
             width: 30px;
             height: 5px;
             position: absolute;
-            left: 16px;
-            top: 26px;
+            left: 15px;
+            top: 27px;
             transition: 0.2s ease;
         }
 
@@ -59,56 +60,49 @@ $background-color:#1d242d;
                 pointer-events: auto;
 
                 &:first-of-type {
-                    left: $nav-button-left;
-                    bottom: -70px;
-                    background: url('https://bassets.github.io/cam.svg') no-repeat 50%/50% #e8e8f3;
+
+                    bottom: -80px;
+                    background: url('../../svg/6916994_building_home_homepage_house_icon.svg') no-repeat 50%/50% #e8e8f3;
                 }
 
                 &:nth-of-type(2) {
-                    left: $nav-button-left;
-                    bottom: -140px;
+                    bottom: -150px;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.05s;
                 }
 
                 &:nth-of-type(3) {
-                    left: $nav-button-left;
-                    bottom: -210px;
+                    bottom: -220px;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.1s;
                 }
 
                 &:nth-of-type(4) {
-                    left: $nav-button-left;
-                    bottom: -280px;
+                    bottom: -290px;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.15s;
                 }
 
                 &:nth-of-type(5) {
-                    left: $nav-button-left;
-                    bottom: -350px;
+                    bottom: -360px;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.2s;
                 }
 
                 &:nth-of-type(6) {
-                    left: $nav-button-left;
-                    bottom: -420px;
+                    bottom: -430px;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.25s;
                 }
 
                 &:nth-of-type(7) {
-                    left: $nav-button-left;
-                    bottom: -490px;
+                    bottom: -500px;
                     background: url('https://bassets.github.io/img.svg') no-repeat 50%/ 50% #e8e8f3;
                     transition-delay: 0.3s;
                 }
 
                 &:last-of-type {
-                    left: $nav-button-left;
-                    bottom: -560px;
+                    bottom: -570px;
                     background: url('https://bassets.github.io/music.svg') no-repeat 50% 45%/50% 45% #e8e8f3;
                     transition-delay: 0.35s;
                 }
@@ -116,23 +110,22 @@ $background-color:#1d242d;
         }
 
         .home {
-            top: 90px;
+            top: 100px;
         }
 
         .home1 {
-            top: 160px;
+            top: 170px;
         }
 
         .home2 {
-            top: 230px;
+            top: 240px;
         }
 
         .nav {
             display: none;
             position: absolute;
-            left: $nav-text-left;
             font-size: 18px;
-            width: 400px;
+            width: 200px;
         }
 
         .nav_button {
@@ -147,6 +140,7 @@ $background-color:#1d242d;
             pointer-events: none;
             box-shadow: 0px 0px 10px 5px #15191f;
             transition: 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), 0.1s ease opacity;
+            z-index: 1;
 
             &:hover {
                 transform: scale(1.1);

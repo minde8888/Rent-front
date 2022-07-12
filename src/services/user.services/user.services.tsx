@@ -10,7 +10,6 @@ export const getProfile = async (id: string): Promise<User> => {
     try {
         const { data } = await api.get<User>(SELLER_URL + 'id?id=' + id);
         if (!(Object.keys(data).length !== 0)) throw Error('no user found');
-
         return data;
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
@@ -25,7 +24,19 @@ export const getProfile = async (id: string): Promise<User> => {
 };
 
 export const updateUser = async (formData: FormData, id: string): Promise<User> => {
-    console.log(Object.fromEntries(formData));
-    const { data } = await api.put<User>(SELLER_URL + 'update/' + id, formData);
-    return data;
+    // console.log(Object.fromEntries(formData));
+    try {
+        const { data } = await api.put<User>(SELLER_URL + 'update/' + id, formData);
+        if (!(Object.keys(data).length !== 0)) throw Error('no user found');
+        return data;
+    } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+            const serverError = error as AxiosError<ServerError>;
+            if (serverError && serverError.response?.data) {
+                throw new AuthError(serverError.response.data.errors.$values[0]);
+            }
+            throw new AuthError(error.message);
+        }
+        throw error;
+    }
 }

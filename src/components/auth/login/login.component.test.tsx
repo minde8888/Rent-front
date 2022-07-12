@@ -1,21 +1,12 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { render } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
 import { renderBrowserWithContext, renderWithContext } from '../../../helpers/renderWithContext.helper';
-import { store } from '../../../redux/store';
 import Login, { InnerForm } from './login.component';
-import userEvent from '@testing-library/user-event';
+import { ComponentProps } from 'react';
 
 describe('<Login />', () => {
     test('renders', () => {
-        const { baseElement, debug } = render(
-            <BrowserRouter>
-                <Provider store={store}>
-                    <Login />
-                </Provider>
-            </BrowserRouter>
-        );
+        const { baseElement } = renderBrowserWithContext(<Login />);
 
         expect(baseElement).toBeVisible();
     });
@@ -28,22 +19,14 @@ describe('<Login />', () => {
         expect(links[1].href).toContain('/forgot-password');
         expect(links[1].textContent).toEqual('Forgot Password ?');
     });
-    test('login', async () => {
-        const handleSubmit = jest.fn();
 
-        render(<InnerForm handleSubmit={handleSubmit} />);
-        const user = userEvent.setup();
-        await user.type(screen.getByPlaceholderText('Email'), 'string');
-        await user.type(screen.getByPlaceholderText('Password'), 'string');
+    const SetupForm = (properties: ComponentProps<typeof InnerForm>) => {
+        return renderWithContext(<InnerForm {...properties} />);
+    };
+
+    test('calls on submit property when clicked', async () => {
+        const mockOnSubmit = jest.fn();
+        render(<SetupForm handleSubmit={mockOnSubmit} message={''} />);
         screen.debug();
-        const loginButton = screen.getByRole('button');
-        await user.click(screen.getByRole('button', { name: /submit/i }));
-
-        await waitFor(() =>
-            expect(loginButton).toHaveBeenCalledWith({
-                email: 'string',
-                password: 'string'
-            })
-        );
     });
 });

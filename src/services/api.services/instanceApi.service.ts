@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { changeRefreshToken } from '../../redux/slice/authSlice';
 import { store } from '../../redux/store';
-import authHeader from '../auth.services/authHeader.services';
+import authHeader from './authHeader.services';
 
 export interface Response {
     $id: string;

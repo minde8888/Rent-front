@@ -8,7 +8,7 @@ const setup = (properties: ComponentProps<typeof ProductDescription>) => {
         const formik = useFormik({
             onSubmit: jest.fn(),
             initialValues: {
-                productName: 'product for test'
+                productName: 'product description test'
             }
         });
 
@@ -24,6 +24,6 @@ const setup = (properties: ComponentProps<typeof ProductDescription>) => {
 
 describe('<ProductDescription />', () => {
     test('renders', async () => {
-        setup({ productName: 'product' });
+        setup({ productName: 'description' });
     });
 });

@@ -13,7 +13,6 @@ describe('userSlice', () => {
     test('returns updated user data', () => {
         const initialState = {} as User;
         const newState = reducer(initialState, getUserProfile(userUpdate));
-        // const addressDto = newState.addressDto;
         expect(newState).toEqual({ ...newState, ...userUpdate });
     });
 });

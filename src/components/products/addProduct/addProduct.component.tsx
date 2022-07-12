@@ -1,10 +1,8 @@
 import * as Yup from 'yup';
 import { Form, FormikProps, withFormik } from 'formik';
-
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import { imageResize } from '../../../helpers/imageResize.helper';
-
 import style from './addProduct.module.scss';
 import UploadProductImages from '../addProduct/uploadImages/uploadProductImages';
 import { Product, ImageData } from '../typings';
@@ -30,7 +28,6 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
 
         if (Object.keys(files).length !== 0) {
             setFieldValue('attachments', files);
-
             files.map(async (e) => {
                 const image = await imageResize(e.file, 'Product_image');
                 if (image?.width !== undefined && image?.height !== undefined) {
@@ -43,7 +40,7 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
         }
     };
 
-    const { productName, quantityPerUnit, unitPrice, unitsInStock, warehousePlace, productCode, addCategory, id } = props.values;
+    const { productName, quantityPerUnit, unitPrice, unitsInStock, warehousePlace, productCode, addCategory } = props.values;
 
     const toggle = (event: React.MouseEvent<HTMLHeadingElement>) => {
         // console.log(event.target.children[0].classList.value);
@@ -103,7 +100,7 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             productHeight: props.productHeight || '',
             productCode: props.productCode || '',
             addCategory: props.addCategory || '',
-            id: '6a971eeb-377e-47e2-9ccd-0f6a039e1004' || ''
+            id: props.id || ''
         };
     },
     validationSchema: Yup.object().shape({

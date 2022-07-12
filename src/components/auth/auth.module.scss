@@ -114,10 +114,11 @@ $grid-width : 100%;
                 }
             }
 
+            input:-webkit-autofill {
+                transition: background-color 5000s;
+                -webkit-text-fill-color: #fff;
+            }
+
         }
     }
 }
-
-// input:-webkit-autofill {
-//     -webkit-text-fill-color: yellow !important;
-// }
