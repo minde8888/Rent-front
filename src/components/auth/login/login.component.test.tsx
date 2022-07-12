@@ -30,13 +30,14 @@ describe('<Login />', () => {
     });
     test('login', async () => {
         const handleSubmit = jest.fn();
-        renderBrowserWithContext(<Login />);
+
+        render(<InnerForm handleSubmit={handleSubmit} />);
         const user = userEvent.setup();
         await user.type(screen.getByPlaceholderText('Email'), 'string');
         await user.type(screen.getByPlaceholderText('Password'), 'string');
         screen.debug();
         const loginButton = screen.getByRole('button');
-        // await user.click(screen.getByRole('button', { name: /submit/i }));
+        await user.click(screen.getByRole('button', { name: /submit/i }));
 
         await waitFor(() =>
             expect(loginButton).toHaveBeenCalledWith({
