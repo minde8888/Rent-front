@@ -11,7 +11,6 @@ const setup = (properties: ComponentProps<typeof ProductSpecifications>) => {
                 productName: 'product specifications test'
             }
         });
-
         return (
             <FormikProvider value={formik}>
                 <ProductSpecifications />

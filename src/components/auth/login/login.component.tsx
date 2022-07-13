@@ -1,6 +1,6 @@
-import { Dispatch } from 'react';
+import { useState, useCallback } from 'react';
 import * as Yup from 'yup';
-import { withFormik, FormikProps, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import { login } from '../../../services/auth.services/auth.services';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { AnyAction } from 'redux';
@@ -16,89 +16,92 @@ interface FormValues {
     password: string;
 }
 
-interface OtherProps {
-    message: string;
-}
-
-interface LoginFormProps {
-    initEmail?: string;
-    message: string;
-    dispatch: Dispatch<AnyAction>;
-}
-
-export const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-    const { isSubmitting, message } = props;
-    const { email } = props.values;
+export const InnerForm = (props: { onSubmit: (values: FormValues) => Promise<void>; message: string }) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const { isLoggedIn, error } = useAppSelector((state) => state.data.auth);
+
+    const handleSubmit = useCallback(
+        async (values: FormValues) => {
+            setIsSubmitting(true);
+            await props.onSubmit(values);
+            setIsSubmitting(false);
+        },
+        [props.onSubmit]
+    );
 
     if (isLoggedIn) {
         return <Navigate to="/" />;
     }
 
     return (
-        <Form>
-            <h1>{message}</h1>
-            <p>This can be your application</p>
-            <TextField label="Email" name="email" type="email" value={email} />
-            <TextField label="Password" name="password" type="password" />
-            <button type="submit" disabled={isSubmitting}>
-                Login
-            </button>
-            {error && (
-                <div className="error-group">
-                    <div className="danger">{error}</div>
+        <Formik
+            initialValues={{
+                email: '',
+                password: ''
+            }}
+            onSubmit={handleSubmit}
+            validationSchema={Yup.object().shape({
+                email: Yup.string().email('Email not valid').required('Email is required'),
+                password: Yup.string()
+                    .min(6, 'Password must be at least 6 charters')
+                    .required('Password is required')
+                    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})/, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character')
+            })}
+        >
+            <Form>
+                <h1>{props.message}</h1>
+                <p>This can be your application</p>
+                <TextField label="Email" name="email" type="email" />
+                <TextField label="Password" name="password" type="password" />
+                <button type="submit" disabled={isSubmitting}>
+                    Login
+                </button>
+                {error && (
+                    <div className="error-group">
+                        <div className="danger">{error}</div>
+                    </div>
+                )}
+                <div className={style.links}>
+                    Not a user ?
+                    <NavLink to={'/signup'} className="nav-link">
+                        Sign Up
+                    </NavLink>
                 </div>
-            )}
-            <div className={style.links}>
-                Not a user ?
-                <NavLink to={'/signup'} className="nav-link">
-                    Sign Up
-                </NavLink>
-            </div>
-            <div className={style.links}>
-                <NavLink to={'/forgot-password'} className="nav-link">
-                    Forgot Password ?
-                </NavLink>
-            </div>
-        </Form>
+                <div className={style.links}>
+                    <NavLink to={'/forgot-password'} className="nav-link">
+                        Forgot Password ?
+                    </NavLink>
+                </div>
+            </Form>
+        </Formik>
     );
 };
 
-const LoginForm = withFormik<LoginFormProps, FormValues>({
-    mapPropsToValues: (props) => {
-        return {
-            email: props.initEmail || '',
-            password: ''
-        };
-    },
-    validationSchema: Yup.object().shape({
-        email: Yup.string().email('Email not valid').required('Email is required'),
-        password: Yup.string()
-            .min(6, 'Password must be at least 6 charters')
-            .required('Password is required')
-            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})/, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character')
-    }),
-    handleSubmit: async (values, { props }) => {
+const Login = () => {
+    const dispatch = useAppDispatch();
+
+    const handleSubmit = async (values: FormValues) => {
         try {
             const user = await login(values.email, values.password);
             if (!(user instanceof Error)) {
-                props.dispatch(getUserProfile(user));
+                dispatch(getUserProfile(user));
                 if (typeof user.token === 'string' && typeof user.refreshToken === 'string') {
-                    props.dispatch(loginSuccess({ token: user.token, refreshToken: user.refreshToken }));
+                    dispatch(loginSuccess({ token: user.token, refreshToken: user.refreshToken }));
                 }
             }
         } catch (error: any) {
-            props.dispatch(loginFail(error.message));
+            dispatch(loginFail(error.message));
         }
-    }
-})(InnerForm);
+    };
 
-const Login = () => (
-    <div className={style.container}>
-        <div className={style.auth}>
-            <LoginForm message="Login" dispatch={useAppDispatch()} />
+    return (
+        <div className={style.container}>
+            <div className={style.auth}>
+                {/* <LoginForm message="Login" dispatch={useAppDispatch()} /> */}
+                <InnerForm message="Login" onSubmit={handleSubmit} />
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default Login;

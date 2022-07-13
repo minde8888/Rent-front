@@ -1,18 +1,9 @@
-import { render } from '@testing-library/react';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { renderBrowserWithContext } from './helpers/renderWithContext.helper';
 
 describe('<App />', () => {
     test('renders', () => {
-        const { baseElement } = render(
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </BrowserRouter>
-        );
+        const { baseElement } = renderBrowserWithContext(<App />);
         expect(baseElement).toBeVisible();
     });
 });
