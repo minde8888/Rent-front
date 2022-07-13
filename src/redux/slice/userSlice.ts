@@ -1,6 +1,5 @@
 import { User } from './../../models/user.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 
 const userSlice = createSlice({
     name: 'user',
@@ -22,7 +21,5 @@ const userSlice = createSlice({
 });
 
 export const { updateProfile, getUserProfile } = userSlice.actions;
-
-export const selectAuth = (state: RootState) => state.data.auth;
 
 export default userSlice.reducer;
