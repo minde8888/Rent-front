@@ -23,6 +23,4 @@ const userSlice = createSlice({
 
 export const { updateProfile, getUserProfile } = userSlice.actions;
 
-export const selectAuth = (state: RootState) => state.data.auth;
-
 export default userSlice.reducer;

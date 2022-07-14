@@ -1,7 +1,8 @@
 import { screen } from '@testing-library/dom';
-import { renderBrowserWithContext, renderWithContext } from '../../../helpers/renderWithContext.helper';
+import { renderBrowserWithContext } from '../../../helpers/renderWithContext.helper';
 import Login, { InnerForm } from './login.component';
 import { ComponentProps } from 'react';
+import { act, fireEvent } from '@testing-library/react';
 
 const setupForm = (properties: ComponentProps<typeof InnerForm>) => {
     return renderBrowserWithContext(<InnerForm {...properties} />);
@@ -25,7 +26,11 @@ describe('<Login />', () => {
 
     test('calls on submit property when clicked', async () => {
         const mockOnSubmit = jest.fn();
-        setupForm({ onSubmit: mockOnSubmit, message: 'mock msg' });
-        screen.debug();
+
+        const { getByRole } = setupForm({ onSubmit: mockOnSubmit, message: 'mock msg' });
+        const submit = getByRole('button');
+        act(() => {
+            fireEvent.click(submit);
+        });
     });
 });

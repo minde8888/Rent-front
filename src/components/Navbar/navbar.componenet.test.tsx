@@ -13,7 +13,6 @@ describe('<NavBar />', () => {
     });
 
     test('render link', () => {
-        const payload = { token: 'string1', refreshToken: 'string2' };
         renderBrowserWithContext(<NavBar />);
         const links: HTMLAnchorElement[] = screen.getAllByRole('link');
         expect(links[0].href).toContain('/login');
@@ -28,9 +27,8 @@ describe('<NavBar />', () => {
         store.dispatch(loginSuccess(payload));
         store.dispatch(getUserProfile({ id: slug, name: 'Tester1', surname: 'Tester2' } as unknown as User));
         renderBrowserWithContext(<NavBar />);
-        screen.debug()
-        const links: HTMLAnchorElement[] = screen.getAllByRole('link'); +
-            expect(links[0].href).toContain('/');
+        const links: HTMLAnchorElement[] = screen.getAllByRole('link');
+        +expect(links[0].href).toContain('/');
         expect(links[1].href).toContain('/products');
         expect(links[2].href).toContain('/add-products');
         expect(links[3].href).toContain(`/profile/${slug}`);

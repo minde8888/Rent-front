@@ -3,7 +3,6 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { login } from '../../../services/auth.services/auth.services';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
-import { AnyAction } from 'redux';
 import { loginFail, loginSuccess } from '../../../redux/slice/authSlice';
 import { TextField } from '../../validation/textField';
 import { Navigate, NavLink } from 'react-router-dom';
@@ -97,7 +96,6 @@ const Login = () => {
     return (
         <div className={style.container}>
             <div className={style.auth}>
-                {/* <LoginForm message="Login" dispatch={useAppDispatch()} /> */}
                 <InnerForm message="Login" onSubmit={handleSubmit} />
             </div>
         </div>

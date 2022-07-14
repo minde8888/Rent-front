@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { act, fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import ProductDescription from './productDescription.component';
 import { FormikProvider, useFormik } from 'formik';
 
