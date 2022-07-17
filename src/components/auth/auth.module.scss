@@ -11,7 +11,7 @@ $grid-max-width : 25rem;
 $grid-width : 100%;
 
 .container {
-    height: 94vh;
+    height: 100vh;
     width: $grid-width;
     background-color: $base-bgColor;
     align-items: center;
@@ -39,7 +39,7 @@ $grid-width : 100%;
         color: $base-color;
         box-shadow: 0 0 250px #000;
         text-align: center;
-        padding: 4rem 2rem;
+        padding: 0rem 2rem;
         justify-content: center;
 
         form {
@@ -101,7 +101,7 @@ $grid-width : 100%;
             }
 
             .links {
-                margin: 30px 0 0 0;
+                margin: 30px 0 30px 0;
                 color: $base-color;
 
                 a {
