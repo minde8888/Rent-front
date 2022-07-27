@@ -13,18 +13,7 @@ import Profile from './profile/profile.component';
 import Products from './products/products.component';
 import AddProduct from './products/addProduct/addProduct.component';
 
-// const ForgotPassword = lazy(() => import('./auth/restorePassword/forgotPassword.component'));
-// const Preloader = lazy(() => import('./preloader/preloader.component'));
-// const Home = lazy(() => import('./home/home.component'));
-// const Login = lazy(() => import('./auth/login/login.component'));
-// const SignUp = lazy(() => import('./auth/signup/signup.component'));
-// const NavBar = lazy(() => import('./navbar/navbar.component'));
-// const Profile = lazy(() => import('./profile/profile.component'));
-// const Products = lazy(() => import('./products/products.component'));
-// const AddProduct = lazy(() => import('./products/addProduct/addProduct.component'));
-
 function Main(): JSX.Element {
-
     return (
         <div className="main">
             <NavBar />
@@ -34,7 +23,7 @@ function Main(): JSX.Element {
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="*" element={<p>There's nothing here: 404!</p>} />
-                    <Route element={<ProtectedRoute role={[Roles.user, Roles.admin]} />} >
+                    <Route element={<ProtectedRoute role={[Roles.user, Roles.admin]} />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<Products />} />
                         <Route path="/add-products" element={<AddProduct />} />
@@ -42,7 +31,7 @@ function Main(): JSX.Element {
                     </Route>
                 </Routes>
             </Suspense>
-        </div >
+        </div>
     );
 }
 

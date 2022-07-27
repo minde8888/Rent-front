@@ -5,6 +5,7 @@ import { ServerError } from '../typings';
 import { Products } from './typings';
 
 export const addProduct = async (formData: FormData): Promise<Products> => {
+    console.log(Object.fromEntries(formData));
     try {
         const { data } = await api.post<Products>('products', formData);
         return data;

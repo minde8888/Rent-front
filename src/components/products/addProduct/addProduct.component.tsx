@@ -126,16 +126,15 @@ const ProductForm = withFormik<ProductProps, FormValues>({
         productHeight: Yup.string()
     }),
     handleSubmit: async (values, { setErrors, props }) => {
-
         let formData = new FormData();
-        formData.append("sellerId", values.id);
+        formData.append('sellerId', values.id);
         Object.entries(values).forEach(([key, value]) => {
             if (value !== undefined) formData.append(key, value);
             if (Array.isArray(value)) {
                 for (const key in value) {
                     if (Object.prototype.hasOwnProperty.call(value, key)) {
                         formData.append(`attachments[${key}]`, value[key].file);
-                        formData.append(`imageName[${key}]`, value[key].file.name)
+                        formData.append(`imageName[${key}]`, value[key].file.name);
                     }
                 }
                 // console.log(value);
