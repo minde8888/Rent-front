@@ -1,31 +1,40 @@
 import style from './home.module.scss';
+import image from "../../image/benidorm-gad205453d_1920.jpg";
+import prof1 from "../../image/adult-g85d451249_640.jpg";
+import prof2 from "../../image/portrait-g64600a4f3_640.jpg";
+import prof3 from "../../image/portrait-gcf634d440_640.jpg";
+import prof4 from "../../image/human-g2897b2a4c_640.jpg";
+import prof5 from "../../image/young-woman-g599baf728_640.jpg";
+import prof6 from "../../image/happy-gc1e199d7e_640.jpg";
 
 const Home = () => {
     return (
         <div className={style.home}>
-            <div className={style.hero}></div>
-            <div className={style.row}>
-                <div className={style.hexagon_wrapper}>
-                    <div className={style.hexagon}></div>
+            <div className={style.hero}>
+                <img src={image} alt="spain" />
+            </div>
+            <div className={`${style.row} ${style.up}`}>
+                <div className={style.hexagon}>
+                    <img src={prof1} alt="prof1" />
                 </div>
-                <div className={style.hexagon_wrapper}>
-                    <div className={style.hexagon}></div>
+                <div className={style.hexagon}>
+                    <img src={prof2} alt="prof2" />
                 </div>
-                <div className={style.hexagon_wrapper}>
-                    <div className={style.hexagon}></div>
+                <div className={style.hexagon}>
+                    <img src={prof3} alt="prof3" />
                 </div>
             </div>
             <div className={`${style.row} ${style.up}`}>
-                <div className={style.hexagon_wrapper}>
-                    <div className={style.hexagon}></div>
+                <div className={style.hexagon}>
+                    <img src={prof4} alt="prof4" />
                 </div>
-                <div className={style.hexagon_wrapper}>
-                    <div className={style.hexagon}></div>
+                <div className={style.hexagon}>
+                    <img src={prof5} alt="prof5" />
                 </div>
             </div>
             <div className={`${style.row} ${style.up}`}>
-                <div className={style.hexagon_wrapper}>
-                    <div className={style.hexagon}></div>
+                <div className={style.hexagon}>
+                    <img src={prof6} alt="prof6" />
                 </div>
             </div>
         </div>

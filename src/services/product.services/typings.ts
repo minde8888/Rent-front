@@ -1,5 +1,5 @@
 export interface Products {
-    attachments: Array<File>;
+    images: Array<File>;
     imageName: Array<string>;
     imageSrc: Array<string>;
     height: Array<string>;

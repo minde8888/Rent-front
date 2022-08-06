@@ -47,10 +47,12 @@ const setupForm = (properties: ComponentProps<typeof InnerForm>) => {
 afterEach(cleanup);
 
 describe('Login form calls on submit property when clicked', () => {
+
     let emailNode: HTMLInputElement;
     let passwordNode: HTMLInputElement;
-    let loginButtonNode: HTMLButtonElement;
+    let loginButton: HTMLButtonElement;
     let mockOnSubmit: jest.Mock<any, any>;
+
     beforeEach(() => {
         mockOnSubmit = jest.fn();
         const props = {
@@ -61,12 +63,14 @@ describe('Login form calls on submit property when clicked', () => {
 
         emailNode = getByPlaceholderText('Email') as HTMLInputElement;
         passwordNode = getByPlaceholderText('Password') as HTMLInputElement;
-        loginButtonNode = getByText('Login') as HTMLButtonElement;
+        loginButton = getByText('Login') as HTMLButtonElement;
+
+
         act(() => {
             fireEvent.change(emailNode, { target: { value: 'test@email.com' } });
             fireEvent.change(passwordNode, { target: { value: 'testPassword' } });
 
-            fireEvent.click(loginButtonNode);
+            fireEvent.click(loginButton);
         });
     });
 

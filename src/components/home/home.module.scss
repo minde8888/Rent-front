@@ -1,93 +1,43 @@
-.hero {
-    height: 60vh;
-    background-color: beige;
-}
+.home {
+    background-color: rgb(198, 228, 248);
 
-
-.up {
-    margin-top: -30px;
-}
-
-.row {
-    overflow: hidden;
-
-    // background: linear-gradient(18deg, #e37682, #a58fe9);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    // .hexagon {
-    //     background-image: url("../../svg/325966_user_account_avatar_human_male_icon.svg");
-    //     float: left;
-    //     margin-left: 3px;
-    //     margin-bottom: -26px;
-    // }
-
-    .hexagon_wrapper {
-        display: flex;
-        text-align: initial;
-        width: 200px;
-        height: 206px;
-        cursor: pointer;
-    }
-
-    .hexagon {
-        position: relative;
-        width: 90%;
-        height: 50%;
-        margin: auto;
-        color: white;
-        // background: linear-gradient(-120deg, #aeaaaa, white);
-        background-color: rgb(109, 107, 107);
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        transition: 0.5s;
-    }
-
-    // .hexagon i {
-    //     z-index: 1;
-    //     margin: auto;
-    //     font-size: 50px;
-    //     color: transparent;
-    //     background: linear-gradient(45deg, #a58fe9, #e37682);
-    //     background-clip: text;
-    //     -webkit-background-clip: text;
-    // }
-
-    .hexagon:before,
-    .hexagon:after {
-        position: absolute;
-        content: "";
-        background: inherit;
-        height: 100%;
+    .hero {
+        height: 400px;
         width: 100%;
-        border-radius: 0;
-        transition: 0.5s;
-        transform-origin: center;
+        margin: 0 0 70px 0;
+
+        img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
     }
 
-    .hexagon:before {
-        transform: rotateZ(60deg);
+    .row {
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .hexagon {
+            display: flex;
+            width: 240px;
+            height: 265px;
+            -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            margin: 0 0 0 12px;
+            cursor: pointer;
+
+            img {
+
+                width: 100%;
+                object-fit: cover;
+            }
+        }
     }
 
-    .hexagon:after {
-        transform: rotateZ(-60deg);
-    }
-
-    .hexagon:hover {
-        border-radius: 50px;
-        transition: 0.5s;
-    }
-
-    .hexagon:hover:before {
-        border-radius: 50px;
-        transition: 0.5s;
-    }
-
-    .hexagon:hover:after {
-        border-radius: 50px;
-        transition: 0.5s;
+    .up {
+        margin: -60px 0 0 0;
     }
 }

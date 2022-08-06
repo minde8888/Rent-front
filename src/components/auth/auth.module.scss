@@ -16,7 +16,7 @@ $grid-width : 100%;
     background-color: $base-bgColor;
     align-items: center;
     display: flex;
-    align-content: flex-start;
+    align-items: flex-start;
 
     form {
         width: 100%;
@@ -30,7 +30,7 @@ $grid-width : 100%;
     }
 
     .auth {
-        margin: 0 auto;
+        margin: 5% auto;
         max-width: $grid-max-width;
         width: $grid-width;
         display: flex;
