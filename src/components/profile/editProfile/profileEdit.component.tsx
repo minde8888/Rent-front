@@ -16,7 +16,7 @@ interface EditProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
-interface FormValues extends Props {}
+interface FormValues extends Props { }
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
     const { errors, imageSrc, isSubmitting, setFieldValue } = props;
@@ -69,8 +69,6 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                         <TextField className={style.profileUpdate} id="surname" name="surname" placeholder="surname" />
                         <label>Phone Number </label>
                         <TextField className={style.profileUpdate} id="phoneNumber" name="phoneNumber" placeholder="phoneNumber" />
-                        <label>Email </label>
-                        <TextField className={style.profileUpdate} id="email" name="email" placeholder="email" />
                     </div>
                 </div>
             </div>
@@ -94,7 +92,6 @@ const EditForm = withFormik<EditProps, FormValues>({
             name: props.name || '',
             surname: props.surname || '',
             phoneNumber: props.phoneNumber || '',
-            email: props.email || '',
             occupation: props.occupation || '',
             imageName: props.imageName || '',
             $id: props.address?.$id || '',
@@ -114,7 +111,6 @@ const EditForm = withFormik<EditProps, FormValues>({
         phoneNumber: Yup.string()
             .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/, 'Phone number is not valid')
             .max(11, 'Must be 10 characters'),
-        email: Yup.string().email(),
         occupation: Yup.string(),
         city: Yup.string(),
         companyCode: Yup.string(),
