@@ -1,7 +1,11 @@
 import { renderBrowserWithContext } from '../../../helpers/renderWithContext.helper';
-import { InnerForm } from './login.component';
+import Login, { InnerForm } from './login.component';
 import { ComponentProps } from 'react';
-import { act, cleanup, fireEvent } from '@testing-library/react';
+import { act, cleanup, fireEvent, screen } from '@testing-library/react';
+import * as reactRedux from 'react-redux';
+import { loginSuccess } from '../../../redux/slice/authSlice';
+import { login } from '../../../services/auth.services/auth.services';
+import { debug } from 'console';
 
 // describe('<Login />', () => {
 //     test('renders', () => {
@@ -46,7 +50,23 @@ const setupForm = (properties: ComponentProps<typeof InnerForm>) => {
 
 afterEach(cleanup);
 
-describe('Login form calls on submit property when clicked', () => {
+describe('Login', () => {
+    test('renders', () => {
+        const { baseElement } = renderBrowserWithContext(<Login />);
+        debug();
+        expect(baseElement).toBeVisible();
+    });
+
+    test('should link', () => {
+        renderBrowserWithContext(<Login />);
+
+        const links: HTMLAnchorElement[] = screen.getAllByRole('link');
+
+        expect(links[0].href).toContain('/signup');
+        expect(links[0].textContent).toEqual('Sign Up');
+        expect(links[1].href).toContain('/forgot-password');
+        expect(links[1].textContent).toEqual('Forgot Password ?');
+    });
 
     let emailNode: HTMLInputElement;
     let passwordNode: HTMLInputElement;
@@ -64,7 +84,6 @@ describe('Login form calls on submit property when clicked', () => {
         emailNode = getByPlaceholderText('Email') as HTMLInputElement;
         passwordNode = getByPlaceholderText('Password') as HTMLInputElement;
         loginButton = getByText('Login') as HTMLButtonElement;
-
 
         act(() => {
             fireEvent.change(emailNode, { target: { value: 'test@email.com' } });

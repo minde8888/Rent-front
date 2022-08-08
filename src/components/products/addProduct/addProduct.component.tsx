@@ -45,7 +45,6 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
 
     const { productName, price, place, productCode, category } = props.values;
 
-
     return (
         <div className={style.container}>
             <Form>
@@ -53,13 +52,7 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
                     <UploadProductImages getImages={getImagesData} />
                 </div>
                 <div className={style.columns}>
-                    <ProductDescription
-                        productName={productName}
-                        price={price}
-                        place={place}
-                        productCode={productCode}
-                        category={category}
-                    />
+                    <ProductDescription productName={productName} price={price} place={place} productCode={productCode} category={category} />
                     <div className={style.saveProduct}>
                         <button type="submit" disabled={isSubmitting}>
                             Save
@@ -97,29 +90,29 @@ const ProductForm = withFormik<ProductProps, FormValues>({
         place: Yup.string(),
         productCode: Yup.string(),
         category: Yup.string(),
-        sellerId: Yup.string(),
+        sellerId: Yup.string()
     }),
     handleSubmit: async (values: any, { setErrors }) => {
         let formData = new FormData();
-        let imageName = "";
+
         for (const key in values) {
-            if (Object.prototype.hasOwnProperty.call(values, key) && typeof values[key] === "string") {
+            if (Object.prototype.hasOwnProperty.call(values, key) && typeof values[key] === 'string') {
                 formData.append(key, values[key]);
             }
             if (Array.isArray(values[key])) {
                 for (var val in values[key]) {
                     formData.append(`images`, values[key][val].file);
-                    imageName += values[key][val].file.name + ',';
+                    // imageName += values[key][val].file.name + ',';
                 }
             }
         }
-        formData.append(`imageName`, imageName);
+
         try {
             if (typeof values.sellerId === 'string') {
                 addProduct(formData);
             }
         } catch (error: any) {
-            setErrors(error)
+            setErrors(error);
         }
     }
 })(ProfileEdit);
@@ -131,10 +124,7 @@ const AddProduct = () => {
         <div className={style.auth}>
             <ProductForm dispatch={useAppDispatch()} sellerId={id} />
         </div>
-    )
-
+    );
 };
 
 export default AddProduct;
-
-

@@ -1,11 +1,12 @@
 import style from './home.module.scss';
-import image from "../../image/benidorm-gad205453d_1920.jpg";
-import prof1 from "../../image/adult-g85d451249_640.jpg";
-import prof2 from "../../image/portrait-g64600a4f3_640.jpg";
-import prof3 from "../../image/portrait-gcf634d440_640.jpg";
-import prof4 from "../../image/human-g2897b2a4c_640.jpg";
-import prof5 from "../../image/young-woman-g599baf728_640.jpg";
-import prof6 from "../../image/happy-gc1e199d7e_640.jpg";
+import image from '../../image/benidorm-gad205453d_1920.jpg';
+import prof1 from '../../image/adult-g85d451249_640.jpg';
+import prof2 from '../../image/portrait-g64600a4f3_640.jpg';
+import prof3 from '../../image/portrait-gcf634d440_640.jpg';
+import prof4 from '../../image/human-g2897b2a4c_640.jpg';
+import prof5 from '../../image/young-woman-g599baf728_640.jpg';
+import prof6 from '../../image/happy-gc1e199d7e_640.jpg';
+import Footer from './footer.component';
 
 const Home = () => {
     return (
@@ -37,6 +38,7 @@ const Home = () => {
                     <img src={prof6} alt="prof6" />
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
