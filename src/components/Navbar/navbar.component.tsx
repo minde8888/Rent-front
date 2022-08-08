@@ -30,15 +30,16 @@ const NavBar: FunctionComponent<INavBar> = () => {
 
 
             {!isLoggedIn ? (
-                <div className="links" >
-                    <NavLink to={'/login'} className="login">
-                        Login
-                    </NavLink>
-                    <NavLink to={'/signup'} className="signup">
-                        Sign Up
-                    </NavLink>
-                </div>
-
+                <>
+                    <div className="links" >
+                        <NavLink to={'/login'} className="login">
+                            Login
+                        </NavLink>
+                        <NavLink to={'/signup'} className="signup">
+                            Sign Up
+                        </NavLink>
+                    </div>
+                </>
             ) : (
                 <>
                     <button className="menu" onClick={toggleClickHandler}>

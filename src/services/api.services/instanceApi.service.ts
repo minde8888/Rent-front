@@ -48,6 +48,7 @@ const refreshAuthLogic = async (failedRequest: any): Promise<void> => {
             token: auth.data.auth.token,
             refreshToken: auth.data.auth.refreshToken
         });
+
         const { token, refreshToken } = response.data;
         if (!(token.length !== 0 || refreshToken.length !== 0)) throw Error('no token found');
         auth.data.auth.refreshToken = refreshToken;
