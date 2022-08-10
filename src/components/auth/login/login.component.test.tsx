@@ -3,9 +3,11 @@ import Login, { InnerForm } from './login.component';
 import { ComponentProps } from 'react';
 import { act, cleanup, fireEvent, screen } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
-import { loginSuccess } from '../../../redux/slice/authSlice';
+import { loginFail, loginSuccess } from '../../../redux/slice/authSlice';
 import { login } from '../../../services/auth.services/auth.services';
 import { debug } from 'console';
+import { store } from '../../../redux/store';
+import { getUserProfile } from '../../../redux/slice/userSlice';
 
 // describe('<Login />', () => {
 //     test('renders', () => {
@@ -96,5 +98,21 @@ describe('Login', () => {
     xtest('Submits Login with email and password', () => {
         expect(mockOnSubmit).toHaveBeenCalledTimes(1);
         expect(mockOnSubmit).toHaveBeenCalledWith('test@email.com', 'test_password');
+        store.dispatch(getUserProfile(user));
+        store.dispatch(loginFail('error'));
     });
 });
+
+const user = {
+    $id: 'string',
+    token: 'string',
+    refreshToken: 'string',
+    id: 'string',
+    name: 'string',
+    surname: 'string',
+    phoneNumber: 'string',
+    email: 'string',
+    occupation: 'string',
+    roles: 'string',
+    imageName: 'string'
+};
