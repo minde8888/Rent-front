@@ -14,8 +14,15 @@ const Products = () => {
         })();
     }, []);
 
-    console.log(product.$values[0].categoriesDto.$values);
-    return <div>products page</div>;
+    console.log(product.$values);
+
+    return (
+        <div className="users">
+            {product.$values.map((data) => (
+                <div className="user">{data.price}</div>
+            ))}
+        </div>
+    );
 };
 
 export default Products;

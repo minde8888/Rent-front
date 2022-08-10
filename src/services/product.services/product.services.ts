@@ -26,7 +26,6 @@ export const addProduct = async (formData: FormData): Promise<Products> => {
 export const getAllProducts = async (): Promise<IResponse<Product>> => {
     try {
         const { data } = await api.get<IResponse<Product>>('products');
-
         return data;
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
