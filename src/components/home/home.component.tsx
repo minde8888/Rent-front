@@ -14,9 +14,7 @@ const Home = () => {
             <div className={style.hero}>
                 <img src={image} alt="spain" />
             </div>
-            <div className={style.text}>
-                Take Contact With Ours Employees
-            </div>
+            <div className={style.text}>Take Contact With Our Creative Team</div>
             <div className={`${style.row} ${style.up}`}>
                 <div className={style.hexagon}>
                     <img src={prof1} alt="prof1" />

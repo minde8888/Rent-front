@@ -1,7 +1,5 @@
 export interface Product {
-    $id: string;
-    imageHeight: string;
-    imageWidth: string;
+    imageName: string;
     place: string;
     price: string;
     productCode: string;
@@ -10,12 +8,12 @@ export interface Product {
     sellerId: string;
     imageSrc: Images;
     categoriesDto: Categories;
-    PostsDto: Post;
+    postsDto: Post;
 }
 
 interface Images {
     $id: string;
-    $values?: [string];
+    $values?: Array<string>;
 }
 
 interface Categories {
@@ -30,7 +28,7 @@ interface Post {
     productName: string;
 }
 
-interface CatValues {
+export interface CatValues {
     $id: string;
     categoriesId: string;
     categoriesName: string;
