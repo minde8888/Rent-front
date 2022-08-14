@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './route/protectedRoute';
 import { Roles } from './auth/roles/roles.const';
-
 import ForgotPassword from './auth/restorePassword/forgotPassword.component';
 import Preloader from './preloader/preloader.component';
 import Home from './home/home.component';
@@ -12,10 +11,12 @@ import NavBar from './navbar/navbar.component';
 import Profile from './profile/profile.component';
 import Products from './products/products.component';
 import AddProduct from './products/addProduct/addProduct.component';
+import style from './main.module.scss';
+import Product from './products/product/product.component';
 
 function Main(): JSX.Element {
     return (
-        <div className="main">
+        <div className={style.container}>
             <NavBar />
             <Suspense fallback={<Preloader />}>
                 <Routes>
@@ -26,6 +27,7 @@ function Main(): JSX.Element {
                     <Route element={<ProtectedRoute role={[Roles.user, Roles.admin]} />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<Products />} />
+                        <Route path="/products/:id" element={<Product />} />
                         <Route path="/add-products" element={<AddProduct />} />
                         <Route path="/profile/:id" element={<Profile />} />
                     </Route>

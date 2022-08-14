@@ -7,7 +7,7 @@ import style from './addProduct.module.scss';
 import UploadProductImages from '../addProduct/uploadImages/uploadProductImages';
 import { Product, ImageData } from '../typings';
 import ProductDescription from './productDescription/productDescription.component';
-import { addProduct } from '../../../services/product.services/product.services';
+import { addProduct } from '../../../services/products.services/products.services';
 
 interface ProductProps extends Product {
     productName?: string;
