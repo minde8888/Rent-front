@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-
-
 interface Props {
     images: Array<string> | undefined
 }
@@ -56,6 +54,15 @@ const LightBox = (props: Props) => {
             {/* <button onClick={showPrev}>⭠</button> */}
             {imageCards}
             {/* <button onClick={showNext}>⭢</button> */}
+            {
+                lightBoxDisplay ?
+                    <div id="lightbox" onClick={hideLightBox}>
+                        {/* <button onClick={showPrev}>⭠</button> */}
+                        {/* <img id="lightbox-img" src={imageToShow[0]}></img> */}
+                        {/* <button onClick={showNext}>⭢</button> */}
+                    </div>
+                    : ""
+            }
         </div>
     )
 }
