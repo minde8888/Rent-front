@@ -11,13 +11,8 @@ const Product = () => {
     const dispatch = useAppDispatch();
     const product = useAppSelector((state) => state.data.product);
 
-
-
-    console.log(product);
-
     useEffect(() => {
         (async () => {
-
             if (id) {
                 const data = await getProduct(id)
                 dispatch(getOneProduct(data));
@@ -26,7 +21,6 @@ const Product = () => {
     }, []);
 
     if (Object.keys(product).length === 0) return null
-    console.log(product.$values[0].imageSrc.$values);
 
     return (
         <div>
