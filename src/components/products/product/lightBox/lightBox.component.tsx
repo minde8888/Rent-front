@@ -5,24 +5,29 @@ interface Props {
 }
 
 const LightBox = (props: Props) => {
-    const [imageToShow, setImageToShow] = useState<string[] | undefined>([]);
+    const [imageToShow, setImageToShow] = useState<string | undefined>('');
     const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
 
     if (!props.images || props.images.length == 0) return null;
-    // console.log(props.images);
-    // console.log(111111111);
 
-    const imageCards: JSX.Element[] = props.images.map((image: string, key: number) => <img key={key} className="image" onClick={() => showImage(image)} src={image} />);
+    const imageCards: JSX.Element[] = props.images.map((image: string, key: number) => (
+        <div key={key} className={'smallImg'}>
+            <img className="image" onClick={() => showImage(key)} src={image} />
+        </div>
+    ));
 
-    const showImage = (image: string) => {
-        setImageToShow(props.images);
-        setLightBoxDisplay(true);
+    const showImage = (index: number) => {
+        if (props.images) {
+            setImageToShow(props.images[index]);
+        }
     };
 
     const hideLightBox = () => {
         setLightBoxDisplay(false);
     };
-
+    const showLightBox = () => {
+        console.log(1111);
+    };
     // const showNext = (e: { stopPropagation: () => void; }) => {
     //     e.stopPropagation();
     //     let currentIndex = props.images.indexOf(imageToShow);
@@ -49,7 +54,7 @@ const LightBox = (props: Props) => {
     return (
         <div>
             {/* <button onClick={showPrev}>⭠</button> */}
-            {imageCards}
+            {/* {imageCards} */}
             {/* <button onClick={showNext}>⭢</button> */}
             {lightBoxDisplay ? (
                 <div id="lightbox" onClick={hideLightBox}>
@@ -58,7 +63,12 @@ const LightBox = (props: Props) => {
                     {/* <button onClick={showNext}>⭢</button> */}
                 </div>
             ) : (
-                ''
+                <div>
+                    <div className="mainImg">
+                        <img onClick={showLightBox} src={imageToShow} />
+                    </div>
+                    {imageCards}
+                </div>
             )}
         </div>
     );
