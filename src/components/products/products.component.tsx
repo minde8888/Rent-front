@@ -21,14 +21,12 @@ const Products = () => {
 
     const Categories = (cat: CatValues) => {
         if (cat.categoriesName !== null) {
-            return (
-                <Link to={cat.categoriesId}>{cat.categoriesName}</Link>
-            );
+            return <Link to={cat.categoriesId}>{cat.categoriesName}</Link>;
         }
         return null;
     };
 
-    let cat = products.$values.map(arr => arr.categoriesDto.$values?.map((el, k) => <Categories key={k} categoriesName={el.categoriesName} $id={el.$id} categoriesId={el.categoriesId} />))
+    let cat = products.$values.map((arr) => arr.categoriesDto.$values?.map((el, k) => <Categories key={k} categoriesName={el.categoriesName} $id={el.$id} categoriesId={el.categoriesId} />));
 
     return (
         <div className={style.container}>

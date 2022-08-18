@@ -1,18 +1,16 @@
 import { MouseEventHandler, useState } from 'react';
-import style from './lightBox.module.scss'
+import style from './lightBox.module.scss';
 
 interface Props {
     images: Array<string> | undefined;
 }
 
-
 const LightBox = (props: Props) => {
+    const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
+    const [newClass, setNewClass] = useState('');
+    const [imageToShow, setImageToShow] = useState<string | undefined>(!props.images || props.images.length == 0 ? '' : props.images[0]);
 
     if (!props.images || props.images.length == 0) return null;
-
-    const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
-    const [newClass, setNewClass] = useState("");
-    const [imageToShow, setImageToShow] = useState<string | undefined>(props.images[0]);
 
     const imageCards: JSX.Element[] = props.images.map((image: string, key: number) => (
         <div key={key} className={'smallImg'}>
@@ -26,15 +24,12 @@ const LightBox = (props: Props) => {
         }
     };
 
-    const hideLightBox = () => {
-        setLightBoxDisplay(false);
-    };
-    const showLightBox = (event: React.MouseEvent<HTMLElement>) => {
-        setNewClass("LightBox");
+    const showLightBox = () => {
+        setNewClass('LightBox');
     };
     const closeLightBox = () => {
-        setNewClass("");
-    }
+        setNewClass('');
+    };
     // const showNext = (e: { stopPropagation: () => void; }) => {
     //     e.stopPropagation();
     //     let currentIndex = props.images.indexOf(imageToShow);
@@ -60,24 +55,13 @@ const LightBox = (props: Props) => {
 
     return (
         <div>
-            {/* <button onClick={showPrev}>⭠</button> */}
-            {/* {imageCards} */}
-            {/* <button onClick={showNext}>⭢</button> */}
-            {lightBoxDisplay ? (
-                <div id="lightbox" onClick={hideLightBox}>
-                    {/* <button onClick={showPrev}>⭠</button> */}
-                    {/* <img id="lightbox-img" src={imageToShow[0]}></img> */}
-                    {/* <button onClick={showNext}>⭢</button> */}
+            <div className={style[newClass]}>
+                <div className={style.close} style={{ display: !newClass ? 'none' : 'block' }} onClick={closeLightBox}>
+                    &#x274C;
                 </div>
-            ) : (
-                <div>
-                    <div className={style[newClass]}>
-                        <div className={style.close} style={{ display: (!newClass) ? 'none' : 'block' }} onClick={closeLightBox}>&#x274C;</div>
-                        <img className={style.cursor} onClick={showLightBox} src={imageToShow} />
-                    </div>
-                    {imageCards}
-                </div>
-            )}
+                <img className={style.cursor} onClick={showLightBox} src={imageToShow} />
+            </div>
+            {imageCards}
         </div>
     );
 };
