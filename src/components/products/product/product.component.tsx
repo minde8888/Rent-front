@@ -12,7 +12,6 @@ const Product = () => {
 
     useEffect(() => {
         (async () => {
-            console.log(id);
             if (id) {
                 const data = await getProduct(id);
                 dispatch(getOneProduct(data));
@@ -31,7 +30,7 @@ const Product = () => {
             <div>{product.$values[0].postsDto.productName}</div>
             <div>{product.$values[0].postsDto.content}</div>
             <div>{product.$values[0].size}</div>
-            <LightBox images={product.$values[0].imageSrc.$values} />
+            <LightBox images={product.$values[0].imageSrc.$values} id={id} />
         </div>
     );
 };
