@@ -1,5 +1,7 @@
-import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from './lightBox.module.scss';
+import Swipe from './swiper/swiper.componenet';
+
 
 interface Props {
     images: Array<string> | undefined;
@@ -8,7 +10,6 @@ interface Props {
 
 const LightBox = (props: Props) => {
     const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
-    const [newClass, setNewClass] = useState('');
     const [imageToShow, setImageToShow] = useState<string | undefined>('');
 
     useEffect(() => {
@@ -65,7 +66,8 @@ const LightBox = (props: Props) => {
                     <div className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
                         &#x274C;
                     </div>
-                    <div className={style.bigImg}>{imageCards}</div>
+                    {/* <div className={style.bigImg}>{imageCards}</div> */}
+                    <Swipe images={props.images} />
                 </div>
             ) : (
                 <>

@@ -4,7 +4,7 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.wordWrap": "on",
-    "cSpell.words": ["browserslist", "Dropzone", "fontawesome", "formik", "fortawesome", "reduxjs", "Signup", "svgrepo", "testid", "testpassword"],
+    "cSpell.words": ["browserslist", "Dropzone", "fontawesome", "formik", "fortawesome", "reduxjs", "Signup", "svgrepo", "Swiper", "testid", "testpassword"],
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
