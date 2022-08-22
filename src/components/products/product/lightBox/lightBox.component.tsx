@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import style from './lightBox.module.scss';
 import Swipe from './swiper/swiper.componenet';
 
-
 interface Props {
     images: Array<string> | undefined;
     id?: string;
@@ -13,7 +12,7 @@ const LightBox = (props: Props) => {
     const [imageToShow, setImageToShow] = useState<string | undefined>('');
 
     useEffect(() => {
-        setImageToShow(!props.images || props.images.length == 0 ? '' : props.images[0]);
+        setImageToShow(!props.images || props.images.length === 0 ? '' : props.images[0]);
     }, [props]);
 
     if (!props.images || props.images.length == 0) return null;
