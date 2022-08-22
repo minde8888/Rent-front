@@ -7,16 +7,28 @@ interface Options {
     onDrag(e: TouchEvent | MouseEvent): void;
 }
 
-const useDrag = (ref: RefObject<HTMLDivElement>, deps: { x: number }, options: Options) => {
-    const { onPointerDown = () => {}, onPointerUp = () => {}, onPointerMove = () => {}, onDrag = () => {} } = options;
+const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): { clientX: number, clientY: number } => {
+    const { onPointerDown = () => { }, onPointerUp = () => { }, onPointerMove = () => { }, onDrag = () => { } } = options;
 
     const [isDragging, setIsDragging] = useState(false);
-    const [position, setPosition] = useState({});
+    const [startPosition, setStartPosition] = useState({ clientX: 0, clientY: 0 });
 
     const handlePointerDown = (e: TouchEvent | MouseEvent) => {
         setIsDragging(true);
         onPointerDown(e);
+        if (e instanceof TouchEvent) {
+            setStartPosition({
+                clientX: e.touches[0].clientX,
+                clientY: e.touches[0].clientY,
+            })
+        } else {
+            setStartPosition({
+                clientX: e.clientX,
+                clientY: e.clientY,
+            })
+        }
     };
+
 
     const handlePointerUp = (e: TouchEvent | MouseEvent) => {
         setIsDragging(false);
@@ -51,10 +63,10 @@ const useDrag = (ref: RefObject<HTMLDivElement>, deps: { x: number }, options: O
             };
         }
 
-        return () => {};
+        return () => { };
     }, [isDragging]);
 
-    return { isDragging };
+    return { ...startPosition };
 };
 
 export default useDrag;
