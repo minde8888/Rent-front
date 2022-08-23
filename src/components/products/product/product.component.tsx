@@ -20,7 +20,6 @@ const Product = () => {
     }, []);
 
     if (Object.keys(product).length === 0) return null;
-    // console.log(product);
 
     return (
         <div>

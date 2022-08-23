@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import style from './lightBox.module.scss';
-import Swipe from './swiper/swiper.componenet';
+import Swipe from './swiper/swiper.component';
 
 interface Props {
     images: Array<string> | undefined;

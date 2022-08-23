@@ -7,6 +7,7 @@ interface Props {
 }
 
 const Swipe = (props: Props) => {
+
     const divRef = useRef<HTMLDivElement>(null);
 
     const { x, pageX } = useDrag(divRef, {
@@ -25,7 +26,6 @@ const Swipe = (props: Props) => {
 
     return (
         <div
-            draggable
             ref={divRef}
             style={{
                 transform: `translateX(${pageX !== 0 ? pageX - x : 0}px) translateY(${65}px)`
