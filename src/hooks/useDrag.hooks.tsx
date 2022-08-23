@@ -1,57 +1,100 @@
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useCallback, useEffect, useState } from 'react';
 
 interface Options {
     onPointerDown(e: TouchEvent | MouseEvent): void;
     onPointerUp(e: TouchEvent | MouseEvent): void;
     onPointerMove(e: TouchEvent | MouseEvent): void;
-    onDrag(e: TouchEvent | MouseEvent): void;
 }
 
-const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): { clientX: number, clientY: number } => {
-    const { onPointerDown = () => { }, onPointerUp = () => { }, onPointerMove = () => { }, onDrag = () => { } } = options;
+interface Props {
+    pageX: number;
+    pageY: number;
+    x: number;
+    y: number;
+    isDragging: boolean;
+}
+
+const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
+    const { onPointerDown = () => {}, onPointerUp = () => {}, onPointerMove = () => {} } = options;
 
     const [isDragging, setIsDragging] = useState(false);
-    const [startPosition, setStartPosition] = useState({ clientX: 0, clientY: 0 });
+    const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+    const [translate, setTranslate] = useState({ pageX: 0, pageY: 0 });
 
-    const handlePointerDown = (e: TouchEvent | MouseEvent) => {
-        setIsDragging(true);
-        onPointerDown(e);
-        if (e instanceof TouchEvent) {
-            setStartPosition({
-                clientX: e.touches[0].clientX,
-                clientY: e.touches[0].clientY,
-            })
-        } else {
-            setStartPosition({
-                clientX: e.clientX,
-                clientY: e.clientY,
-            })
-        }
-    };
+    const handlePointerDown = useCallback(
+        (e: TouchEvent | MouseEvent) => {
+            setIsDragging(true);
+            onPointerDown(e);
+            let bounds = ref.current?.getBoundingClientRect();
 
+            if (e instanceof TouchEvent) {
+                if (bounds !== undefined) {
+                    console.log('down mob' + 111111);
+                    setStartPosition({
+                        x: e.touches[0].clientX - bounds.left,
+                        y: e.touches[0].clientY - bounds.top
+                    });
+                }
+            } else {
+                if (bounds !== undefined) {
+                    console.log('down pc' + 111111);
+                    setStartPosition({
+                        x: e.clientX - bounds.left,
+                        y: e.clientY - bounds.top
+                    });
+                }
+            }
+        },
+        [onPointerDown, ref]
+    );
 
-    const handlePointerUp = (e: TouchEvent | MouseEvent) => {
-        setIsDragging(false);
-        onPointerUp(e);
-    };
+    const handlePointerUp = useCallback(
+        (e: TouchEvent | MouseEvent) => {
+            console.log('up' + 2222);
+            setIsDragging(false);
+            onPointerUp(e);
+        },
+        [onPointerUp]
+    );
 
-    const handlePointerMove = (e: TouchEvent | MouseEvent) => {
-        onPointerMove(e);
-        if (isDragging) {
-            onDrag(e);
-        }
-    };
+    const handlePointerMove = useCallback(
+        (e: TouchEvent | MouseEvent) => {
+            onPointerMove(e);
+            if (isDragging) {
+                if (e instanceof TouchEvent) {
+                    console.log('move mob' + 3333);
+                    setTranslate({
+                        pageX: e.touches[0].pageX,
+                        pageY: e.touches[0].pageY
+                    });
+                } else {
+                    console.log('move pc' + 4444);
+
+                    setTranslate({
+                        pageX: e.pageX,
+                        pageY: e.pageY
+                    });
+                }
+            }
+        },
+        [isDragging, onPointerMove]
+    );
 
     useEffect(() => {
         const element = ref.current;
-
         if (element) {
+            console.log('effect' + 555555555);
+
             element.addEventListener('pointerdown', handlePointerDown);
             element.addEventListener('touchstart', handlePointerDown);
-            element.addEventListener('pointerup', handlePointerUp);
-            element.addEventListener('touchend', handlePointerUp);
-            element.addEventListener('pointermove', handlePointerMove);
-            element.addEventListener('touchmove', handlePointerMove);
+            if (isDragging) {
+                console.log('add event' + 6666666666);
+
+                element.addEventListener('pointerup', handlePointerUp);
+                element.addEventListener('touchend', handlePointerUp);
+                element.addEventListener('pointermove', handlePointerMove);
+                element.addEventListener('touchmove', handlePointerMove);
+            }
 
             return () => {
                 element.removeEventListener('pointerdown', handlePointerDown);
@@ -62,11 +105,9 @@ const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): { clientX: n
                 element.removeEventListener('touchmove', handlePointerMove);
             };
         }
-
-        return () => { };
     }, [isDragging]);
 
-    return { ...startPosition };
+    return { ...startPosition, ...translate, isDragging };
 };
 
 export default useDrag;
