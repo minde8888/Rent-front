@@ -9,16 +9,16 @@ interface Options {
 interface Props {
     pageX: number;
     pageY: number;
-    x: number;
-    y: number;
+    startX: number;
+    startY: number;
     isDragging: boolean;
 }
 
 const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
-    const { onPointerDown = () => { }, onPointerUp = () => { }, onPointerMove = () => { } } = options;
+    const { onPointerDown = () => {}, onPointerUp = () => {}, onPointerMove = () => {} } = options;
 
     const [isDragging, setIsDragging] = useState(false);
-    const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+    const [startPosition, setStartPosition] = useState({ startX: 0, startY: 0 });
     const [translate, setTranslate] = useState({ pageX: 0, pageY: 0 });
 
     const handlePointerDown = useCallback(
@@ -30,15 +30,23 @@ const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
             if (e instanceof TouchEvent) {
                 if (bounds !== undefined) {
                     setStartPosition({
-                        x: e.touches[0].clientX - bounds.left,
-                        y: e.touches[0].clientY - bounds.top
+                        startX: e.touches[0].clientX - bounds.left,
+                        startY: e.touches[0].clientY - bounds.top
+                    });
+                    setTranslate({
+                        pageX: e.touches[0].pageX,
+                        pageY: e.touches[0].pageY
                     });
                 }
             } else {
                 if (bounds !== undefined) {
                     setStartPosition({
-                        x: e.clientX - bounds.left,
-                        y: e.clientY - bounds.top
+                        startX: e.clientX - bounds.left,
+                        startY: e.clientY - bounds.top
+                    });
+                    setTranslate({
+                        pageX: e.pageX,
+                        pageY: e.pageY
                     });
                 }
             }
@@ -76,7 +84,6 @@ const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
 
     useEffect(() => {
         const element = ref.current;
-
         if (element) {
             element.addEventListener('pointerdown', handlePointerDown);
             element.addEventListener('touchstart', handlePointerDown);

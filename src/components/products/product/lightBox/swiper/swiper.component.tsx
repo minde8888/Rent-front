@@ -7,10 +7,9 @@ interface Props {
 }
 
 const Swipe = (props: Props) => {
-
     const divRef = useRef<HTMLDivElement>(null);
 
-    const { x, pageX } = useDrag(divRef, {
+    const { startX, pageX } = useDrag(divRef, {
         onPointerDown: () => void {},
         onPointerUp: () => void {},
         onPointerMove: () => void {}
@@ -23,12 +22,15 @@ const Swipe = (props: Props) => {
             <img draggable={false} className={style.cursor} src={image} />
         </div>
     ));
+    console.log('startX ' + startX);
+    console.log('pageX ' + pageX);
+    console.log('translateX' + (pageX - startX));
 
     return (
         <div
             ref={divRef}
             style={{
-                transform: `translateX(${pageX !== 0 ? pageX - x : 0}px) translateY(${65}px)`
+                transform: `translateX(${pageX !== 0 ? pageX - startX : 0}px) translateY(${65}px)`
             }}
         >
             {imageCards}
