@@ -65,7 +65,6 @@ const LightBox = (props: Props) => {
                     <div className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
                         &#x274C;
                     </div>
-                    {/* <div className={style.bigImg}>{imageCards}</div> */}
                     <Swipe images={props.images} />
                 </div>
             ) : (

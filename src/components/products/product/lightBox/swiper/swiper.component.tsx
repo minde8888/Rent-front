@@ -9,7 +9,7 @@ interface Props {
 const Swipe = (props: Props) => {
     const divRef = useRef<HTMLDivElement>(null);
 
-    const { startX, pageX } = useDrag(divRef, {
+    const { positionX } = useDrag(divRef, {
         onPointerDown: () => void {},
         onPointerUp: () => void {},
         onPointerMove: () => void {}
@@ -18,19 +18,17 @@ const Swipe = (props: Props) => {
     if (!props.images || props.images.length === 0) return null;
 
     const imageCards: JSX.Element[] = props.images.map((image: string, key: number) => (
-        <div draggable={false} key={key}>
+        <div draggable={false} key={key} >
             <img draggable={false} className={style.cursor} src={image} />
         </div>
     ));
-    console.log('startX ' + startX);
-    console.log('pageX ' + pageX);
-    console.log('translateX' + (pageX - startX));
 
     return (
         <div
+            className={style.swiper}
             ref={divRef}
             style={{
-                transform: `translateX(${pageX !== 0 ? pageX - startX : 0}px) translateY(${65}px)`
+                transform: `translateX(${positionX}px) translateY(${110}px)`
             }}
         >
             {imageCards}

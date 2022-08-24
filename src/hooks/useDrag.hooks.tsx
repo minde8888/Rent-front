@@ -7,15 +7,13 @@ interface Options {
 }
 
 interface Props {
-    pageX: number;
-    pageY: number;
-    startX: number;
-    startY: number;
+    positionX: number;
+    positionY: number;
     isDragging: boolean;
 }
 
 const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
-    const { onPointerDown = () => {}, onPointerUp = () => {}, onPointerMove = () => {} } = options;
+    const { onPointerDown = () => { }, onPointerUp = () => { }, onPointerMove = () => { } } = options;
 
     const [isDragging, setIsDragging] = useState(false);
     const [startPosition, setStartPosition] = useState({ startX: 0, startY: 0 });
@@ -102,8 +100,12 @@ const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
             };
         }
     }, [isDragging]);
+    const position = {
+        positionX: translate.pageX - startPosition.startX,
+        positionY: translate.pageY - startPosition.startY,
+    }
 
-    return { ...startPosition, ...translate, isDragging };
+    return { ...position, isDragging };
 };
 
 export default useDrag;

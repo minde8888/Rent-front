@@ -10,30 +10,22 @@
     height: 100%;
     width: 100%;
 
-
     .close {
         position: absolute;
-        z-index: 2;
         font-size: 30px;
         content: "✖";
         cursor: pointer;
         left: 90%;
-        top: 8%;
+        top: 65px;
     }
 
-    .bigImg {
+    .swiper {
         display: flex;
-        position: absolute;
-        top: 15vh;
-        height: 80vh;
-        width: 200%;
-        z-index: 9999;
 
         img {
-            width: 20%;
-            height: 90%;
+            height: 70%;
             object-fit: cover;
-            padding: 1em;
+            padding: 0 2em;
         }
     }
 }
