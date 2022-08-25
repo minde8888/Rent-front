@@ -13,7 +13,7 @@ interface Props {
 }
 
 const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
-    const { onPointerDown = () => { }, onPointerUp = () => { }, onPointerMove = () => { } } = options;
+    const { onPointerDown = () => {}, onPointerUp = () => {}, onPointerMove = () => {} } = options;
 
     const [isDragging, setIsDragging] = useState(false);
     const [startPosition, setStartPosition] = useState({ startX: 0, startY: 0 });
@@ -100,10 +100,11 @@ const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
             };
         }
     }, [isDragging]);
+
     const position = {
         positionX: translate.pageX - startPosition.startX,
-        positionY: translate.pageY - startPosition.startY,
-    }
+        positionY: translate.pageY - startPosition.startY
+    };
 
     return { ...position, isDragging };
 };

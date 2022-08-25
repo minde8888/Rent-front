@@ -21,11 +21,13 @@
 
     .swiper {
         display: flex;
+        width: 100%;
 
         img {
             height: 70%;
             object-fit: cover;
             padding: 0 2em;
+            width: 800px;
         }
     }
 }

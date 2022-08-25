@@ -18,7 +18,7 @@ const Swipe = (props: Props) => {
     if (!props.images || props.images.length === 0) return null;
 
     const imageCards: JSX.Element[] = props.images.map((image: string, key: number) => (
-        <div draggable={false} key={key} >
+        <div draggable={false} key={key}>
             <img draggable={false} className={style.cursor} src={image} />
         </div>
     ));

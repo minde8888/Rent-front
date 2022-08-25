@@ -13,7 +13,8 @@ const LightBox = (props: Props) => {
 
     useEffect(() => {
         setImageToShow(!props.images || props.images.length === 0 ? '' : props.images[0]);
-    }, [props]);
+    }, [props.images]);
+    console.log(1111);
 
     if (!props.images || props.images.length == 0) return null;
 
