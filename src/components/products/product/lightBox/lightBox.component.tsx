@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import style from './lightBox.module.scss';
 import Swipe from './swiper/swiper.component';
 
@@ -10,11 +10,6 @@ interface Props {
 const LightBox = (props: Props) => {
     const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
     const [imageToShow, setImageToShow] = useState<string | undefined>('');
-
-    useEffect(() => {
-        setImageToShow(!props.images || props.images.length === 0 ? '' : props.images[0]);
-    }, [props.images]);
-    console.log(1111);
 
     if (!props.images || props.images.length == 0) return null;
 
@@ -36,28 +31,6 @@ const LightBox = (props: Props) => {
     const closeLightBox = () => {
         setLightBoxDisplay(false);
     };
-    // const showNext = (e: { stopPropagation: () => void; }) => {
-    //     e.stopPropagation();
-    //     let currentIndex = props.images.indexOf(imageToShow);
-    //     if (currentIndex >= props.images.length - 1) {
-    //         setLightBoxDisplay(false);
-    //     } else {
-    //         let nextImage = props.images[currentIndex + 1];
-    //         setImageToShow(nextImage);
-    //     }
-    // };
-
-    // //show previous image in lightbox
-    // const showPrev = (e: { stopPropagation: () => void; }) => {
-    //     e.stopPropagation();
-    //     let currentIndex = props.images.indexOf(imageToShow);
-    //     if (currentIndex <= 0) {
-    //         setLightBoxDisplay(false);
-    //     } else {
-    //         let nextImage = props.images[currentIndex - 1];
-    //         setImageToShow(nextImage);
-    //     }
-    // };
 
     return (
         <div>
@@ -71,7 +44,7 @@ const LightBox = (props: Props) => {
             ) : (
                 <>
                     <div className={style.smallImg}>
-                        <img className={style.cursor} onClick={showLightBox} src={imageToShow} />
+                        <img className={style.cursor} onClick={showLightBox} src={imageToShow === "" ? props.images[0] : imageToShow} />
                     </div>
                     {imageCards}
                 </>

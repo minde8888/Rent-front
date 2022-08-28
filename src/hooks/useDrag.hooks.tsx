@@ -1,10 +1,4 @@
-import { RefObject, useCallback, useEffect, useState } from 'react';
-
-interface Options {
-    onPointerDown(e: TouchEvent | MouseEvent): void;
-    onPointerUp(e: TouchEvent | MouseEvent): void;
-    onPointerMove(e: TouchEvent | MouseEvent): void;
-}
+import { useCallback, useEffect, useState } from 'react';
 
 interface Props {
     positionX: number;
@@ -12,8 +6,7 @@ interface Props {
     isDragging: boolean;
 }
 
-const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
-    const { onPointerDown = () => {}, onPointerUp = () => {}, onPointerMove = () => {} } = options;
+const useDrag = (ref: HTMLDivElement | null): Props => {
 
     const [isDragging, setIsDragging] = useState(false);
     const [startPosition, setStartPosition] = useState({ startX: 0, startY: 0 });
@@ -22,8 +15,7 @@ const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
     const handlePointerDown = useCallback(
         (e: TouchEvent | MouseEvent) => {
             setIsDragging(true);
-            onPointerDown(e);
-            let bounds = ref.current?.getBoundingClientRect();
+            const bounds = ref?.getBoundingClientRect();
 
             if (e instanceof TouchEvent) {
                 if (bounds !== undefined) {
@@ -49,20 +41,18 @@ const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
                 }
             }
         },
-        [onPointerDown, ref]
+        [ref]
     );
 
     const handlePointerUp = useCallback(
         (e: TouchEvent | MouseEvent) => {
             setIsDragging(false);
-            onPointerUp(e);
         },
-        [onPointerUp]
+        []
     );
 
     const handlePointerMove = useCallback(
         (e: TouchEvent | MouseEvent) => {
-            onPointerMove(e);
             if (isDragging) {
                 if (e instanceof TouchEvent) {
                     setTranslate({
@@ -77,29 +67,29 @@ const useDrag = (ref: RefObject<HTMLDivElement>, options: Options): Props => {
                 }
             }
         },
-        [onPointerMove]
+        [isDragging]
     );
 
     useEffect(() => {
-        const element = ref.current;
-        if (element) {
-            element.addEventListener('pointerdown', handlePointerDown);
-            element.addEventListener('touchstart', handlePointerDown);
-            element.addEventListener('pointerup', handlePointerUp);
-            element.addEventListener('touchend', handlePointerUp);
-            element.addEventListener('pointermove', handlePointerMove);
-            element.addEventListener('touchmove', handlePointerMove);
+        if (!ref) return () => { }
 
-            return () => {
-                element.removeEventListener('pointerdown', handlePointerDown);
-                element.removeEventListener('touchstart', handlePointerDown);
-                element.removeEventListener('pointerup', handlePointerUp);
-                element.removeEventListener('touchend', handlePointerUp);
-                element.removeEventListener('pointermove', handlePointerMove);
-                element.removeEventListener('touchmove', handlePointerMove);
-            };
-        }
-    }, [isDragging]);
+        ref.addEventListener('pointerdown', handlePointerDown);
+        ref.addEventListener('touchstart', handlePointerDown);
+        ref.addEventListener('pointerup', handlePointerUp);
+        ref.addEventListener('touchend', handlePointerUp);
+        ref.addEventListener('pointermove', handlePointerMove);
+        ref.addEventListener('touchmove', handlePointerMove);
+
+        return () => {
+            ref.removeEventListener('pointerdown', handlePointerDown);
+            ref.removeEventListener('touchstart', handlePointerDown);
+            ref.removeEventListener('pointerup', handlePointerUp);
+            ref.removeEventListener('touchend', handlePointerUp);
+            ref.removeEventListener('pointermove', handlePointerMove);
+            ref.removeEventListener('touchmove', handlePointerMove);
+        };
+
+    }, [ref, isDragging]);
 
     const position = {
         positionX: translate.pageX - startPosition.startX,
