@@ -45,7 +45,7 @@ const Swipe = (props: Props) => {
     let arrayImg = [props.images[props.images.length - 1], ...props.images, props.images[0]]
 
     const imageCards: JSX.Element[] = arrayImg.map((image: string, key: number) => (
-        <div draggable={false} key={key}>
+        <div className={style.mandatory} draggable={false} key={key}>
             <img draggable={false} className={style.cursor} src={image} />
         </div>
     ));
@@ -54,9 +54,9 @@ const Swipe = (props: Props) => {
         <div
             className={style.swiper}
             ref={setDivRef}
-            style={{
-                transform: `translateX(${positionX}px) translateY(${110}px)`
-            }}
+        // style={{
+        //     transform: `translateX(${positionX}px) translateY(${110}px)`
+        // }}
         >
             {imageCards}
         </div>
