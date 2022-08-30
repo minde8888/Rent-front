@@ -10,8 +10,6 @@
 
     .wrapper {
         display: flex;
-        overflow-x: scroll;
-        overflow-y: hidden;
 
         .close {
             position: absolute;
@@ -24,7 +22,6 @@
 
         .swiper {
             display: flex;
-            scroll-snap-type: x mandatory;
 
             img {
                 height: 60vh;
