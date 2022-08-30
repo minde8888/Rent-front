@@ -23,48 +23,40 @@ const Swipe = (props: Props) => {
         const imageWidth = width / (images + 1);
         const browserCenter = window.innerWidth / 2;
         const firsImagePixelsToHide = (imageWidth / 2 + imageWidth - browserCenter) * -1;
+        console.log(firsImagePixelsToHide);
+
         imagesPixelsToHide = [firsImagePixelsToHide];
 
         for (let i = 0; i < images; i++) {
             let pixelsToHide = -imageWidth * (i + 1) + firsImagePixelsToHide;
-            imagesPixelsToHide = [...imagesPixelsToHide, pixelsToHide];
+            imagesPixelsToHide = [0, ...imagesPixelsToHide, pixelsToHide];
         }
     }
-
-    let position: number | undefined = imagesPixelsToHide[0];
 
     let transform = {
         transform: `translateX(${positionX}px) translateY(${marginTop}px)`
     };
 
-    if (!isDragging) {
-        for (let i = 0; i < imagesPixelsToHide.length; i++) {
-            if (imagesPixelsToHide[i] < positionX && i < imagesPixelsToHide.length - 2) {
-                position = imagesPixelsToHide[i];
-                break;
-            }
+    if (!isDragging && imagesPixelsToHide.length > 0) {
+        let closest = imagesPixelsToHide.reduce((prev, curr) => {
+            return (Math.abs(curr - positionX) < Math.abs(prev - positionX) ? curr : prev);
+        });
+        if (closest === imagesPixelsToHide[imagesPixelsToHide.length - 1]) {
+            closest = imagesPixelsToHide[imagesPixelsToHide.length - 2]
         }
-        console.log(position);
-
-        transform = { transform: `translateX(${position}px) translateY(${marginTop}px)`, ...{ transition: 'transform 500ms ease-in-out 25ms' } };
+        transform = { transform: `translateX(${closest}px) translateY(${marginTop}px)`, ...{ transition: 'transform 500ms ease-in-out 25ms' } };
     }
 
-    let arrayImg = [props.images[props.images.length - 1], ...props.images, props.images[0]];
+    let arrayImg = [...props.images];
 
     const imageCards: JSX.Element[] = arrayImg.map((image: string, key: number) => (
-        <div className={style.mandatory} draggable={false} key={key}>
+        <div draggable={false} key={key}>
             <img draggable={false} className={style.cursor} src={image} />
         </div>
     ));
 
     return (
-        <div
-            className={style.swiper}
-            ref={setDivRef}
-            style={{
-                transform: `translateX(${positionX}px) translateY(${110}px)`
-            }}
-        >
+        <div className={style.swiper} ref={setDivRef} style={transform}>
             {imageCards}
         </div>
     );

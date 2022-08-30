@@ -36,12 +36,10 @@ const LightBox = (props: Props) => {
         <div>
             {lightBoxDisplay ? (
                 <div className={style.lightBox}>
-                    <div className={style.wrapper}>
-                        <div className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
-                            &#x274C;
-                        </div>
-                        <Swipe images={props.images} />
+                    <div className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
+                        &#x274C;
                     </div>
+                    <Swipe images={props.images} />
                 </div>
             ) : (
                 <>

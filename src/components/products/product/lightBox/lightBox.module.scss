@@ -1,4 +1,5 @@
 .lightBox {
+    display: flex;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -6,29 +7,25 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.9);
-    height: 100vh;
+    height: 100%;
 
-    .wrapper {
+    .close {
+        position: absolute;
+        font-size: 30px;
+        content: "✖";
+        cursor: pointer;
+        left: 90%;
+        top: 65px;
+    }
+
+    .swiper {
         display: flex;
 
-        .close {
-            position: absolute;
-            font-size: 30px;
-            content: "✖";
-            cursor: pointer;
-            left: 90%;
-            top: 65px;
-        }
-
-        .swiper {
-            display: flex;
-
-            img {
-                height: 60vh;
-                object-fit: cover;
-                margin: 0 5px;
-                width: 900px;
-            }
+        img {
+            height: 60%;
+            object-fit: cover;
+            margin: 0 5px;
+            width: 900px;
         }
     }
 }
