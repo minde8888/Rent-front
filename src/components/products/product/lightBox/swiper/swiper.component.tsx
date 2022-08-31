@@ -22,14 +22,14 @@ const Swipe = (props: Props) => {
         const images = props.images.length + 1;
         const imageWidth = width / (images + 1);
         const browserCenter = window.innerWidth / 2;
-        const firsImagePixelsToHide = (imageWidth / 2 + imageWidth - browserCenter) * -1;
+        const firsImagePixelsToHide = browserCenter - imageWidth + imageWidth;
         console.log(firsImagePixelsToHide);
 
         imagesPixelsToHide = [firsImagePixelsToHide];
 
         for (let i = 0; i < images; i++) {
             let pixelsToHide = -imageWidth * (i + 1) + firsImagePixelsToHide;
-            imagesPixelsToHide = [0, ...imagesPixelsToHide, pixelsToHide];
+            imagesPixelsToHide = [firsImagePixelsToHide, ...imagesPixelsToHide, pixelsToHide];
         }
     }
 
@@ -39,10 +39,10 @@ const Swipe = (props: Props) => {
 
     if (!isDragging && imagesPixelsToHide.length > 0) {
         let closest = imagesPixelsToHide.reduce((prev, curr) => {
-            return (Math.abs(curr - positionX) < Math.abs(prev - positionX) ? curr : prev);
+            return Math.abs(curr - positionX) < Math.abs(prev - positionX) ? curr : prev;
         });
         if (closest === imagesPixelsToHide[imagesPixelsToHide.length - 1]) {
-            closest = imagesPixelsToHide[imagesPixelsToHide.length - 2]
+            closest = imagesPixelsToHide[imagesPixelsToHide.length - 2];
         }
         transform = { transform: `translateX(${closest}px) translateY(${marginTop}px)`, ...{ transition: 'transform 500ms ease-in-out 25ms' } };
     }
