@@ -5,23 +5,25 @@ import Swipe from './swiper/swiper.component';
 interface Props {
     images: Array<string> | undefined;
     id?: string;
+    showLightBox: () => void;
+    closeLightBox: () => void;
 }
 
-const LightBox = (props: Props) => {
+const LightBox = ({ images }: Props) => {
     const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
     const [imageToShow, setImageToShow] = useState<string | undefined>('');
 
-    if (!props.images || props.images.length == 0) return null;
+    if (!images || images.length == 0) return null;
 
-    const imageCards: JSX.Element[] = props.images.map((image: string, key: number) => (
+    const imageCards: JSX.Element[] = images.map((image: string, key: number) => (
         <div key={key}>
-            <img className={style.cursor} onClick={() => showImage(key)} src={image} />
+            <img role="role-images" className={style.cursor} onClick={() => showImage(key)} src={image} />
         </div>
     ));
 
     const showImage = (index: number) => {
-        if (props.images && Array.isArray(props.images)) {
-            setImageToShow(props.images[index]);
+        if (images && Array.isArray(images)) {
+            setImageToShow(images[index]);
         }
     };
 
@@ -36,15 +38,15 @@ const LightBox = (props: Props) => {
         <div>
             {lightBoxDisplay ? (
                 <div className={style.lightBox}>
-                    <div className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
+                    <div role="role-images-1" className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
                         &#x274C;
                     </div>
-                    <Swipe images={props.images} />
+                    <Swipe images={images} />
                 </div>
             ) : (
                 <>
                     <div className={style.smallImg}>
-                        <img className={style.cursor} onClick={showLightBox} src={imageToShow === "" ? props.images[0] : imageToShow} />
+                        <img role="role-images-2" className={style.cursor} onClick={showLightBox} src={imageToShow === "" ? images[0] : imageToShow} />
                     </div>
                     {imageCards}
                 </>

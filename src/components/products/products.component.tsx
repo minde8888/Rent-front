@@ -1,14 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import { CatValues } from '../../models/product.model';
 import { getProducts } from '../../redux/slice/productsSlice';
 import { getAllProducts } from '../../services/products.services/products.services';
+import Contact from './contact/contact.component';
 import style from './products.module.scss';
 
-const Products = () => {
+const Products: React.FC = () => {
     const dispatch = useAppDispatch();
     const products = useAppSelector((state) => state.data.products);
+    const [toggle, setToggle] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -27,6 +29,10 @@ const Products = () => {
     };
 
     let cat = products.$values.map((arr) => arr.categoriesDto.$values?.map((el, k) => <Categories key={k} categoriesName={el.categoriesName} $id={el.$id} categoriesId={el.categoriesId} />));
+
+    const passToggle = (e: React.MouseEvent<HTMLButtonElement>, value: string): void => {
+        setToggle(value);
+    }
 
     return (
         <div className={style.container}>
@@ -51,13 +57,15 @@ const Products = () => {
                                     <div> {data.size}</div>
                                     <div> {data.price}</div>
                                 </Link>
-                                <button>
-                                    <Link to={data.productsId}>Contact</Link>
+                                <button onClick={(e) => passToggle(e, data.productCode)}>
+                                    Contact
                                 </button>
+                                {toggle === data.productCode && (<Contact setToggle={setToggle} phone={data.productCode} id={data.productsId} />)}
                             </div>
                         </div>
                     ))}
                 </div>
+
             </div>
         </div>
     );

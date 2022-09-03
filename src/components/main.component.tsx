@@ -13,6 +13,7 @@ import Products from './products/products.component';
 import AddProduct from './products/addProduct/addProduct.component';
 import style from './main.module.scss';
 import Product from './products/product/product.component';
+import Contact from './products/contact/contact.component';
 
 function Main(): JSX.Element {
     return (
@@ -24,10 +25,10 @@ function Main(): JSX.Element {
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="*" element={<p>There's nothing here: 404!</p>} />
+                    <Route path="/products" element={<Products />} />
+                    <Route path="/products/:id" element={<Product />} />
+                    <Route path="/" element={<Home />} />
                     <Route element={<ProtectedRoute role={[Roles.user, Roles.admin]} />}>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/products" element={<Products />} />
-                        <Route path="/products/:id" element={<Product />} />
                         <Route path="/add-products" element={<AddProduct />} />
                         <Route path="/profile/:id" element={<Profile />} />
                     </Route>

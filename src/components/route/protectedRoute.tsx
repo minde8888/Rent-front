@@ -19,7 +19,7 @@ export const ProtectedRoute: React.FC<Props> = ({ role }) => {
         return <Outlet />
     }
     if (!isLoggedIn || !userHasRequiredRole) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/home" replace />;
     }
     return null;
 };

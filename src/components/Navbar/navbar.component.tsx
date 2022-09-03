@@ -24,56 +24,53 @@ const NavBar: FunctionComponent<INavBar> = () => {
         logout();
     };
 
-    const style = { justifyContent: "flex-end" }
     return (
-        <div className="navBar" style={!isLoggedIn ? style : undefined}>
+        <div className="navBar" >
+
+            <button className="menu" onClick={toggleClickHandler}>
+                <div className="nav_button">
+                    <NavLink className="nav_link" to={'/'}></NavLink>
+                </div>
+                <span className="home nav">home</span>
+                <div className="nav_button">
+                    <NavLink className="nav_link" to={'/products'}></NavLink>
+                </div>
+                <span className="home1 nav">products</span>
+
+                {isLoggedIn && (<><div className="nav_button">
+                    <NavLink className="nav_link" to={'/add-products'}></NavLink>
+                </div><span className="home2 nav">add products</span></>)}
 
 
-            {!isLoggedIn ? (
-                <>
-                    <div className="links" >
+                <div className="nav_button"></div>
+                <div className="nav_button"></div>
+                <div className="nav_button"></div>
+                <div className="nav_button"></div>
+                <div className="nav_button"></div>
+            </button>
+            <div className="links" >
+                {!isLoggedIn ? (
+                    <>
                         <NavLink to={'/login'} className="login">
                             Login
                         </NavLink>
                         <NavLink to={'/signup'} className="signup">
                             Sign Up
                         </NavLink>
-                    </div>
-                </>
-            ) : (
-                <>
-                    <button className="menu" onClick={toggleClickHandler}>
-                        <div className="nav_button">
-                            <NavLink className="nav_link" to={'/'}></NavLink>
-                        </div>
-                        <span className="home nav">home</span>
-                        <div className="nav_button">
-                            <NavLink className="nav_link" to={'/products'}></NavLink>
-                        </div>
-                        <span className="home1 nav">products</span>
-                        <div className="nav_button">
-                            <NavLink className="nav_link" to={'/add-products'}></NavLink>
-                        </div>
-                        <span className="home2 nav">add products</span>
-                        <div className="nav_button"></div>
-                        <div className="nav_button"></div>
-                        <div className="nav_button"></div>
-                        <div className="nav_button"></div>
-                        <div className="nav_button"></div>
-                    </button>
-                    <div className="links" >
-                        <div className="navbar_profile_logout">
-                            <NavLink to={`profile/${id}`} className="profile">
-                                {name} {surname}
-                            </NavLink>
-                            <button onClick={onLogout} className="userLogout">
-                                Logout
-                            </button>
-                        </div>
-                    </div>
-                </>
-            )}
 
+                    </>
+                ) : (
+                    <>
+                        <NavLink to={`profile/${id}`} className="profile">
+                            {name} {surname}
+                        </NavLink>
+                        <button onClick={onLogout} className="userLogout">
+                            Logout
+                        </button>
+                    </>
+                )
+                }
+            </div>
             <Outlet />
         </div>
     );

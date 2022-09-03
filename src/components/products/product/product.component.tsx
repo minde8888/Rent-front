@@ -29,7 +29,7 @@ const Product = () => {
             <div>{product.$values[0].postsDto.productName}</div>
             <div>{product.$values[0].postsDto.content}</div>
             <div>{product.$values[0].size}</div>
-            <LightBox images={product.$values[0].imageSrc.$values} id={id} />
+            <LightBox images={product.$values[0].imageSrc.$values} id={id} showLightBox={(): void => { }} closeLightBox={(): void => { }} />
         </div>
     );
 };

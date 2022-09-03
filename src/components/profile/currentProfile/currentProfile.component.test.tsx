@@ -4,7 +4,7 @@ import CurrentProfile from './currentProfile.component';
 
 describe('<CurrentProfile />', () => {
     test('renders', () => {
-        const { baseElement, debug } = render(<CurrentProfile passToggle={jest.fn()} />);
+        const { baseElement } = render(<CurrentProfile passToggle={jest.fn()} />);
         expect(baseElement).toBeVisible();
     });
 

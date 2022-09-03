@@ -4,12 +4,14 @@ interface Props {
     positionX: number;
     positionY: number;
     isDragging: boolean;
+    startPositionX: number;
+    startPositionY: number;
 }
 
 const useDrag = (ref: HTMLDivElement | null): Props => {
 
     const [isDragging, setIsDragging] = useState(false);
-    const [startPosition, setStartPosition] = useState({ startX: 0, startY: 0 });
+    const [startPosition, setStartPosition] = useState({ startX: 0, startY: 0, startPositionX: 0, startPositionY: 0 });
     const [translate, setTranslate] = useState({ pageX: 0, pageY: 0 });
 
     const handlePointerDown = useCallback(
@@ -21,7 +23,9 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
                 if (bounds !== undefined) {
                     setStartPosition({
                         startX: e.touches[0].clientX - bounds.left,
-                        startY: e.touches[0].clientY - bounds.top
+                        startY: e.touches[0].clientY - bounds.top,
+                        startPositionX: e.touches[0].pageX - e.touches[0].clientX - bounds.left,
+                        startPositionY: e.touches[0].pageY - e.touches[0].clientY - bounds.top,
                     });
                     setTranslate({
                         pageX: e.touches[0].pageX,
@@ -32,7 +36,9 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
                 if (bounds !== undefined) {
                     setStartPosition({
                         startX: e.clientX - bounds.left,
-                        startY: e.clientY - bounds.top
+                        startY: e.clientY - bounds.top,
+                        startPositionX: e.pageX - e.clientX - bounds.left,
+                        startPositionY: e.pageY - e.clientY - bounds.top,
                     });
                     setTranslate({
                         pageX: e.pageX,
@@ -93,10 +99,14 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
 
     const position = {
         positionX: translate.pageX - startPosition.startX,
-        positionY: translate.pageY - startPosition.startY
+        positionY: translate.pageY - startPosition.startY,
+        startPositionX: startPosition.startPositionX,
+        startPositionY: startPosition.startPositionY
     };
 
-    return { ...position, isDragging };
+    return {
+        ...position, isDragging
+    };
 };
 
 export default useDrag;
