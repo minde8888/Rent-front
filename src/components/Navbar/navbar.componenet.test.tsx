@@ -14,11 +14,14 @@ describe('<NavBar />', () => {
 
     test('render link', () => {
         renderBrowserWithContext(<NavBar />);
+        screen.debug()
         const links: HTMLAnchorElement[] = screen.getAllByRole('link');
-        expect(links[0].href).toContain('/login');
-        expect(links[0].textContent).toEqual('Login');
-        expect(links[1].href).toContain('/signup');
-        expect(links[1].textContent).toEqual('Sign Up');
+        expect(links[0].href).toContain('/');
+        expect(links[1].href).toContain('/products');
+        expect(links[2].href).toContain('/login');
+        expect(links[2].textContent).toEqual('Login');
+        expect(links[3].href).toContain('/signup');
+        expect(links[3].textContent).toEqual('Sign Up');
     });
 
     test('render links after login ', () => {
@@ -28,7 +31,7 @@ describe('<NavBar />', () => {
         store.dispatch(getUserProfile({ id: slug, name: 'Tester1', surname: 'Tester2' } as unknown as User));
         renderBrowserWithContext(<NavBar />);
         const links: HTMLAnchorElement[] = screen.getAllByRole('link');
-        +expect(links[0].href).toContain('/');
+        expect(links[0].href).toContain('/');
         expect(links[1].href).toContain('/products');
         expect(links[2].href).toContain('/add-products');
         expect(links[3].href).toContain(`/profile/${slug}`);

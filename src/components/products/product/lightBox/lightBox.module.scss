@@ -18,6 +18,10 @@
         top: 65px;
     }
 
+    .close:hover {
+        background-color: rgba(136, 54, 54, 0.226);
+    }
+
     .swiper {
         display: flex;
 
@@ -25,6 +29,37 @@
             height: 60%;
             object-fit: cover;
             height: 70vh;
+        }
+    }
+
+    .arrow {
+        display: flex;
+        position: absolute;
+        color: white;
+        top: 50vh;
+        width: 100%;
+        justify-content: space-between;
+
+        .right {
+            font-size: 30px;
+            z-index: 1;
+            margin: 0 0 0 2%;
+            cursor: pointer;
+        }
+
+        .left {
+            font-size: 30px;
+            z-index: 1;
+            margin: 0 2% 0 0;
+            cursor: pointer;
+        }
+
+        .right:hover {
+            color: #7e8ba3;
+        }
+
+        .left:hover {
+            color: #7e8ba3;
         }
     }
 }

@@ -1,19 +1,21 @@
 import { useState, useCallback } from 'react';
 import useDrag from '../../../../../hooks/useDrag.hooks';
+import { Direction } from '../lightBox.component';
 import style from '../lightBox.module.scss';
 
 interface Props {
     images: Array<string> | undefined;
+    changeImage: Direction
 }
 
-const Swipe = (props: Props) => {
+const Swipe = ({ images, changeImage }: Props) => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
 
     const { positionX, isDragging, startPositionX } = useDrag(divRef);
     const marginTop = 110;
 
-    if (!props.images || props.images.length === 0) return null;
+    if (!images || images.length === 0) return null;
 
     const bounds = divRef?.getBoundingClientRect();
     let imagesPixelsToHide: Array<number> = [];
@@ -21,15 +23,15 @@ const Swipe = (props: Props) => {
 
     if (bounds) {
         const width = bounds.width;
-        const images = props.images.length;
-        const imageWidth = width / (images);
+        const picture = images.length;
+        const imageWidth = width / (picture);
         const browserCenter = window.innerWidth / 2;
         const firsImagePixelsToHide = browserCenter - imageWidth / 2;
         firsImageToCenter = firsImagePixelsToHide;
 
         imagesPixelsToHide = [firsImagePixelsToHide];
 
-        for (let i = 0; i < images - 1; i++) {
+        for (let i = 0; i < picture - 1; i++) {
             let pixelsToHide = -imageWidth * (i + 1) + firsImagePixelsToHide;
             imagesPixelsToHide = [...imagesPixelsToHide, pixelsToHide];
         }
@@ -60,7 +62,7 @@ const Swipe = (props: Props) => {
         margin: `0px ${window.innerWidth * 0.2}px`
     }
 
-    const imageCards: JSX.Element[] = props.images.map((image: string, key: number) => (
+    const imageCards: JSX.Element[] = images.map((image: string, key: number) => (
         <div draggable={false} key={key}>
             <img role="role-images" style={imageStyle} draggable={false} className={style.cursor} src={image} />
         </div>

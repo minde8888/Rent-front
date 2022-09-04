@@ -9,9 +9,16 @@ interface Props {
     closeLightBox: () => void;
 }
 
+export enum Direction {
+    Start = "START",
+    Left = "LEFT",
+    Right = "RIGHT",
+}
+
 const LightBox = ({ images }: Props) => {
     const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
     const [imageToShow, setImageToShow] = useState<string | undefined>('');
+    const [changeImage, setChangeImage] = useState<Direction>(Direction.Start);
 
     if (!images || images.length == 0) return null;
 
@@ -33,6 +40,13 @@ const LightBox = ({ images }: Props) => {
     const closeLightBox = () => {
         setLightBoxDisplay(false);
     };
+    const clickRight = () => {
+        setChangeImage(Direction.Right)
+
+    }
+    const clickLeft = () => {
+        setChangeImage(Direction.Left)
+    }
 
     return (
         <div>
@@ -41,7 +55,16 @@ const LightBox = ({ images }: Props) => {
                     <div role="role-images-1" className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
                         &#x274C;
                     </div>
-                    <Swipe images={images} />
+                    <div className={style.arrow}>
+                        <div className={style.right} onClick={clickRight}>
+                            &#10096;
+                        </div>
+                        <div className={style.left} onClick={clickLeft}>
+                            &#10097;
+                        </div>
+                    </div>
+
+                    <Swipe images={images} changeImage={changeImage} />
                 </div>
             ) : (
                 <>
