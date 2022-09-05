@@ -10,9 +10,9 @@ interface Props {
 }
 
 export enum Direction {
-    Start = "START",
-    Left = "LEFT",
-    Right = "RIGHT",
+    Start = 'START',
+    Left = 'LEFT',
+    Right = 'RIGHT'
 }
 
 const LightBox = ({ images }: Props) => {
@@ -41,12 +41,11 @@ const LightBox = ({ images }: Props) => {
         setLightBoxDisplay(false);
     };
     const clickRight = () => {
-        setChangeImage(Direction.Right)
-
-    }
+        setChangeImage(Direction.Right);
+    };
     const clickLeft = () => {
-        setChangeImage(Direction.Left)
-    }
+        setChangeImage(Direction.Left);
+    };
 
     return (
         <div>
@@ -56,20 +55,19 @@ const LightBox = ({ images }: Props) => {
                         &#x274C;
                     </div>
                     <div className={style.arrow}>
-                        <div className={style.right} onClick={clickRight}>
+                        <div className={style.right} onClick={clickLeft}>
                             &#10096;
                         </div>
-                        <div className={style.left} onClick={clickLeft}>
+                        <div className={style.left} onClick={clickRight}>
                             &#10097;
                         </div>
                     </div>
-
                     <Swipe images={images} changeImage={changeImage} />
                 </div>
             ) : (
                 <>
                     <div className={style.smallImg}>
-                        <img role="role-images-2" className={style.cursor} onClick={showLightBox} src={imageToShow === "" ? images[0] : imageToShow} />
+                        <img role="role-images-2" className={style.cursor} onClick={showLightBox} src={imageToShow === '' ? images[0] : imageToShow} />
                     </div>
                     {imageCards}
                 </>

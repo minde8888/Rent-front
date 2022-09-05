@@ -7,8 +7,6 @@ const productSlice = createSlice({
     initialState: {} as IResponse<Product>,
     reducers: {
         getOneProduct: (state, action: PayloadAction<IResponse<Product>>) => {
-            // console.log(action);
-
             return {
                 ...state,
                 ...action.payload
