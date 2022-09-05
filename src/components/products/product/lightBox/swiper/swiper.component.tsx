@@ -1,16 +1,14 @@
 import { useState, useCallback } from 'react';
 import useDrag from '../../../../../hooks/useDrag.hooks';
-import { Direction } from '../lightBox.component';
 import style from '../lightBox.module.scss';
 
 interface Props {
     images: Array<string> | undefined;
-    changeImage: Direction;
 }
 
-const Swipe = ({ images, changeImage }: Props) => {
+const Swipe = ({ images }: Props) => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
-    const [stateIndex, setStateIndex] = useState(0);
+    const [indexImage, setIndexImage] = useState(0);
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
 
     const { positionX, isDragging, startPositionX } = useDrag(divRef);
@@ -55,18 +53,7 @@ const Swipe = ({ images, changeImage }: Props) => {
         }
         transform = TransformPosition(imagesPixelsToHide, index, marginTop);
     }
-    if (changeImage === 'LEFT' && index > 0) {
-        console.log(changeImage);
 
-        // let a = 0;
-        // imagesPixelsToHide[++a];
-        // console.log(a);
-    }
-    if (changeImage === 'RIGHT' && index < imagesPixelsToHide.length) {
-        console.log(changeImage);
-        // let b = 0;
-        // imagesPixelsToHide[--b];
-    }
     const imageStyle = {
         width: `${window.innerWidth * 0.8}px`,
         margin: `0px ${window.innerWidth * 0.2}px`
@@ -78,10 +65,25 @@ const Swipe = ({ images, changeImage }: Props) => {
         </div>
     ));
 
+    if (indexImage > 0) {
+        transform = TransformPosition(imagesPixelsToHide, indexImage, marginTop);
+    }
+
     return (
-        <div className={style.swiper} ref={setDivRef} style={transform}>
-            {imageCards}
-        </div>
+        <>
+            <div className={style.arrow}>
+                <div className={style.right} onClick={() => index > 0 ? setIndexImage(index + 1) : 0}>
+                    &#10096;
+                </div>
+                <div className={style.left} onClick={() => index < imagesPixelsToHide.length - 1 ? setIndexImage(index - 1) : 0}>
+                    &#10097;
+                </div>
+            </div>
+            <div className={style.swiper} ref={setDivRef} style={transform}>
+                {imageCards}
+            </div>
+        </>
+
     );
 };
 
