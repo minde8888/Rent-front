@@ -9,7 +9,6 @@ interface Props {
 }
 
 const useDrag = (ref: HTMLDivElement | null): Props => {
-
     const [isDragging, setIsDragging] = useState(false);
     const [startPosition, setStartPosition] = useState({ startX: 0, startY: 0, startPositionX: 0, startPositionY: 0 });
     const [translate, setTranslate] = useState({ pageX: 0, pageY: 0 });
@@ -25,7 +24,7 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
                         startX: e.touches[0].clientX - bounds.left,
                         startY: e.touches[0].clientY - bounds.top,
                         startPositionX: e.touches[0].pageX - e.touches[0].clientX - bounds.left,
-                        startPositionY: e.touches[0].pageY - e.touches[0].clientY - bounds.top,
+                        startPositionY: e.touches[0].pageY - e.touches[0].clientY - bounds.top
                     });
                     setTranslate({
                         pageX: e.touches[0].pageX,
@@ -38,7 +37,7 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
                         startX: e.clientX - bounds.left,
                         startY: e.clientY - bounds.top,
                         startPositionX: e.pageX - e.clientX - bounds.left,
-                        startPositionY: e.pageY - e.clientY - bounds.top,
+                        startPositionY: e.pageY - e.clientY - bounds.top
                     });
                     setTranslate({
                         pageX: e.pageX,
@@ -50,12 +49,9 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
         [ref]
     );
 
-    const handlePointerUp = useCallback(
-        (e: TouchEvent | MouseEvent) => {
-            setIsDragging(false);
-        },
-        []
-    );
+    const handlePointerUp = useCallback((e: TouchEvent | MouseEvent) => {
+        setIsDragging(false);
+    }, []);
 
     const handlePointerMove = useCallback(
         (e: TouchEvent | MouseEvent) => {
@@ -77,7 +73,7 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
     );
 
     useEffect(() => {
-        if (!ref) return () => { }
+        if (!ref) return () => {};
 
         ref.addEventListener('pointerdown', handlePointerDown);
         ref.addEventListener('touchstart', handlePointerDown);
@@ -94,7 +90,6 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
             ref.removeEventListener('pointermove', handlePointerMove);
             ref.removeEventListener('touchmove', handlePointerMove);
         };
-
     }, [ref, isDragging]);
 
     const position = {
@@ -105,7 +100,8 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
     };
 
     return {
-        ...position, isDragging
+        ...position,
+        isDragging
     };
 };
 

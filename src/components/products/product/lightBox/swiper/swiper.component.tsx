@@ -64,18 +64,28 @@ const Swipe = ({ images }: Props) => {
             <img role="role-images" style={imageStyle} draggable={false} className={style.cursor} src={image} />
         </div>
     ));
-
-    if (indexImage > 0) {
-        transform = TransformPosition(imagesPixelsToHide, indexImage, marginTop);
-    }
+    const rightClick = () => {
+        if (index > 0) {
+            index -= 1;
+            transform = TransformPosition(imagesPixelsToHide, index, marginTop);
+            console.log(transform);
+        }
+    };
+    const leftClick = () => {
+        if (imagesPixelsToHide.length - 1 > index) {
+            index += 1;
+            transform = TransformPosition(imagesPixelsToHide, index, marginTop);
+            console.log(transform);
+        }
+    };
 
     return (
         <>
             <div className={style.arrow}>
-                <div className={style.right} onClick={() => index > 0 ? setIndexImage(index + 1) : 0}>
+                <div className={style.right} onClick={rightClick}>
                     &#10096;
                 </div>
-                <div className={style.left} onClick={() => index < imagesPixelsToHide.length - 1 ? setIndexImage(index - 1) : 0}>
+                <div className={style.left} onClick={leftClick}>
                     &#10097;
                 </div>
             </div>
@@ -83,7 +93,6 @@ const Swipe = ({ images }: Props) => {
                 {imageCards}
             </div>
         </>
-
     );
 };
 
