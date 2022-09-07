@@ -8,7 +8,7 @@ interface Props {
 
 const Swipe = ({ images }: Props) => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
-    const [indexImage, setIndexImage] = useState(0);
+    const [indexImage, setIndexImage] = useState({});
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
 
     const { positionX, isDragging, startPositionX } = useDrag(divRef);
@@ -68,16 +68,23 @@ const Swipe = ({ images }: Props) => {
         if (index > 0) {
             index -= 1;
             transform = TransformPosition(imagesPixelsToHide, index, marginTop);
-            console.log(transform);
+            // console.log(transform);
+            // setIndexImage(transform);
         }
     };
     const leftClick = () => {
         if (imagesPixelsToHide.length - 1 > index) {
             index += 1;
             transform = TransformPosition(imagesPixelsToHide, index, marginTop);
-            console.log(transform);
+            // console.log(transform);
+
+            // setIndexImage(transform);
         }
     };
+    // console.log(index);
+
+    // console.log(indexImage);
+    console.log(111);
 
     return (
         <>

@@ -13,8 +13,7 @@ const LightBox = ({ images }: Props) => {
     const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
     const [imageToShow, setImageToShow] = useState<string | undefined>('');
 
-
-    if (!images || images.length == 0) return null;
+    if (!images || images.length === 0) return null;
 
     const imageCards: JSX.Element[] = images.map((image: string, key: number) => (
         <div key={key}>
