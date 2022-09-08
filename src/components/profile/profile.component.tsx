@@ -14,7 +14,7 @@ const Profile: React.FC = (): JSX.Element => {
         setToggle(true);
     };
 
-    const editHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
+    const editHandler: MouseEventHandler<HTMLButtonElement> = () => {
         setToggle(false);
     };
 

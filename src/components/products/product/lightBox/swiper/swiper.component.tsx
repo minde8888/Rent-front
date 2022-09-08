@@ -8,7 +8,7 @@ interface Props {
 
 const Swipe = ({ images }: Props) => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
-    const [indexImage, setIndexImage] = useState({});
+
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
 
     const { positionX, isDragging, startPositionX } = useDrag(divRef);
@@ -64,23 +64,7 @@ const Swipe = ({ images }: Props) => {
             <img role="role-images" style={imageStyle} draggable={false} className={style.cursor} src={image} />
         </div>
     ));
-    const rightClick = () => {
-        if (index > 0) {
-            index -= 1;
-            transform = TransformPosition(imagesPixelsToHide, index, marginTop);
-            // console.log(transform);
-            // setIndexImage(transform);
-        }
-    };
-    const leftClick = () => {
-        if (imagesPixelsToHide.length - 1 > index) {
-            index += 1;
-            transform = TransformPosition(imagesPixelsToHide, index, marginTop);
-            // console.log(transform);
 
-            // setIndexImage(transform);
-        }
-    };
     // console.log(index);
 
     // console.log(indexImage);
@@ -88,14 +72,15 @@ const Swipe = ({ images }: Props) => {
 
     return (
         <>
-            <div className={style.arrow}>
+            {/* <div className={style.arrow}>
                 <div className={style.right} onClick={rightClick}>
                     &#10096;
                 </div>
                 <div className={style.left} onClick={leftClick}>
                     &#10097;
                 </div>
-            </div>
+            </div> */}
+            <Arrows index={index} imagesPixelsToHide={imagesPixelsToHide} marginTop={marginTop} />
             <div className={style.swiper} ref={setDivRef} style={transform}>
                 {imageCards}
             </div>
@@ -118,6 +103,52 @@ function TransformPosition(imagesPixelsToHide: number[], index: number, marginTo
         transform: `translateX(${imagesPixelsToHide[index]}px) translateY(${marginTop}px)`,
         ...{ transition: 'transform 350ms ease-in-out 15ms' }
     };
+}
+
+interface ArrowProps {
+    index: number;
+    imagesPixelsToHide: number[];
+    marginTop: number;
+}
+
+function Arrows({ index, imagesPixelsToHide, marginTop }: ArrowProps) {
+    const [indexImage, setIndexImage] = useState({});
+    const rightClick = () => {
+        if (index > 0) {
+            index -= 1;
+            console.log(index);
+            // setIndexImage(TransformPosition(imagesPixelsToHide, index, marginTop));
+            // console.log(transform);
+            // setIndexImage(transform);
+            // setIndexImage((prevState) => ({
+            //     ...prevState,
+            //     transform
+            // }));
+        }
+    };
+    const leftClick = () => {
+        if (imagesPixelsToHide.length - 1 > index) {
+            index += 1;
+            console.log(index);
+
+            // setIndexImage(TransformPosition(imagesPixelsToHide, index, marginTop));
+            // console.log(transform);
+
+            // setIndexImage(transform);
+        }
+    };
+    console.log(indexImage);
+
+    return (
+        <div className={style.arrow}>
+            <div className={style.right} onClick={rightClick}>
+                &#10096;
+            </div>
+            <div className={style.left} onClick={leftClick}>
+                &#10097;
+            </div>
+        </div>
+    );
 }
 
 export default Swipe;

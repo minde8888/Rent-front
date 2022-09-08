@@ -18,10 +18,6 @@ interface FormValues extends Product {
     productName: string;
 }
 
-// interface valueType {
-//     [key: string]: string | [];
-// }
-
 const ProfileEdit = (props: FormikProps<FormValues>) => {
     const { errors, isSubmitting, setFieldValue } = props;
 

@@ -5,10 +5,9 @@ import { getOneProduct } from '../../../redux/slice/productSlice';
 import { useEffect } from 'react';
 import LightBox from './lightBox/lightBox.component';
 
-const Product = () => {
+const Product: React.FC = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
-    const product = useAppSelector((state) => state.data.product);
 
     useEffect(() => {
         (async () => {
@@ -18,6 +17,8 @@ const Product = () => {
             }
         })();
     }, []);
+
+    const product = useAppSelector((state) => state.data.product);
 
     if (Object.keys(product).length === 0) return null;
 
@@ -29,7 +30,7 @@ const Product = () => {
             <div>{product.$values[0].postsDto.productName}</div>
             <div>{product.$values[0].postsDto.content}</div>
             <div>{product.$values[0].size}</div>
-            <LightBox images={product.$values[0].imageSrc.$values} id={id} showLightBox={(): void => { }} closeLightBox={(): void => { }} />
+            <LightBox images={product.$values[0].imageSrc.$values} id={id} showLightBox={(): void => {}} closeLightBox={(): void => {}} />
         </div>
     );
 };

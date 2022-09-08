@@ -10,7 +10,7 @@ import style from './products.module.scss';
 const Products: React.FC = () => {
     const dispatch = useAppDispatch();
     const products = useAppSelector((state) => state.data.products);
-    const [toggle, setToggle] = useState("");
+    const [toggle, setToggle] = useState<string>('');
 
     useEffect(() => {
         (async () => {
@@ -32,7 +32,7 @@ const Products: React.FC = () => {
 
     const passToggle = (e: React.MouseEvent<HTMLButtonElement>, value: string): void => {
         setToggle(value);
-    }
+    };
 
     return (
         <div className={style.container}>
@@ -57,15 +57,12 @@ const Products: React.FC = () => {
                                     <div> {data.size}</div>
                                     <div> {data.price}</div>
                                 </Link>
-                                <button onClick={(e) => passToggle(e, data.productCode)}>
-                                    Contact
-                                </button>
-                                {toggle === data.productCode && (<Contact setToggle={setToggle} phone={data.productCode} id={data.productsId} />)}
+                                <button onClick={(e) => passToggle(e, data.productCode)}>Contact</button>
+                                {toggle === data.productCode && <Contact setToggle={setToggle} phone={data.productCode} id={data.productsId} />}
                             </div>
                         </div>
                     ))}
                 </div>
-
             </div>
         </div>
     );
