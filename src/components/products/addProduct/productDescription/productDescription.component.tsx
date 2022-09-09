@@ -8,11 +8,12 @@ interface Props {
     place?: string;
     price?: string;
     size?: string;
-    productCode?: string;
+    phone?: string;
+    email?: string;
     category?: string;
 }
 
-const ProductDescription = ({ productName, size, price, place, category, productCode }: Props) => {
+const ProductDescription = ({ productName, size, price, place, category, phone, email }: Props) => {
     const cat = ['Roles.user', 'Roles.customer'];
     const CategoryOptions = cat.map((r, key) => (
         <option value={r} key={key}>
@@ -29,7 +30,10 @@ const ProductDescription = ({ productName, size, price, place, category, product
                 <TextArea className={style.profileTextArea} label="Product description" name="productDescription" rows="20" />
                 <div className={style.numberItems}>
                     <div className={style.profileInputNumber}>
-                        <TextField label="Product code" className={style.numberItem} id="productCode" name="productCode" placeholder="productCode" value={productCode} />
+                        <TextField label="Phone" className={style.numberItem} id="phone" name="phone" placeholder="phone" value={phone} />
+                    </div>
+                    <div className={style.profileInputNumber}>
+                        <TextField label="Email" className={style.numberItem} id="email" name="email" placeholder="email" value={email} />
                     </div>
                     <div className={style.profileInputNumber}>
                         <TextField label="Size" className={style.numberItem} id="size" name="size" placeholder="size" value={size} />

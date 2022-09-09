@@ -39,7 +39,7 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
         }
     };
 
-    const { productName, price, place, productCode, category } = props.values;
+    const { productName, price, place, phone, category } = props.values;
 
     return (
         <div className={style.container}>
@@ -48,7 +48,7 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
                     <UploadProductImages getImages={getImagesData} />
                 </div>
                 <div className={style.columns}>
-                    <ProductDescription productName={productName} price={price} place={place} productCode={productCode} category={category} />
+                    <ProductDescription productName={productName} price={price} place={place} phone={phone} category={category} />
                     <div className={style.saveProduct}>
                         <button type="submit" disabled={isSubmitting}>
                             Save
@@ -71,7 +71,8 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             price: props.price || '',
             size: props.size || '',
             place: props.place || '',
-            productCode: props.productCode || '',
+            phone: props.phone || '',
+            email: props.email || '',
             category: props.category || '',
             sellerId: props.sellerId || ''
         };
@@ -84,12 +85,17 @@ const ProductForm = withFormik<ProductProps, FormValues>({
         price: Yup.string(),
         size: Yup.string(),
         place: Yup.string(),
-        productCode: Yup.string(),
+        phone: Yup.string()
+            .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/, 'Phone number is not valid')
+            .min(11, 'Must be 10 characters')
+            .max(11, 'Must be 10 characters'),
+        email: Yup.string().email('Email not valid').required('Email is required'),
         category: Yup.string(),
         sellerId: Yup.string()
     }),
     handleSubmit: async (values: any, { setErrors }) => {
         let formData = new FormData();
+        console.log(values);
 
         for (const key in values) {
             if (Object.prototype.hasOwnProperty.call(values, key) && typeof values[key] === 'string') {
@@ -98,7 +104,6 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             if (Array.isArray(values[key])) {
                 for (var val in values[key]) {
                     formData.append(`images`, values[key][val].file);
-                    // imageName += values[key][val].file.name + ',';
                 }
             }
         }

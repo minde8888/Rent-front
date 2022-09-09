@@ -10,7 +10,8 @@ export interface Product {
     price?: string;
     place?: string;
     size?: string;
-    productCode?: string;
+    phone?: string;
+    email?: string;
     category?: string;
 }
 

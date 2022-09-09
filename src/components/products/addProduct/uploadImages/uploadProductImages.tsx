@@ -12,7 +12,6 @@ interface Images {
 export interface ImageError {
     imageFile: string;
 }
-interface ImagesFiles extends File { }
 
 const UploadProductImages = ({ getImages }: Images) => {
     const [images, setImages] = React.useState([]);
@@ -33,9 +32,10 @@ const UploadProductImages = ({ getImages }: Images) => {
 
                     <div className={style.upload_image}>
                         <div className={style.clickDrop} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
-                            <div>Click or Drop image here</div>
+                            <div>Click or Drop image here </div>
                             <img className={style.image_show} src={temp_image} alt="" width="100" />
                         </div>
+
                         {imageList.map((image, index) => (
                             <div key={index} className={style.image_item}>
                                 <img className={style.image_show} src={image['data_url']} alt="" width="100" />

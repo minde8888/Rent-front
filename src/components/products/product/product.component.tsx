@@ -26,11 +26,12 @@ const Product: React.FC = () => {
         <div>
             <div>{product.$values[0].place}</div>
             <div>{product.$values[0].price}</div>
-            <div>{product.$values[0].productCode}</div>
+            <div>{product.$values[0].phone}</div>
+            <div>{product.$values[0].email}</div>
             <div>{product.$values[0].postsDto.productName}</div>
             <div>{product.$values[0].postsDto.content}</div>
-            <div>{product.$values[0].size}</div>
-            <LightBox images={product.$values[0].imageSrc.$values} id={id} showLightBox={(): void => {}} closeLightBox={(): void => {}} />
+            <div>{product.$values[0].size}m<sup>2</sup></div>
+            <LightBox images={product.$values[0].imageSrc.$values} id={id} showLightBox={(): void => { }} closeLightBox={(): void => { }} />
         </div>
     );
 };

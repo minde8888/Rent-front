@@ -50,15 +50,16 @@ const Products: React.FC = () => {
                             </Link>
                             <div className={style.description}>
                                 <Link to={data.productsId}>
-                                    <div> {data.productCode}</div>
+                                    <div> {data.phone}</div>
+                                    <div> {data.email}</div>
                                     <div> {data.postsDto.productName}</div>
                                     <div className={style.text}> {data.postsDto.content}</div>
                                     <div> {data.place}</div>
-                                    <div> {data.size}</div>
+                                    <div> {data.size}m<sup>2</sup></div>
                                     <div> {data.price}</div>
                                 </Link>
-                                <button onClick={(e) => passToggle(e, data.productCode)}>Contact</button>
-                                {toggle === data.productCode && <Contact setToggle={setToggle} phone={data.productCode} id={data.productsId} />}
+                                <button onClick={(e) => passToggle(e, data.phone)}>Contact</button>
+                                {toggle === data.phone && <Contact setToggle={setToggle} phone={data.phone} id={data.productsId} />}
                             </div>
                         </div>
                     ))}

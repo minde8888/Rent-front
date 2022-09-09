@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './route/protectedRoute';
 import { Roles } from './auth/roles/roles.const';

@@ -18,7 +18,7 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
             setIsDragging(true);
             const bounds = ref?.getBoundingClientRect();
 
-            if (e instanceof TouchEvent) {
+            if ('TouchEvent' in window && e instanceof TouchEvent) {
                 if (bounds !== undefined) {
                     setStartPosition({
                         startX: e.touches[0].clientX - bounds.left,
@@ -32,7 +32,7 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
                     });
                 }
             } else {
-                if (bounds !== undefined) {
+                if (bounds !== undefined && e instanceof MouseEvent) {
                     setStartPosition({
                         startX: e.clientX - bounds.left,
                         startY: e.clientY - bounds.top,
@@ -56,12 +56,12 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
     const handlePointerMove = useCallback(
         (e: TouchEvent | MouseEvent) => {
             if (isDragging) {
-                if (e instanceof TouchEvent) {
+                if ('TouchEvent' in window && e instanceof TouchEvent) {
                     setTranslate({
                         pageX: e.touches[0].pageX,
                         pageY: e.touches[0].pageY
                     });
-                } else {
+                } else if (e instanceof MouseEvent) {
                     setTranslate({
                         pageX: e.pageX,
                         pageY: e.pageY
@@ -73,7 +73,7 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
     );
 
     useEffect(() => {
-        if (!ref) return () => {};
+        if (!ref) return () => { };
 
         ref.addEventListener('pointerdown', handlePointerDown);
         ref.addEventListener('touchstart', handlePointerDown);

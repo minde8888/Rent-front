@@ -2,7 +2,8 @@ export interface Product {
     imageName: string;
     place: string;
     price: string;
-    productCode: string;
+    phone: string;
+    email: string;
     size: string;
     productsId: string;
     sellerId: string;
@@ -13,7 +14,7 @@ export interface Product {
 
 interface Images {
     $id: string;
-    $values?: Array<string>;
+    $values?: string[];
 }
 
 interface Categories {

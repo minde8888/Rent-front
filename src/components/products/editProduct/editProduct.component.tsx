@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik';
-import { useCallback, useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { getOneProduct } from '../../../redux/slice/productSlice';
 import { getProduct } from '../../../services/products.services/products.services';
@@ -11,26 +11,27 @@ import { TextArea } from '../../validation/textArea';
 interface FormValues {
     place: string;
     price: string;
-    productCode: string;
     size: string;
+    phone: string;
+    email: string;
     productName: string;
     content: string;
+    imageSrc: string[] | undefined;
 }
 
-interface Props {
+interface Props extends FormValues {
     onSubmit: (values: FormValues) => Promise<void>;
-    place: string;
-    price: string;
-    size: string;
-    productCode: string;
-    productName: string;
-    content: string;
+
 }
 
 export const InnerForm = (props: Props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { isLoggedIn, error } = useAppSelector((state) => state.data.auth);
+    const onFileChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
+        const { files } = e.target;
+        console.log(index);
 
+    }
     const handleSubmit = useCallback(
         async (values: FormValues) => {
             setIsSubmitting(true);
@@ -45,10 +46,12 @@ export const InnerForm = (props: Props) => {
             initialValues={{
                 place: '',
                 price: '',
-                productCode: '',
+                phone: '',
+                email: '',
                 size: '',
                 productName: '',
-                content: ''
+                content: '',
+                imageSrc: []
             }}
             onSubmit={handleSubmit}
             validationSchema={Yup.object().shape({
@@ -61,9 +64,18 @@ export const InnerForm = (props: Props) => {
             })}
         >
             <Form>
+                {props.imageSrc !== undefined ? props.imageSrc.map((element, key) => (
+                    <div key={key}>
+                        <img src={element} alt="image" />
+                        <input type="file" onChange={e => onFileChange(e, key)} />
+                        <button>❌</button>
+                    </div>
+                )) : null};
+
                 <TextField label="Place" name="place" type="place" />
                 <TextField label="Price" name="price" type="price" />
-                <TextField label="ProductCode" name="productCode" type="productCode" />
+                <TextField label="Phone" name="phone" type="phone" />
+                <TextField label="mail" name="email" type="email" />
                 <TextField label="Size" name="size" type="size" />
                 <TextField label="ProductName" name="productName" type="productName" />
                 <TextArea className={'style.profileTextArea'} label="Content" name="content" rows="20" />
@@ -121,9 +133,11 @@ const EditProduct: React.FC = () => {
                 place={product.$values[0].place}
                 price={product.$values[0].price}
                 size={product.$values[0].size}
-                productCode={product.$values[0].productCode}
+                phone={product.$values[0].phone}
+                email={product.$values[0].email}
                 productName={product.$values[0].postsDto.productName}
                 content={product.$values[0].postsDto.content}
+                imageSrc={product.$values[0].imageSrc.$values}
             />
         </div>
     );

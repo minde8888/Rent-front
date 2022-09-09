@@ -68,7 +68,6 @@ const Swipe = ({ images }: Props) => {
     // console.log(index);
 
     // console.log(indexImage);
-    console.log(111);
 
     return (
         <>
@@ -137,7 +136,7 @@ function Arrows({ index, imagesPixelsToHide, marginTop }: ArrowProps) {
             // setIndexImage(transform);
         }
     };
-    console.log(indexImage);
+    // console.log(indexImage);
 
     return (
         <div className={style.arrow}>
