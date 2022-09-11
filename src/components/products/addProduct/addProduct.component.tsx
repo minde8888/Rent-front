@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import style from './addProduct.module.scss';
-import UploadProductImages from '../addProduct/uploadImages/uploadProductImages';
+import UploadProductImages from './uploadImages/uploadProductImages.component';
 import { Product, ImageData } from '../typings';
 import ProductDescription from './productDescription/productDescription.component';
 import { addProduct } from '../../../services/products.services/products.services';
@@ -18,8 +18,7 @@ interface FormValues extends Product {
     productName: string;
 }
 
-const ProfileEdit = (props: FormikProps<FormValues>) => {
-    const { errors, isSubmitting, setFieldValue } = props;
+const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProps<FormValues>) => {
 
     const getImagesData = async (files: [ImageData]): Promise<void> => {
         let arrayImageWidth: number[] = [];
@@ -39,7 +38,7 @@ const ProfileEdit = (props: FormikProps<FormValues>) => {
         }
     };
 
-    const { productName, price, place, phone, category } = props.values;
+    const { productName, price, place, phone, category } = values;
 
     return (
         <div className={style.container}>

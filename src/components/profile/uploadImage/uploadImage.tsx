@@ -11,7 +11,7 @@ export interface ImageError {
     imageFile: string;
 }
 
-const UploadProfileImage = ({ getImage, imageSrc }: Image) => {
+const UploadImage = ({ getImage, imageSrc }: Image) => {
     const [images, setImages] = React.useState([]);
 
     const onChange = (imageList: ImageListType) => {
@@ -47,4 +47,4 @@ const UploadProfileImage = ({ getImage, imageSrc }: Image) => {
     );
 };
 
-export default UploadProfileImage;
+export default UploadImage;

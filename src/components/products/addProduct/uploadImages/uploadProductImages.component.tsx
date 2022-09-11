@@ -6,17 +6,15 @@ import close from '../../../../svg/3830967_close_closed_cross_delete_remove_icon
 import upload from '../../../../svg/1904676_arrow_backup_cloud_hosting_storage_icon.svg';
 import temp_image from '../../../../svg/2955250_cloud_cloud upload_upload_computing_data_icon.svg';
 
-interface Images {
+interface ImagesProps {
     getImages: (ImageData: [ImageData]) => void;
 }
 export interface ImageError {
     imageFile: string;
 }
 
-const UploadProductImages = ({ getImages }: Images) => {
+const UploadProductImages = ({ getImages }: ImagesProps) => {
     const [images, setImages] = React.useState([]);
-
-    const maxNumber = 10;
 
     const onChange = (imageList: ImageListType): void => {
         if (imageList.length !== 0) {
@@ -27,7 +25,7 @@ const UploadProductImages = ({ getImages }: Images) => {
 
     return (
         <div className={style.image}>
-            <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']} >
+            <ImageUploading multiple value={images} onChange={onChange} maxNumber={10} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']} >
                 {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
 
                     <div className={style.upload_image}>
@@ -35,7 +33,6 @@ const UploadProductImages = ({ getImages }: Images) => {
                             <div>Click or Drop image here </div>
                             <img className={style.image_show} src={temp_image} alt="" width="100" />
                         </div>
-
                         {imageList.map((image, index) => (
                             <div key={index} className={style.image_item}>
                                 <img className={style.image_show} src={image['data_url']} alt="" width="100" />

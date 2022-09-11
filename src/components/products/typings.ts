@@ -1,4 +1,4 @@
-import { ImageError } from './addProduct/uploadImages/uploadProductImages';
+import { ImageError } from './addProduct/uploadImages/uploadProductImages.component';
 
 export interface Product {
     sellerId: string;

@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { getOneProduct } from '../../../redux/slice/productSlice';
@@ -7,39 +7,62 @@ import { getProduct } from '../../../services/products.services/products.service
 import * as Yup from 'yup';
 import { TextField } from '../../validation/textField';
 import { TextArea } from '../../validation/textArea';
+import UploadImages from './uploadImages/uploadImages.component';
+import { imageResize } from '../../../helpers/imageResize.helper';
+import { ImageData } from '../typings';
 
 interface FormValues {
-    place: string;
+    place?: string;
     price: string;
     size: string;
     phone: string;
     email: string;
     productName: string;
-    content: string;
-    imageSrc: string[] | undefined;
+    content?: string;
+    imageSrc?: string[];
 }
 
 interface Props extends FormValues {
     onSubmit: (values: FormValues) => Promise<void>;
-
+    setFieldValue: React.Dispatch<React.SetStateAction<PropState>>;
 }
 
-export const InnerForm = (props: Props) => {
+export const InnerForm = ({ imageSrc, onSubmit, setFieldValue }: Props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { isLoggedIn, error } = useAppSelector((state) => state.data.auth);
-    const onFileChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
-        const { files } = e.target;
-        console.log(index);
 
-    }
+
+    const getImagesData = async (files: [ImageData]): Promise<void> => {
+        let arrayImageWidth: number[] = [];
+        let arrayImageHeight: number[] = [];
+
+        if (Object.keys(files).length !== 0) {
+
+
+            files.map(async (e) => {
+                const image = await imageResize(e.file, 'Product_image');
+                if (image?.width !== undefined && image?.height !== undefined) {
+                    arrayImageWidth.push(image.width);
+                    arrayImageHeight.push(image.height);
+                    setFieldValue({
+                        file: files,
+                        imageWidth: arrayImageWidth.toString(),
+                        imageHeight: arrayImageHeight.toString()
+                    });
+                }
+            });
+        }
+    };
+
     const handleSubmit = useCallback(
         async (values: FormValues) => {
             setIsSubmitting(true);
-            await props.onSubmit(values);
+            await onSubmit(values);
             setIsSubmitting(false);
         },
-        [props.onSubmit]
+        [onSubmit]
     );
+
 
     return (
         <Formik
@@ -64,14 +87,7 @@ export const InnerForm = (props: Props) => {
             })}
         >
             <Form>
-                {props.imageSrc !== undefined ? props.imageSrc.map((element, key) => (
-                    <div key={key}>
-                        <img src={element} alt="image" />
-                        <input type="file" onChange={e => onFileChange(e, key)} />
-                        <button>❌</button>
-                    </div>
-                )) : null};
-
+                <UploadImages imageSrc={imageSrc} getImages={getImagesData} />
                 <TextField label="Place" name="place" type="place" />
                 <TextField label="Price" name="price" type="price" />
                 <TextField label="Phone" name="phone" type="phone" />
@@ -92,9 +108,20 @@ export const InnerForm = (props: Props) => {
     );
 };
 
+interface PropState {
+    file: Array<ImageData>;
+    imageWidth: string;
+    imageHeight: string;
+}
+
 const EditProduct: React.FC = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
+    const [fieldValue, setFieldValue] = useState<PropState>({
+        file: [],
+        imageWidth: '',
+        imageHeight: ''
+    });
 
     useEffect(() => {
         (async () => {
@@ -110,8 +137,10 @@ const EditProduct: React.FC = () => {
     if (Object.keys(product).length === 0) return null;
 
     const handleSubmit = async (values: FormValues) => {
-        console.log(id);
-        console.log(values);
+        // console.log(id);
+        // console.log(values);
+        console.log(fieldValue);
+
 
         // try {
         //     const user = await login(values.email, values.password);
@@ -129,6 +158,7 @@ const EditProduct: React.FC = () => {
     return (
         <div>
             <InnerForm
+                setFieldValue={setFieldValue}
                 onSubmit={handleSubmit}
                 place={product.$values[0].place}
                 price={product.$values[0].price}
