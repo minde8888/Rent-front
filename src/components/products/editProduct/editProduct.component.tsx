@@ -31,14 +31,11 @@ export const InnerForm = ({ imageSrc, onSubmit, setFieldValue }: Props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { isLoggedIn, error } = useAppSelector((state) => state.data.auth);
 
-
     const getImagesData = async (files: [ImageData]): Promise<void> => {
         let arrayImageWidth: number[] = [];
         let arrayImageHeight: number[] = [];
 
         if (Object.keys(files).length !== 0) {
-
-
             files.map(async (e) => {
                 const image = await imageResize(e.file, 'Product_image');
                 if (image?.width !== undefined && image?.height !== undefined) {
@@ -63,6 +60,13 @@ export const InnerForm = ({ imageSrc, onSubmit, setFieldValue }: Props) => {
         [onSubmit]
     );
 
+    let newData: Array<{ file?: File; data_url: string }> = [];
+
+    if (imageSrc !== undefined) {
+        for (let i = 0; i < imageSrc.length; i++) {
+            newData = [...newData, { file: undefined, data_url: imageSrc[i] }];
+        }
+    }
 
     return (
         <Formik
@@ -87,7 +91,7 @@ export const InnerForm = ({ imageSrc, onSubmit, setFieldValue }: Props) => {
             })}
         >
             <Form>
-                <UploadImages imageSrc={imageSrc} getImages={getImagesData} />
+                <UploadImages imageSrc={newData} getImages={getImagesData} />
                 <TextField label="Place" name="place" type="place" />
                 <TextField label="Price" name="price" type="price" />
                 <TextField label="Phone" name="phone" type="phone" />
@@ -140,7 +144,6 @@ const EditProduct: React.FC = () => {
         // console.log(id);
         // console.log(values);
         console.log(fieldValue);
-
 
         // try {
         //     const user = await login(values.email, values.password);

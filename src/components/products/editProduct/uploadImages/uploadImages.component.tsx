@@ -1,25 +1,33 @@
+import { Blob } from 'buffer';
 import { ChangeEvent, useState } from 'react';
-import ImageUploading, { ImageListType, ImageType } from 'react-images-uploading';
+import ImageUploading, { ImageListType } from 'react-images-uploading';
 import { ImageData } from '../../typings';
-import style from './uploadImages.module.scss'
+import product from '../../../../svg/3615746_checklist_clipboard_package_report_restriction_icon.svg';
+import style from './uploadImages.module.scss';
 
 interface Props {
-    imageSrc?: string[];
+    imageSrc?: Array<{ file?: File; data_url: string }>;
     getImages: (ImageData: [ImageData]) => void;
 }
 
-interface stateProps {
-    image: string[];
-    file?: File;
-}
+// interface stateProps {
+//     image: string[];
+//     file?: File;
+// }
 
 const UploadImages = ({ imageSrc, getImages }: Props) => {
-
     const [images, setImages] = useState<Array<ImageData>>([]);
-    const [imgSrc, setImgSrc] = useState<stateProps>({
-        image: imageSrc !== undefined ? imageSrc : [],
-        file: undefined
-    })
+    const [imgSrc, setImgSrc] = useState<Array<{ file?: File; data_url?: string }>>([]);
+
+    // let newData: Array<{ file?: File; data_url?: string }> = [];
+
+    // if (imageSrc !== undefined) {
+    //     for (let i = 0; i < imageSrc.length; i++) {
+    //         newData = [...newData, { file: undefined, data_url: imageSrc[i] }];
+    //     }
+    // }
+    // // console.log(imageSrc);
+    // console.log(imgSrc);
 
     const onChange = (imageList: ImageListType) => {
         if (imageList.length !== 0) {
@@ -34,25 +42,28 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             const file = target.files[0];
             const fr = new FileReader();
             fr.onload = (data) => {
-                if (data.target !== null && typeof data.target.result === "string") {
-                    let newState = stateUpdate(imgSrc.image, data.target.result, index)
-                    setImgSrc({
-                        image: newState,
-                        file: file
-                    })
+                if (data.target !== null && typeof data.target.result === 'string' && imgSrc[0].data_url !== undefined) {
+                    // let newState = stateUpdate(imgSrc[0].data_url, data.target.result, index);
+                    // // console.log([{ ...newState }]);
+                    // setImgSrc({
+                    //     image: newState,
+                    //     file: file
+                    // });
                 }
-            }
+            };
             fr.readAsDataURL(file);
         }
-    }
+    };
 
     const removeImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number): void => {
-        const newState = imgSrc.image.filter(element => !imgSrc.image[index].includes(element));
-        setImgSrc({ image: newState })
-    }
-    console.log(imgSrc);
-    console.log(images);
-
+        const newState = imageSrc?.filter((element) => {
+            return !element.data_url.includes(imageSrc[index].data_url);
+        });
+        console.log(newState);
+        // setImgSrc(newState);
+    };
+    // console.log(imgSrc);
+    // console.log(images);
 
     // if (imgSrc.file !== undefined) {
     //     getImages({ ...images.files, ...imgSrc.file });
@@ -60,34 +71,28 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
 
     // } getImages(images.files);
 
-
     return (
         <>
-            {imgSrc.image.map((element, key) => (
+            {imageSrc?.map((element, key) => (
                 <div key={key}>
-                    <img src={element} alt="image" width="600" />
-                    <input type="file" onChange={e => onFileChange(e, key)} />
-                    <button className={style.close} onClick={e => removeImage(e, key)} type="button">❌</button>
+                    <img src={element.data_url === undefined ? product : element.data_url} alt="image" width="600" />
+                    <input type="file" onChange={(e) => onFileChange(e, key)} />
+                    <button className={style.close} onClick={(e) => removeImage(e, key)} type="button">
+                        ❌
+                    </button>
                 </div>
-
             ))}
 
-            <div className={style.container} >
-                <ImageUploading multiple value={images} onChange={onChange} maxNumber={10} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']} >
+            <div className={style.container}>
+                <ImageUploading multiple value={images} onChange={onChange} maxNumber={10} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']}>
                     {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
-
                         <div className={style.upload_image}>
-
                             {imageList.map((image, index) => (
                                 <div key={index} className={style.image_item}>
                                     <img className={style.image_show} src={image['data_url']} alt="" width="600" />
                                     <div className={style.image_btn_wrapper}>
-                                        <span onClick={() => onImageUpdate(index)}>
-                                            add
-                                        </span>
-                                        <span onClick={() => onImageRemove(index)}>
-                                            ❌
-                                        </span>
+                                        <span onClick={() => onImageUpdate(index)}>add</span>
+                                        <span onClick={() => onImageRemove(index)}>❌</span>
                                     </div>
                                 </div>
                             ))}
@@ -103,15 +108,13 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
                         </div>
                     )}
                 </ImageUploading>
-
             </div>
-
         </>
-    )
-}
+    );
+};
 
 function stateUpdate(array: string[], newItem: string, index: number): string[] {
-    return array.map((item, i) => i === index ? newItem : item);
+    return array.map((item, i) => (i === index ? newItem : item));
 }
 
 export default UploadImages;
