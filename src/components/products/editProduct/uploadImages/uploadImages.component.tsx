@@ -1,4 +1,3 @@
-import { Blob } from 'buffer';
 import { ChangeEvent, useState } from 'react';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
 import { ImageData } from '../../typings';
@@ -10,24 +9,9 @@ interface Props {
     getImages: (ImageData: [ImageData]) => void;
 }
 
-// interface stateProps {
-//     image: string[];
-//     file?: File;
-// }
-
 const UploadImages = ({ imageSrc, getImages }: Props) => {
     const [images, setImages] = useState<Array<ImageData>>([]);
-    const [imgSrc, setImgSrc] = useState<Array<{ file?: File; data_url: string }> | undefined>([]);
-
-    // let newData: Array<{ file?: File; data_url?: string }> = [];
-
-    // if (imageSrc !== undefined) {
-    //     for (let i = 0; i < imageSrc.length; i++) {
-    //         newData = [...newData, { file: undefined, data_url: imageSrc[i] }];
-    //     }
-    // }
-    // // console.log(imageSrc);
-    // console.log(imgSrc);
+    const [imgSrc, setImgSrc] = useState<Array<{ file?: File; data_url: string }> | undefined>(imageSrc);
 
     const onChange = (imageList: ImageListType) => {
         if (imageList.length !== 0) {
@@ -43,7 +27,7 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             const fr = new FileReader();
             fr.onload = (data) => {
                 if (data.target !== null && typeof data.target.result === 'string' && imgSrc !== undefined) {
-                    // let newState = stateUpdate(imgSrc[0].data_url, data.target.result, index);
+                    // let newState = stateUpdate(imgSrc, data.target.result, file, index);
                     // // console.log([{ ...newState }]);
                     // setImgSrc({
                     //     image: newState,
@@ -57,24 +41,15 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
     console.log(11111);
 
     const removeImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number): void => {
-        const newState = imageSrc?.filter((element) => !element.data_url.includes(imageSrc[index].data_url));
-        console.log(newState);
-        // setImgSrc(newState);
+        const newState = imgSrc?.filter((element) => !element.data_url.includes(imgSrc[index].data_url));
+        setImgSrc(newState);
     };
 
-    //    console.log(newState);
-    // console.log(imgSrc);
-    // console.log(images);
-
-    // if (imgSrc.file !== undefined) {
-    //     getImages({ ...images.files, ...imgSrc.file });
-    // } else {
-
-    // } getImages(images.files);
+    console.log(imgSrc);
 
     return (
         <>
-            {imageSrc?.map((element, key) => (
+            {imgSrc?.map((element, key) => (
                 <div key={key}>
                     <img src={element.data_url === undefined ? product : element.data_url} alt="image" width="600" />
                     <input type="file" onChange={(e) => onFileChange(e, key)} />
