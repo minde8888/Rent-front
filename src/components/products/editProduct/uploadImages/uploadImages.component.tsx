@@ -17,7 +17,7 @@ interface Props {
 
 const UploadImages = ({ imageSrc, getImages }: Props) => {
     const [images, setImages] = useState<Array<ImageData>>([]);
-    const [imgSrc, setImgSrc] = useState<Array<{ file?: File; data_url?: string }>>([]);
+    const [imgSrc, setImgSrc] = useState<Array<{ file?: File; data_url: string }> | undefined>([]);
 
     // let newData: Array<{ file?: File; data_url?: string }> = [];
 
@@ -42,7 +42,7 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             const file = target.files[0];
             const fr = new FileReader();
             fr.onload = (data) => {
-                if (data.target !== null && typeof data.target.result === 'string' && imgSrc[0].data_url !== undefined) {
+                if (data.target !== null && typeof data.target.result === 'string' && imgSrc !== undefined) {
                     // let newState = stateUpdate(imgSrc[0].data_url, data.target.result, index);
                     // // console.log([{ ...newState }]);
                     // setImgSrc({
@@ -54,14 +54,15 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             fr.readAsDataURL(file);
         }
     };
+    console.log(11111);
 
     const removeImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number): void => {
-        const newState = imageSrc?.filter((element) => {
-            return !element.data_url.includes(imageSrc[index].data_url);
-        });
+        const newState = imageSrc?.filter((element) => !element.data_url.includes(imageSrc[index].data_url));
         console.log(newState);
         // setImgSrc(newState);
     };
+
+    //    console.log(newState);
     // console.log(imgSrc);
     // console.log(images);
 
