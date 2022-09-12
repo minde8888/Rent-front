@@ -27,7 +27,9 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             const fr = new FileReader();
             fr.onload = (data) => {
                 if (data.target !== null && typeof data.target.result === 'string' && imgSrc !== undefined) {
-                    // let newState = stateUpdate(imgSrc, data.target.result, file, index);
+                    let item = data.target.result;
+                    let newState = stateUpdate({ imgSrc, item, file, index });
+                    //data.target.result, file,, index
                     // // console.log([{ ...newState }]);
                     // setImgSrc({
                     //     image: newState,
@@ -38,7 +40,6 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             fr.readAsDataURL(file);
         }
     };
-    console.log(11111);
 
     const removeImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number): void => {
         const newState = imgSrc?.filter((element) => !element.data_url.includes(imgSrc[index].data_url));
@@ -89,8 +90,20 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
     );
 };
 
-function stateUpdate(array: string[], newItem: string, index: number): string[] {
-    return array.map((item, i) => (i === index ? newItem : item));
+interface UpdateState {
+    imgSrc: Array<{ file?: File; data_url: string }>;
+    item: string;
+    file: File;
+    index: number
+}
+function stateUpdate({ imgSrc, item, file, index }: UpdateState): Array<{ file?: File; data_url: string }> {
+    // const newState = imgSrc.map((e, i) => (i === index ? (e.file = file, e.data_url = item) : (e.file, e.data_url)))
+    // console.log(newState);
+
+
+
+    return imgSrc
+    //.map((item, i) => (i === index ? newItem : item));
 }
 
 export default UploadImages;
