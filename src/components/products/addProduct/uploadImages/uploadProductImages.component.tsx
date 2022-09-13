@@ -1,13 +1,13 @@
 import React from 'react';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
-import { ImageData } from '../../typings';
+import { ImageFiles } from '../../typings';
 import style from '../uploadImages/uploadProductImages.module.scss';
 import close from '../../../../svg/3830967_close_closed_cross_delete_remove_icon.svg';
 import upload from '../../../../svg/1904676_arrow_backup_cloud_hosting_storage_icon.svg';
 import temp_image from '../../../../svg/2955250_cloud_cloud upload_upload_computing_data_icon.svg';
 
 interface ImagesProps {
-    getImages: (ImageData: [ImageData]) => void;
+    getImages: (ImageData: Array<ImageFiles>) => void;
 }
 export interface ImageError {
     imageFile: string;
@@ -19,15 +19,14 @@ const UploadProductImages = ({ getImages }: ImagesProps) => {
     const onChange = (imageList: ImageListType): void => {
         if (imageList.length !== 0) {
             setImages(imageList as []);
-            getImages(imageList as [ImageData]);
+            getImages(imageList as [ImageFiles]);
         }
     };
 
     return (
         <div className={style.image}>
-            <ImageUploading multiple value={images} onChange={onChange} maxNumber={10} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']} >
+            <ImageUploading multiple value={images} onChange={onChange} maxNumber={10} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']}>
                 {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
-
                     <div className={style.upload_image}>
                         <div className={style.clickDrop} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
                             <div>Click or Drop image here </div>

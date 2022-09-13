@@ -15,7 +15,7 @@ export interface Product {
     category?: string;
 }
 
-export interface ImageData {
-    file: File;
-    data_url: Blob;
+export interface ImageFiles {
+    file?: File;
+    data_url: string;
 }

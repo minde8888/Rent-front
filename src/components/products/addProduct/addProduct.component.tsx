@@ -5,7 +5,7 @@ import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import style from './addProduct.module.scss';
 import UploadProductImages from './uploadImages/uploadProductImages.component';
-import { Product, ImageData } from '../typings';
+import { Product, ImageFiles } from '../typings';
 import ProductDescription from './productDescription/productDescription.component';
 import { addProduct } from '../../../services/products.services/products.services';
 
@@ -19,20 +19,21 @@ interface FormValues extends Product {
 }
 
 const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProps<FormValues>) => {
-
-    const getImagesData = async (files: [ImageData]): Promise<void> => {
+    const getImagesData = async (files: Array<ImageFiles>): Promise<void> => {
         let arrayImageWidth: number[] = [];
         let arrayImageHeight: number[] = [];
 
         if (Object.keys(files).length !== 0) {
             setFieldValue('images', files);
             files.map(async (e) => {
-                const image = await imageResize(e.file, 'Product_image');
-                if (image?.width !== undefined && image?.height !== undefined) {
-                    arrayImageWidth.push(image.width);
-                    arrayImageHeight.push(image.height);
-                    setFieldValue('imageWidth', arrayImageWidth.toString());
-                    setFieldValue('imageHeight', arrayImageHeight.toString());
+                if (e.file) {
+                    const image = await imageResize(e.file, 'Product_image');
+                    if (image?.width !== undefined && image?.height !== undefined) {
+                        arrayImageWidth.push(image.width);
+                        arrayImageHeight.push(image.height);
+                        setFieldValue('imageWidth', arrayImageWidth.toString());
+                        setFieldValue('imageHeight', arrayImageHeight.toString());
+                    }
                 }
             });
         }

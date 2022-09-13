@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import { useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { getOneProduct } from '../../../redux/slice/productSlice';
@@ -9,7 +9,7 @@ import { TextField } from '../../validation/textField';
 import { TextArea } from '../../validation/textArea';
 import UploadImages from './uploadImages/uploadImages.component';
 import { imageResize } from '../../../helpers/imageResize.helper';
-import { ImageData } from '../typings';
+import { ImageFiles } from '../typings';
 
 interface FormValues {
     place?: string;
@@ -22,37 +22,50 @@ interface FormValues {
     imageSrc?: string[];
 }
 
-interface Props extends FormValues {
-    onSubmit: (values: FormValues) => Promise<void>;
-    setFieldValue: React.Dispatch<React.SetStateAction<PropState>>;
+export interface FilesUpload {
+    files: Array<{ file?: File; data_url: string }>;
 }
 
-export const InnerForm = ({ imageSrc, onSubmit, setFieldValue }: Props) => {
-    const [isSubmitting, setIsSubmitting] = useState(false);
+interface Props extends FormValues {
+    onSubmit: (values: FormValues) => Promise<void>;
+    setIsSubmitting: Dispatch<SetStateAction<boolean>>;
+    isSubmitting: boolean;
+}
+
+export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting }: Props) => {
     const { isLoggedIn, error } = useAppSelector((state) => state.data.auth);
+    const [imageState, setImageState] = useState<Array<{ file?: File; data_url: string }> | undefined>(undefined);
 
-    const getImagesData = async (files: [ImageData]): Promise<void> => {
-        let arrayImageWidth: number[] = [];
-        let arrayImageHeight: number[] = [];
+    let data: Array<{ file?: File; data_url: string }> = [];
 
-        if (Object.keys(files).length !== 0) {
-            files.map(async (e) => {
-                const image = await imageResize(e.file, 'Product_image');
-                if (image?.width !== undefined && image?.height !== undefined) {
-                    arrayImageWidth.push(image.width);
-                    arrayImageHeight.push(image.height);
-                    setFieldValue({
-                        file: files,
-                        imageWidth: arrayImageWidth.toString(),
-                        imageHeight: arrayImageHeight.toString()
-                    });
-                }
-            });
+    const getImagesData = async (files: Array<{ file?: File; data_url: string }> | undefined): Promise<void> => {
+        if (files) {
+            data = files;
         }
     };
 
     const handleSubmit = useCallback(
         async (values: FormValues) => {
+            let arrayImageWidth: number[] = [];
+            let arrayImageHeight: number[] = [];
+            let arr: Array<File> = [];
+
+            data.map(async (e) => {
+                if (e.file) {
+                    const image = await imageResize(e.file, 'Product_image');
+
+                    if (image?.width !== undefined && image?.height !== undefined) {
+                        arrayImageWidth.push(image.width);
+                        arrayImageHeight.push(image.height);
+                        arr.push(e.file);
+                        console.log({
+                            file: arr,
+                            imageWidth: arrayImageWidth.toString(),
+                            imageHeight: arrayImageHeight.toString()
+                        });
+                    }
+                }
+            });
             setIsSubmitting(true);
             await onSubmit(values);
             setIsSubmitting(false);
@@ -113,7 +126,7 @@ export const InnerForm = ({ imageSrc, onSubmit, setFieldValue }: Props) => {
 };
 
 interface PropState {
-    file: Array<ImageData>;
+    file: Array<File>;
     imageWidth: string;
     imageHeight: string;
 }
@@ -121,6 +134,7 @@ interface PropState {
 const EditProduct: React.FC = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [fieldValue, setFieldValue] = useState<PropState>({
         file: [],
         imageWidth: '',
@@ -142,9 +156,7 @@ const EditProduct: React.FC = () => {
 
     const handleSubmit = async (values: FormValues) => {
         // console.log(id);
-        // console.log(values);
-        console.log(fieldValue);
-
+        console.log(values);
         // try {
         //     const user = await login(values.email, values.password);
         //     if (!(user instanceof Error)) {
@@ -161,7 +173,8 @@ const EditProduct: React.FC = () => {
     return (
         <div>
             <InnerForm
-                setFieldValue={setFieldValue}
+                isSubmitting={isSubmitting}
+                setIsSubmitting={setIsSubmitting}
                 onSubmit={handleSubmit}
                 place={product.$values[0].place}
                 price={product.$values[0].price}

@@ -1,16 +1,16 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
-import { ImageData } from '../../typings';
+import { ImageFiles } from '../../typings';
 import product from '../../../../svg/3615746_checklist_clipboard_package_report_restriction_icon.svg';
 import style from './uploadImages.module.scss';
 
 interface Props {
     imageSrc?: Array<{ file?: File; data_url: string }>;
-    getImages: (ImageData: [ImageData]) => void;
+    getImages: (files: Array<{ file?: File; data_url: string }> | undefined) => void;
 }
 
 const UploadImages = ({ imageSrc, getImages }: Props) => {
-    const [images, setImages] = useState<Array<ImageData>>([]);
+    const [images, setImages] = useState<Array<ImageFiles>>([]);
     const [imgSrc, setImgSrc] = useState<Array<{ file?: File; data_url: string }> | undefined>(imageSrc);
 
     const onChange = (imageList: ImageListType) => {
@@ -19,35 +19,35 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
         }
     };
 
-    const onFileChange = (e: ChangeEvent<HTMLInputElement>, index: number): void => {
-        const target = e.target as HTMLInputElement;
+    const onFileChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>, index: number): void => {
+            const target = e.target as HTMLInputElement;
 
-        if (target.files && target.files.length) {
-            const file = target.files[0];
-            const fr = new FileReader();
-            fr.onload = (data) => {
-                if (data.target !== null && typeof data.target.result === 'string' && imgSrc !== undefined) {
-                    let item = data.target.result;
-                    let newState = stateUpdate({ imgSrc, item, file, index });
-                    //data.target.result, file,, index
-                    // // console.log([{ ...newState }]);
-                    // setImgSrc({
-                    //     image: newState,
-                    //     file: file
-                    // });
-                }
-            };
-            fr.readAsDataURL(file);
-        }
-    };
+            if (target.files && target.files.length) {
+                const file = target.files[0];
+                const fr = new FileReader();
+                fr.onload = (data) => {
+                    if (data.target !== null && typeof data.target.result === 'string' && imgSrc !== undefined) {
+                        const data_url = data.target.result;
+                        const newState = stateUpdate({ imgSrc, data_url, file, index });
+                        setImgSrc(newState);
+                    }
+                };
+                fr.readAsDataURL(file);
+            }
+            // getImages(imgSrc);
+        },
+        [imgSrc]
+    );
 
-    const removeImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number): void => {
+    console.log(1111);
+
+    const removeImage = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number): void => {
         const newState = imgSrc?.filter((element) => !element.data_url.includes(imgSrc[index].data_url));
         setImgSrc(newState);
-    };
+    }, []);
 
-    console.log(imgSrc);
-
+    getImages(imgSrc);
     return (
         <>
             {imgSrc?.map((element, key) => (
@@ -92,18 +92,15 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
 
 interface UpdateState {
     imgSrc: Array<{ file?: File; data_url: string }>;
-    item: string;
+    data_url: string;
     file: File;
-    index: number
+    index: number;
 }
-function stateUpdate({ imgSrc, item, file, index }: UpdateState): Array<{ file?: File; data_url: string }> {
-    // const newState = imgSrc.map((e, i) => (i === index ? (e.file = file, e.data_url = item) : (e.file, e.data_url)))
-    // console.log(newState);
-
-
-
-    return imgSrc
-    //.map((item, i) => (i === index ? newItem : item));
+function stateUpdate({ imgSrc, data_url, file, index }: UpdateState): Array<{ file?: File; data_url: string }> {
+    let copyState = imgSrc;
+    const newItem = { file: file, data_url: data_url };
+    copyState.splice(index, 1, newItem);
+    return [...copyState];
 }
 
 export default UploadImages;
