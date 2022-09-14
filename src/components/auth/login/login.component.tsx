@@ -18,7 +18,7 @@ interface FormValues {
 export const InnerForm = (props: { onSubmit: (values: FormValues) => Promise<void>; message: string }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { isLoggedIn, error } = useAppSelector((state) => state.data.auth);
-
+    /* eslint-disable */
     const handleSubmit = useCallback(
         async (values: FormValues) => {
             setIsSubmitting(true);
@@ -27,7 +27,7 @@ export const InnerForm = (props: { onSubmit: (values: FormValues) => Promise<voi
         },
         [props.onSubmit]
     );
-
+    /* eslint-disable */
     if (isLoggedIn) {
         return <Navigate to="/" />;
     }

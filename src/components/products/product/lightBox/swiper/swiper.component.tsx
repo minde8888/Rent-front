@@ -5,12 +5,14 @@ import style from '../lightBox.module.scss';
 interface Props {
     images: Array<string> | undefined;
 }
-
+interface ImageStyles {
+    transition: string;
+    transform: string;
+}
 const Swipe = ({ images }: Props) => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
-
+    const [newStyle, setNewStyle] = useState<ImageStyles | undefined>(undefined);
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
-
     const { positionX, isDragging, startPositionX } = useDrag(divRef);
     const marginTop = 110;
 
@@ -65,22 +67,15 @@ const Swipe = ({ images }: Props) => {
         </div>
     ));
 
-    // console.log(index);
-
-    // console.log(indexImage);
+    const newPositionOnClick = (i: number) => {
+        let newImagePosition = TransformPosition(imagesPixelsToHide, i, marginTop);
+        setNewStyle({ ...newImagePosition });
+    };
 
     return (
         <>
-            {/* <div className={style.arrow}>
-                <div className={style.right} onClick={rightClick}>
-                    &#10096;
-                </div>
-                <div className={style.left} onClick={leftClick}>
-                    &#10097;
-                </div>
-            </div> */}
-            <Arrows index={index} imagesPixelsToHide={imagesPixelsToHide} marginTop={marginTop} />
-            <div className={style.swiper} ref={setDivRef} style={transform}>
+            <Arrows index={index} imagesPixelsToHide={imagesPixelsToHide} passData={newPositionOnClick} />
+            <div className={style.swiper} ref={setDivRef} style={newStyle === undefined ? transform : newStyle}>
                 {imageCards}
             </div>
         </>
@@ -97,46 +92,32 @@ function Closest(array: Array<number>, number: number): number {
     return index;
 }
 
-function TransformPosition(imagesPixelsToHide: number[], index: number, marginTop: number) {
+function TransformPosition(imagesPixelsToHide: number[], index: number, marginTop: number): ImageStyles {
     return {
         transform: `translateX(${imagesPixelsToHide[index]}px) translateY(${marginTop}px)`,
-        ...{ transition: 'transform 350ms ease-in-out 15ms' }
+        transition: 'transform 350ms ease-in-out 15ms'
     };
 }
 
 interface ArrowProps {
     index: number;
     imagesPixelsToHide: number[];
-    marginTop: number;
+    passData: (index: number) => void;
 }
 
-function Arrows({ index, imagesPixelsToHide, marginTop }: ArrowProps) {
-    const [indexImage, setIndexImage] = useState({});
+function Arrows({ index, imagesPixelsToHide, passData }: ArrowProps) {
     const rightClick = () => {
         if (index > 0) {
             index -= 1;
-            console.log(index);
-            // setIndexImage(TransformPosition(imagesPixelsToHide, index, marginTop));
-            // console.log(transform);
-            // setIndexImage(transform);
-            // setIndexImage((prevState) => ({
-            //     ...prevState,
-            //     transform
-            // }));
+            passData(index);
         }
     };
     const leftClick = () => {
         if (imagesPixelsToHide.length - 1 > index) {
             index += 1;
-            console.log(index);
-
-            // setIndexImage(TransformPosition(imagesPixelsToHide, index, marginTop));
-            // console.log(transform);
-
-            // setIndexImage(transform);
+            passData(index);
         }
     };
-    // console.log(indexImage);
 
     return (
         <div className={style.arrow}>
