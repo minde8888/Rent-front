@@ -6,7 +6,7 @@ interface PropsType {
 }
 
 export const TextField = ({ label, ...props }: PropsType) => {
-    const [field, meta] = useField(props);
+    const [field] = useField(props);
 
     return (
         <>

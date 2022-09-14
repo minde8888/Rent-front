@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'reac
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { getOneProduct } from '../../../redux/slice/productSlice';
-import { getProduct } from '../../../services/products.services/products.services';
+import { getProduct, updateProduct } from '../../../services/products.services/products.services';
 import * as Yup from 'yup';
 import { TextField } from '../../validation/textField';
 import { TextArea } from '../../validation/textArea';
@@ -19,11 +19,16 @@ interface FormValues {
     email: string;
     productName: string;
     content?: string;
-    imageSrc?: string[];
+    imageSrc?: string[] | string;
+    file?: File[];
+    imageWidth?: string;
+    imageHeight?: string;
+    index?: string;
+    id?: string;
 }
 
 export interface FilesUpload {
-    files: Array<{ file?: File; data_url: string }>;
+    files: Array<ImageFiles>;
 }
 
 interface Props extends FormValues {
@@ -32,48 +37,65 @@ interface Props extends FormValues {
     isSubmitting: boolean;
 }
 
-export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting }: Props) => {
-    const { isLoggedIn, error } = useAppSelector((state) => state.data.auth);
-    const [imageState, setImageState] = useState<Array<{ file?: File; data_url: string }> | undefined>(undefined);
-
-    let data: Array<{ file?: File; data_url: string }> = [];
-
-    const getImagesData = async (files: Array<{ file?: File; data_url: string }> | undefined): Promise<void> => {
+export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, id, place, price, phone, email, size, productName, content }: Props) => {
+    let data: Array<ImageFiles> = [];
+    console.log(phone);
+    console.log(email);
+    const getImagesData = async (files: Array<ImageFiles> | undefined): Promise<void> => {
         if (files) {
             data = files;
         }
     };
 
+    /* eslint-disable */
     const handleSubmit = useCallback(
         async (values: FormValues) => {
             let arrayImageWidth: number[] = [];
             let arrayImageHeight: number[] = [];
+            let index: number[] = [];
             let arr: Array<File> = [];
+            let url: string[] = [];
 
-            data.map(async (e) => {
-                if (e.file) {
-                    const image = await imageResize(e.file, 'Product_image');
-
-                    if (image?.width !== undefined && image?.height !== undefined) {
-                        arrayImageWidth.push(image.width);
-                        arrayImageHeight.push(image.height);
-                        arr.push(e.file);
-                        console.log({
-                            file: arr,
-                            imageWidth: arrayImageWidth.toString(),
-                            imageHeight: arrayImageHeight.toString()
-                        });
+            await Promise.all(
+                data.map(async (e, i) => {
+                    try {
+                        url.push(e.data_url);
+                        if (e.file) {
+                            index.push(i);
+                            const image = await imageResize(e.file, 'Product_image');
+                            if (image?.width !== undefined && image?.height !== undefined) {
+                                arrayImageWidth.push(image.width);
+                                arrayImageHeight.push(image.height);
+                                arr.push(e.file);
+                                values = {
+                                    ...values,
+                                    file: arr,
+                                    imageWidth: arrayImageWidth.toString(),
+                                    imageHeight: arrayImageHeight.toString(),
+                                    index: index.toString()
+                                };
+                            }
+                        }
+                        values = {
+                            ...values,
+                            imageSrc: url.toString(),
+                            id: id
+                        };
+                        return { values };
+                    } catch (err) {
+                        throw err;
                     }
-                }
-            });
+                })
+            );
             setIsSubmitting(true);
             await onSubmit(values);
             setIsSubmitting(false);
         },
         [onSubmit]
     );
+    /* eslint-disable */
 
-    let newData: Array<{ file?: File; data_url: string }> = [];
+    let newData: Array<ImageFiles> = [];
 
     if (imageSrc !== undefined) {
         for (let i = 0; i < imageSrc.length; i++) {
@@ -84,14 +106,17 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting }:
     return (
         <Formik
             initialValues={{
-                place: '',
-                price: '',
-                phone: '',
-                email: '',
-                size: '',
-                productName: '',
-                content: '',
-                imageSrc: []
+                place: place || '',
+                price: price || '',
+                phone: phone || '',
+                email: email || '',
+                size: size || '',
+                productName: productName || '',
+                content: content || '',
+                imageSrc: '',
+                file: [],
+                imageWidth: '',
+                imageHeight: ''
             }}
             onSubmit={handleSubmit}
             validationSchema={Yup.object().shape({
@@ -105,41 +130,33 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting }:
         >
             <Form>
                 <UploadImages imageSrc={newData} getImages={getImagesData} />
-                <TextField label="Place" name="place" type="place" />
-                <TextField label="Price" name="price" type="price" />
-                <TextField label="Phone" name="phone" type="phone" />
-                <TextField label="mail" name="email" type="email" />
-                <TextField label="Size" name="size" type="size" />
-                <TextField label="ProductName" name="productName" type="productName" />
-                <TextArea className={'style.profileTextArea'} label="Content" name="content" rows="20" />
+                <label>Place</label>
+                <TextField id="place" name="place" placeholder="place" />
+                <label>Price</label>
+                <TextField id="price" name="price" type="price" />
+                <label>Phone</label>
+                <TextField id="phone" name="phone" type="phone" />
+                <label>Email</label>
+                <TextField id="mail" name="email" type="email" />
+                <label>Size</label>
+                <TextField id="size" name="size" type="size" />
+                <label>Product name</label>
+                <TextField id="productName" name="productName" type="productName" />
+                <label>Description</label>
+                <TextArea className={'style.profileTextArea'} id="Content" name="content" rows="20" />
                 <button type="submit" disabled={isSubmitting}>
                     Edit
                 </button>
-                {error && (
-                    <div className="error-group">
-                        <div className="danger">{error}</div>
-                    </div>
-                )}
             </Form>
         </Formik>
     );
 };
 
-interface PropState {
-    file: Array<File>;
-    imageWidth: string;
-    imageHeight: string;
-}
-
 const EditProduct: React.FC = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
+    const product = useAppSelector((state) => state.data.product);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [fieldValue, setFieldValue] = useState<PropState>({
-        file: [],
-        imageWidth: '',
-        imageHeight: ''
-    });
 
     useEffect(() => {
         (async () => {
@@ -150,24 +167,30 @@ const EditProduct: React.FC = () => {
         })();
     }, []);
 
-    const product = useAppSelector((state) => state.data.product);
-
     if (Object.keys(product).length === 0) return null;
 
-    const handleSubmit = async (values: FormValues) => {
-        // console.log(id);
-        console.log(values);
-        // try {
-        //     const user = await login(values.email, values.password);
-        //     if (!(user instanceof Error)) {
-        //         dispatch(getUserProfile(user));
-        //         if (typeof user.token === 'string' && typeof user.refreshToken === 'string') {
-        //             dispatch(loginSuccess({ token: user.token, refreshToken: user.refreshToken }));
-        //         }
-        //     }
-        // } catch (error: any) {
-        //     dispatch(loginFail(error.message));
-        // }
+    const handleSubmit = async (values: any) => {
+        let formData = new FormData();
+        for (const key in values) {
+            if (Object.prototype.hasOwnProperty.call(values, key) && typeof values[key] === 'string') {
+                formData.append(key, values[key]);
+            }
+            if (Array.isArray(values[key])) {
+                for (var val in values[key]) {
+                    formData.append(`images`, values[key][val]);
+                }
+            }
+        }
+        console.log(Object.fromEntries(formData));
+
+        try {
+            const data = updateProduct(formData, values.id);
+            if (!(data instanceof Error)) {
+                //     dispatch(getUserProfile(user));
+            }
+        } catch (error: any) {
+            // dispatch(loginFail(error.message));
+        }
     };
 
     return (
@@ -184,6 +207,7 @@ const EditProduct: React.FC = () => {
                 productName={product.$values[0].postsDto.productName}
                 content={product.$values[0].postsDto.content}
                 imageSrc={product.$values[0].imageSrc.$values}
+                id={id}
             />
         </div>
     );

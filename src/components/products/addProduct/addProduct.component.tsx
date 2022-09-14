@@ -95,7 +95,6 @@ const ProductForm = withFormik<ProductProps, FormValues>({
     }),
     handleSubmit: async (values: any, { setErrors }) => {
         let formData = new FormData();
-        console.log(values);
 
         for (const key in values) {
             if (Object.prototype.hasOwnProperty.call(values, key) && typeof values[key] === 'string') {

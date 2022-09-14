@@ -5,13 +5,13 @@ import product from '../../../../svg/3615746_checklist_clipboard_package_report_
 import style from './uploadImages.module.scss';
 
 interface Props {
-    imageSrc?: Array<{ file?: File; data_url: string }>;
-    getImages: (files: Array<{ file?: File; data_url: string }> | undefined) => void;
+    imageSrc?: Array<ImageFiles>;
+    getImages: (files: Array<ImageFiles> | undefined) => void;
 }
 
 const UploadImages = ({ imageSrc, getImages }: Props) => {
     const [images, setImages] = useState<Array<ImageFiles>>([]);
-    const [imgSrc, setImgSrc] = useState<Array<{ file?: File; data_url: string }> | undefined>(imageSrc);
+    const [imgSrc, setImgSrc] = useState<Array<ImageFiles> | undefined>(imageSrc);
 
     const onChange = (imageList: ImageListType) => {
         if (imageList.length !== 0) {
@@ -35,24 +35,31 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
                 };
                 fr.readAsDataURL(file);
             }
-            // getImages(imgSrc);
         },
         [imgSrc]
     );
 
-    console.log(1111);
+    const removeImage = useCallback(
+        (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number): void => {
+            const newState = imgSrc?.filter((element) => !element.data_url.includes(imgSrc[index].data_url));
+            setImgSrc(newState);
+        },
+        [imgSrc]
+    );
 
-    const removeImage = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number): void => {
-        const newState = imgSrc?.filter((element) => !element.data_url.includes(imgSrc[index].data_url));
-        setImgSrc(newState);
-    }, []);
+    if (images.length > 0 && imgSrc !== undefined) {
+        getImages([...imgSrc, ...images]);
+    }
 
-    getImages(imgSrc);
+    if (images.length === 0) {
+        getImages(imgSrc);
+    }
+
     return (
         <>
             {imgSrc?.map((element, key) => (
                 <div key={key}>
-                    <img src={element.data_url === undefined ? product : element.data_url} alt="image" width="600" />
+                    <img src={element.data_url === undefined ? product : element.data_url} alt="alt-text" width="100" />
                     <input type="file" onChange={(e) => onFileChange(e, key)} />
                     <button className={style.close} onClick={(e) => removeImage(e, key)} type="button">
                         ❌
@@ -66,7 +73,7 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
                         <div className={style.upload_image}>
                             {imageList.map((image, index) => (
                                 <div key={index} className={style.image_item}>
-                                    <img className={style.image_show} src={image['data_url']} alt="" width="600" />
+                                    <img className={style.image_show} src={image['data_url']} alt="alt-text" width="600" />
                                     <div className={style.image_btn_wrapper}>
                                         <span onClick={() => onImageUpdate(index)}>add</span>
                                         <span onClick={() => onImageRemove(index)}>❌</span>
@@ -91,12 +98,12 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
 };
 
 interface UpdateState {
-    imgSrc: Array<{ file?: File; data_url: string }>;
+    imgSrc: Array<ImageFiles>;
     data_url: string;
     file: File;
     index: number;
 }
-function stateUpdate({ imgSrc, data_url, file, index }: UpdateState): Array<{ file?: File; data_url: string }> {
+function stateUpdate({ imgSrc, data_url, file, index }: UpdateState): Array<ImageFiles> {
     let copyState = imgSrc;
     const newItem = { file: file, data_url: data_url };
     copyState.splice(index, 1, newItem);

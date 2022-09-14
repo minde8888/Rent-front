@@ -16,7 +16,7 @@ interface EditProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
-interface FormValues extends Props { }
+interface FormValues extends Props {}
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
     const { errors, imageSrc, isSubmitting, setFieldValue } = props;
@@ -55,7 +55,7 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                 </div>
                 <UploadImage getImage={passData} imageSrc={imageSrc} />
                 <div className={style.image}>
-                    <img src={userImage} alt={'editAltImageName'} />
+                    <img src={userImage} alt={'AltImageName'} />
                     {errors && <div className={style.profileError}>{errors.message}</div>}
                 </div>
                 <div className={style.details}>
