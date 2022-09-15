@@ -1,15 +1,16 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import useDrag from '../../../../../hooks/useDrag.hooks';
 import style from '../lightBox.module.scss';
 
 interface Props {
     images: Array<string> | undefined;
+    role?: string;
 }
 interface ImageStyles {
     transition: string;
     transform: string;
 }
-const Swipe = ({ images }: Props) => {
+const Swipe = ({ images, role = 'role-images' }: Props) => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
     const [newStyle, setNewStyle] = useState<ImageStyles | undefined>(undefined);
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
@@ -39,7 +40,8 @@ const Swipe = ({ images }: Props) => {
     }
 
     let transform = {
-        transform: `translateX(${positionX === 0 ? firsImageToCenter : positionX}px) translateY(${marginTop}px)`
+        transform: `translateX(${positionX === 0 ? firsImageToCenter : positionX}px) translateY(${marginTop}px)`,
+        transition: ''
     };
 
     let index = 0;
@@ -63,7 +65,7 @@ const Swipe = ({ images }: Props) => {
 
     const imageCards: JSX.Element[] = images.map((image: string, key: number) => (
         <div draggable={false} key={key}>
-            <img role="role-images" style={imageStyle} draggable={false} className={style.cursor} src={image} />
+            <img role={role} style={imageStyle} draggable={false} className={style.cursor} src={image} alt={'alt-text'} />
         </div>
     ));
 
@@ -106,16 +108,17 @@ interface ArrowProps {
 }
 
 function Arrows({ index, imagesPixelsToHide, passData }: ArrowProps) {
+    console.log(index);
+
+    const countRef = useRef(index);
     const rightClick = () => {
-        if (index > 0) {
-            index -= 1;
-            passData(index);
+        if (countRef.current > 0) {
+            passData(--countRef.current);
         }
     };
     const leftClick = () => {
-        if (imagesPixelsToHide.length - 1 > index) {
-            index += 1;
-            passData(index);
+        if (imagesPixelsToHide.length - 1 > countRef.current) {
+            passData(++countRef.current);
         }
     };
 
