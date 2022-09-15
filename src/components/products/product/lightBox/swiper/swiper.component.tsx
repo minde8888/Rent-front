@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import useCounter from '../../../../../hooks/useCounter';
 import useDrag from '../../../../../hooks/useDrag.hooks';
 import style from '../lightBox.module.scss';
 
@@ -10,12 +11,13 @@ interface ImageStyles {
     transition: string;
     transform: string;
 }
-const Swipe = ({ images, role = 'role-images' }: Props) => {
+const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
     const [newStyle, setNewStyle] = useState<ImageStyles | undefined>(undefined);
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
     const { positionX, isDragging, startPositionX } = useDrag(divRef);
     const marginTop = 110;
+    const countRef = useRef(0);
 
     if (!images || images.length === 0) return null;
 
@@ -44,18 +46,17 @@ const Swipe = ({ images, role = 'role-images' }: Props) => {
         transition: ''
     };
 
-    let index = 0;
-
     if (!isDragging && imagesPixelsToHide.length > 0 && positionX !== 0) {
-        index = Closest(imagesPixelsToHide, positionX);
+        let index = Snap(imagesPixelsToHide, positionX);
 
         if (positionX < imagesPixelsToHide[index] && index < imagesPixelsToHide.length - 1) {
-            index += 1;
+            ++index;
         }
         if (positionX > -startPositionX && index > 0) {
-            index -= 1;
+            --index;
         }
         transform = TransformPosition(imagesPixelsToHide, index, marginTop);
+        countRef.current = index;
     }
 
     const imageStyle = {
@@ -69,14 +70,15 @@ const Swipe = ({ images, role = 'role-images' }: Props) => {
         </div>
     ));
 
-    const newPositionOnClick = (i: number) => {
+    const newPositionClickArrow = (i: number) => {
         let newImagePosition = TransformPosition(imagesPixelsToHide, i, marginTop);
         setNewStyle({ ...newImagePosition });
     };
+    console.log(newStyle);
 
     return (
         <>
-            <Arrows index={index} imagesPixelsToHide={imagesPixelsToHide} passData={newPositionOnClick} />
+            <Arrows index={countRef.current} imagesPixelsToHide={imagesPixelsToHide} passData={newPositionClickArrow} />
             <div className={style.swiper} ref={setDivRef} style={newStyle === undefined ? transform : newStyle}>
                 {imageCards}
             </div>
@@ -84,7 +86,7 @@ const Swipe = ({ images, role = 'role-images' }: Props) => {
     );
 };
 
-function Closest(array: Array<number>, number: number): number {
+function Snap(array: Array<number>, number: number): number {
     var index = 0;
     for (let i = array.length - 1; i >= 0; i--) {
         if (Math.abs(number - array[i]) < Math.abs(number - array[index])) {
@@ -107,13 +109,14 @@ interface ArrowProps {
     passData: (index: number) => void;
 }
 
-function Arrows({ index, imagesPixelsToHide, passData }: ArrowProps) {
+function Arrows({ index, imagesPixelsToHide, passData }: ArrowProps): JSX.Element {
     console.log(index);
 
     const countRef = useRef(index);
+
     const rightClick = () => {
-        if (countRef.current > 0) {
-            passData(--countRef.current);
+        if (index > 0) {
+            passData(--index);
         }
     };
     const leftClick = () => {
