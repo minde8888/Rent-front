@@ -12,8 +12,9 @@ interface ImageStyles {
 }
 const Swipe = ({ images, role = 'role-images' }: Props) => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
-    const [newStyle, setNewStyle] = useState<ImageStyles | undefined>(undefined);
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
+    const [newStyle, setNewStyle] = useState<ImageStyles | undefined>(undefined);
+    // const [stateIndex, setStateIndex] = useState<number>(0);
     const { positionX, isDragging, startPositionX } = useDrag(divRef);
     const marginTop = 110;
 
