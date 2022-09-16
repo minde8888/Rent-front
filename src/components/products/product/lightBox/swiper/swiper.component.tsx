@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import useCounter from '../../../../../hooks/useCounter';
 import useDrag from '../../../../../hooks/useDrag.hooks';
 import style from '../lightBox.module.scss';
@@ -20,6 +20,7 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
     const marginTop = 110;
     const countRef = useRef(0);
 
+    const transition = 'transform 350ms ease-in-out 15ms';
     if (!images || images.length === 0) return null;
 
     const bounds = divRef?.getBoundingClientRect();
@@ -56,9 +57,14 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
         if (positionX > -startPositionX && index > 0) {
             --index;
         }
-        transform = TransformPosition(imagesPixelsToHide, index, marginTop);
+        transform = TransformPosition(imagesPixelsToHide, index, marginTop, transition);
         countRef.current = index;
     }
+
+    const newPositionClickArrow = (i: number) => {
+        let newImagePosition = TransformPosition(imagesPixelsToHide, i, marginTop, transition);
+        setNewStyle({ ...newImagePosition });
+    };
 
     const imageStyle = {
         width: `${window.innerWidth * 0.8}px`,
@@ -70,12 +76,6 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
             <img role={role} style={imageStyle} draggable={false} className={style.cursor} src={image} alt={'alt-text'} />
         </div>
     ));
-
-    const newPositionClickArrow = (i: number) => {
-        let newImagePosition = TransformPosition(imagesPixelsToHide, i, marginTop);
-        setNewStyle({ ...newImagePosition });
-    };
-    console.log(newStyle);
 
     return (
         <>
@@ -97,10 +97,10 @@ function Snap(array: Array<number>, number: number): number {
     return index;
 }
 
-function TransformPosition(imagesPixelsToHide: number[], index: number, marginTop: number): ImageStyles {
+function TransformPosition(imagesPixelsToHide: number[], index: number, marginTop: number, transition = ''): ImageStyles {
     return {
         transform: `translateX(${imagesPixelsToHide[index]}px) translateY(${marginTop}px)`,
-        transition: 'transform 350ms ease-in-out 15ms'
+        transition: transition
     };
 }
 
@@ -113,7 +113,8 @@ interface ArrowProps {
 function Arrows({ index, imagesPixelsToHide, passData }: ArrowProps): JSX.Element {
     console.log(index);
 
-    const countRef = useRef(index);
+    // const countRef = useRef(index);
+    // console.log(countRef);
 
     const rightClick = () => {
         if (index > 0) {
@@ -121,11 +122,13 @@ function Arrows({ index, imagesPixelsToHide, passData }: ArrowProps): JSX.Elemen
         }
     };
     const leftClick = () => {
-        if (imagesPixelsToHide.length - 1 > countRef.current) {
-            passData(++countRef.current);
+        if (imagesPixelsToHide.length - 1 > index) {
+            passData(++index);
         }
     };
+    console.log('-----------');
 
+    console.log(index);
     return (
         <div className={style.arrow}>
             <div className={style.right} onClick={rightClick}>
@@ -137,5 +140,26 @@ function Arrows({ index, imagesPixelsToHide, passData }: ArrowProps): JSX.Elemen
         </div>
     );
 }
+
+// interface Position {
+//     transform: string;
+//     transition: string;
+//     index:number
+// }
+
+// function getPositionOnDrag(isDragging: boolean, imagesPixelsToHide: number[], positionX: number, startPositionX: number, marginTop: number, transition: string): Position | undefined {
+//     if (!isDragging && imagesPixelsToHide.length > 0 && positionX !== 0) {
+//         let index = Snap(imagesPixelsToHide, positionX);
+
+//         if (positionX < imagesPixelsToHide[index] && index < imagesPixelsToHide.length - 1) {
+//             ++index;
+//         }
+//         if (positionX > -startPositionX && index > 0) {
+//             --index;
+//         }
+//         const transform = TransformPosition(imagesPixelsToHide, index, marginTop, transition);
+//         return { index: index, transform: transform };
+//     }
+// }
 
 export default Swipe;
