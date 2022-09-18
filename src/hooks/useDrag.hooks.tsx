@@ -3,13 +3,13 @@ import { useCallback, useEffect, useState } from 'react';
 interface Props {
     positionX: number;
     positionY: number;
-    isDragging: boolean;
+    isDragging?: boolean;
     startPositionX: number;
     startPositionY: number;
 }
 
 const useDrag = (ref: HTMLDivElement | null): Props => {
-    const [isDragging, setIsDragging] = useState(false);
+    const [isDragging, setIsDragging] = useState<boolean | undefined>(undefined);
     const [startPosition, setStartPosition] = useState({ startX: 0, startY: 0, startPositionX: 0, startPositionY: 0 });
     const [translate, setTranslate] = useState({ pageX: 0, pageY: 0 });
 

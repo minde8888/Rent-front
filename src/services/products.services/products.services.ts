@@ -61,10 +61,11 @@ export const getProduct = async (id: string): Promise<IResponse<Product>> => {
     }
 };
 
-export const updateProduct = (formData: FormData, id: string) => {
-    console.log(Object.fromEntries(formData), id);
+export const updateProduct = (formData: FormData) => {
+    console.log(Object.fromEntries(formData));
+
     try {
-        return api.put<AxiosResponse>(PRODUCTS_URL + 'id?id=' + id, formData);
+        return api.put<AxiosResponse>(PRODUCTS_URL + 'update', formData);
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;

@@ -8,15 +8,12 @@ interface ReturnType {
     setCount: Dispatch<SetStateAction<number>>;
 }
 
-function useCounter(initialValue?: number): ReturnType {
-    const [count, setCount] = useState(initialValue || 0);
+function useCounter(initialValue: number): ReturnType {
+    const [count, setCount] = useState(initialValue);
 
-    const increment = () => {
-        console.log(2222);
-        setCount((x) => x + 1);
-    };
+    const increment = () => setCount((x) => x + 1);
     const decrement = () => setCount((x) => x - 1);
-    const reset = () => setCount(initialValue || 0);
+    const reset = () => setCount(initialValue);
 
     return {
         count,

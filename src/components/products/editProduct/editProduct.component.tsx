@@ -24,7 +24,7 @@ interface FormValues {
     imageWidth?: string;
     imageHeight?: string;
     index?: string;
-    id?: string;
+    productsId?: string;
 }
 
 export interface FilesUpload {
@@ -37,10 +37,10 @@ interface Props extends FormValues {
     isSubmitting: boolean;
 }
 
-export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, id, place, price, phone, email, size, productName, content }: Props) => {
+export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content }: Props) => {
     let data: Array<ImageFiles> = [];
-    console.log(phone);
-    console.log(email);
+    // console.log(phone);
+    // console.log(email);
     const getImagesData = async (files: Array<ImageFiles> | undefined): Promise<void> => {
         if (files) {
             data = files;
@@ -59,8 +59,12 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, i
             await Promise.all(
                 data.map(async (e, i) => {
                     try {
-                        url.push(e.data_url);
+                        if (!e.data_url.includes("data:image/jpeg;base64")) {
+                            url.push("");
+                        }
+
                         if (e.file) {
+                            url.push(e.file.name);
                             index.push(i);
                             const image = await imageResize(e.file, 'Product_image');
                             if (image?.width !== undefined && image?.height !== undefined) {
@@ -79,7 +83,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, i
                         values = {
                             ...values,
                             imageSrc: url.toString(),
-                            id: id
+                            productsId: productsId
                         };
                         return { values };
                     } catch (err) {
@@ -171,6 +175,7 @@ const EditProduct: React.FC = () => {
 
     const handleSubmit = async (values: any) => {
         let formData = new FormData();
+
         for (const key in values) {
             if (Object.prototype.hasOwnProperty.call(values, key) && typeof values[key] === 'string') {
                 formData.append(key, values[key]);
@@ -181,10 +186,8 @@ const EditProduct: React.FC = () => {
                 }
             }
         }
-        console.log(Object.fromEntries(formData));
-
         try {
-            const data = updateProduct(formData, values.id);
+            const data = updateProduct(formData);
             if (!(data instanceof Error)) {
                 //     dispatch(getUserProfile(user));
             }
@@ -207,7 +210,7 @@ const EditProduct: React.FC = () => {
                 productName={product.$values[0].postsDto.productName}
                 content={product.$values[0].postsDto.content}
                 imageSrc={product.$values[0].imageSrc.$values}
-                id={id}
+                productsId={id}
             />
         </div>
     );
