@@ -60,7 +60,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 data.map(async (e, i) => {
                     try {
                         if (e.data_url.includes('data:image/jpeg;base64')) {
-                            url.push('');
+                            url.push('/');
                         }
 
                         if (e.file) {
@@ -91,6 +91,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                     }
                 })
             );
+
             setIsSubmitting(true);
             await onSubmit(values);
             setIsSubmitting(false);
