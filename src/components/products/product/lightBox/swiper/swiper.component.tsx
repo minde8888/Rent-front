@@ -57,8 +57,9 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
         }
         transform = TransformPosition(imagesPixelsToHide, index, marginTop, transition);
     }
-    useCallback(() => { transform = TransformPosition(imagesPixelsToHide, count, marginTop, transition); }, [count])
-
+    useCallback(() => {
+        transform = TransformPosition(imagesPixelsToHide, count, marginTop, transition);
+    }, [count]);
 
     const imageStyle = {
         width: `${window.innerWidth * 0.8}px`,
@@ -75,11 +76,7 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
 
     return (
         <>
-            <Arrows
-                imagesPixelsToHide={imagesPixelsToHide}
-                increment={increment}
-                decrement={decrement}
-                count={count} />
+            <Arrows imagesPixelsToHide={imagesPixelsToHide} increment={increment} decrement={decrement} count={count} />
             <div className={style.swiper} ref={setDivRef} style={transform}>
                 {imageCards}
             </div>
