@@ -14,6 +14,7 @@ import AddProduct from './products/addProduct/addProduct.component';
 import style from './main.module.scss';
 import Product from './products/product/product.component';
 import EditProduct from './products/editProduct/editProduct.component';
+import EditAllProducts from './products/editProduct/editAllProducts/editAllProducts.component';
 
 function Main(): JSX.Element {
     return (
@@ -31,7 +32,7 @@ function Main(): JSX.Element {
                     <Route element={<ProtectedRoute role={[Roles.user, Roles.admin]} />}>
                         <Route path="/add-products" element={<AddProduct />} />
                         <Route path="/profile/:id" element={<Profile />} />
-                        <Route path="/edit-products" element={<Products />} />
+                        <Route path="/edit-products" element={<EditAllProducts />} />
                         <Route path="/edit-products/:id" element={<EditProduct />} />
                     </Route>
                 </Routes>

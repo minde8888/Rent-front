@@ -60,7 +60,7 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             {imgSrc?.map((element, key) => (
                 <div key={key}>
                     <img src={element.data_url === undefined ? product : element.data_url} alt="alt-text" width="100" />
-                    <input type="file" onChange={(e) => onFileChange(e, key)} />
+                    <input type="file" onChange={(e) => onFileChange(e, key)} accept=".jpg,.jpeg,.png,.gif" />
                     <button className={style.close} onClick={(e) => removeImage(e, key)} type="button">
                         ❌
                     </button>
@@ -68,12 +68,12 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             ))}
 
             <div className={style.container}>
-                <ImageUploading multiple value={images} onChange={onChange} maxNumber={10} dataURLKey="data_url" acceptType={['jpg', 'gif', 'png', 'gif']}>
+                <ImageUploading multiple value={images} onChange={onChange} maxNumber={10} dataURLKey="data_url" acceptType={['jpg', 'jpeg', 'png', 'gif']}>
                     {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
                         <div className={style.upload_image}>
                             {imageList.map((image, index) => (
                                 <div key={index} className={style.image_item}>
-                                    <img className={style.image_show} src={image['data_url']} alt="alt-text" width="600" />
+                                    <img className={style.image_show} src={image['data_url']} alt="alt-text" width="100" />
                                     <div className={style.image_btn_wrapper}>
                                         <span onClick={() => onImageUpdate(index)}>add</span>
                                         <span onClick={() => onImageRemove(index)}>❌</span>

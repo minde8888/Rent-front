@@ -77,3 +77,18 @@ export const updateProduct = (formData: FormData) => {
         throw error;
     }
 };
+
+export const removeProduct = async (id: string) => {
+    try {
+        return await api.delete<AxiosResponse>(PRODUCTS_URL + 'delete/' + id);
+    } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+            const serverError = error as AxiosError<ServerError>;
+            if (serverError && serverError.response?.data) {
+                throw new AuthError(serverError.response.data.errors.$values[0]);
+            }
+            throw new AuthError(error.message);
+        }
+        throw error;
+    }
+};
