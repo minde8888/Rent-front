@@ -58,7 +58,9 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             await Promise.all(
                 data.map(async (e, i) => {
                     try {
-                        if (e.data_url.includes('data:image/jpeg;base64')) {
+                        console.log(typeof e.data_url);
+
+                        if (e.data_url.includes('data:image/jpeg;base64') || e.data_url.includes('data:image/png;base64')) {
                             url.push('/');
                         } else {
                             url.push(e.data_url.replace('https://localhost:44346/Images/', ''));
