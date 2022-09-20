@@ -20,10 +20,9 @@ interface FormValues {
     productName: string;
     content?: string;
     imageSrc?: string[] | string;
-    file?: File[];
+    file?: File[] | number;
     imageWidth?: string;
     imageHeight?: string;
-    index?: string;
     productsId?: string;
 }
 
@@ -39,8 +38,7 @@ interface Props extends FormValues {
 
 export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content }: Props) => {
     let data: Array<ImageFiles> = [];
-    // console.log(phone);
-    // console.log(email);
+
     const getImagesData = async (files: Array<ImageFiles> | undefined): Promise<void> => {
         if (files) {
             data = files;
@@ -52,20 +50,21 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
         async (values: FormValues) => {
             let arrayImageWidth: number[] = [];
             let arrayImageHeight: number[] = [];
-            let index: number[] = [];
             let arr: Array<File> = [];
             let url: string[] = [];
+
+            console.log(window.origin);
 
             await Promise.all(
                 data.map(async (e, i) => {
                     try {
                         if (e.data_url.includes('data:image/jpeg;base64')) {
                             url.push('/');
+                        } else {
+                            url.push(e.data_url.replace('https://localhost:44346/Images/', ''));
                         }
 
                         if (e.file) {
-                            url.push(e.file.name);
-                            index.push(i);
                             const image = await imageResize(e.file, 'Product_image');
                             if (image?.width !== undefined && image?.height !== undefined) {
                                 arrayImageWidth.push(image.width);
@@ -75,8 +74,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                                     ...values,
                                     file: arr,
                                     imageWidth: arrayImageWidth.toString(),
-                                    imageHeight: arrayImageHeight.toString(),
-                                    index: index.toString()
+                                    imageHeight: arrayImageHeight.toString()
                                 };
                             }
                         }
