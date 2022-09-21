@@ -3,7 +3,6 @@ import Login, { InnerForm } from './login.component';
 import { ComponentProps } from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import { debug } from 'console';
 
 
 const setupForm = (properties: ComponentProps<typeof InnerForm>) => {
@@ -13,7 +12,6 @@ const setupForm = (properties: ComponentProps<typeof InnerForm>) => {
 describe('<Login />', () => {
     test('renders', () => {
         const { baseElement } = renderBrowserWithContext(<Login />);
-        debug();
         expect(baseElement).toBeVisible();
     });
 

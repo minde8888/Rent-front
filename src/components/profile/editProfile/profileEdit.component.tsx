@@ -16,7 +16,7 @@ interface EditProps extends Props {
     dispatch: Dispatch<AnyAction>;
 }
 
-interface FormValues extends Props {}
+interface FormValues extends Props { }
 
 const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
     const { errors, imageSrc, isSubmitting, setFieldValue } = props;

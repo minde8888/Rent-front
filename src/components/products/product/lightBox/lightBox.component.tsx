@@ -7,17 +7,20 @@ interface Props {
     id?: string;
     showLightBox: () => void;
     closeLightBox: () => void;
+    role?: string;
+    role1?: string;
+    role2?: string;
 }
 
-const LightBox = ({ images }: Props) => {
+const LightBox = ({ images, role = "role-images", role1 = "role-images-1", role2 = "role-images-2" }: Props) => {
     const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
     const [imageToShow, setImageToShow] = useState<string | undefined>('');
 
     if (!images || images.length === 0) return null;
 
     const imageCards: JSX.Element[] = images.map((image: string, key: number) => (
-        <div key={key}>
-            <img role="role-images" className={style.cursor} onClick={() => showImage(key)} src={image} />
+        <div className={style.smallImages} key={key}>
+            <img role={role} className={style.cursor} onClick={() => showImage(key)} src={image} alt={'product_alt_text'} />
         </div>
     ));
 
@@ -38,17 +41,20 @@ const LightBox = ({ images }: Props) => {
         <div>
             {lightBoxDisplay ? (
                 <div className={style.lightBox}>
-                    <div role="role-images-1" className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
+                    <div role={role1} className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
                         &#x274C;
                     </div>
                     <Swipe images={images} />
                 </div>
             ) : (
                 <>
-                    <div className={style.smallImg}>
-                        <img role="role-images-2" className={style.cursor} onClick={showLightBox} src={imageToShow === '' ? images[0] : imageToShow} />
+                    <div className={style.bigImage}>
+                        <img role={role2} className={style.cursor} onClick={showLightBox} src={imageToShow === '' ? images[0] : imageToShow} alt={'product_alt_text'} />
                     </div>
-                    {imageCards}
+                    <div className={style.smallImagesContainer}>
+                        {imageCards}
+                    </div>
+
                 </>
             )}
         </div>

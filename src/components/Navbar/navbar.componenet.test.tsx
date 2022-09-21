@@ -14,7 +14,6 @@ describe('<NavBar />', () => {
 
     test('render link', () => {
         renderBrowserWithContext(<NavBar />);
-        screen.debug();
         const links: HTMLAnchorElement[] = screen.getAllByRole('link');
         expect(links[0].href).toContain('/');
         expect(links[1].href).toContain('/products');
@@ -24,7 +23,7 @@ describe('<NavBar />', () => {
         expect(links[3].textContent).toEqual('Sign Up');
     });
 
-    test('render links after login ', () => {
+    test('render links after login', () => {
         const payload = { token: 'string1', refreshToken: 'string2' };
         const slug = '123';
         store.dispatch(loginSuccess(payload));
