@@ -11,10 +11,29 @@ const productsSlice = createSlice({
                 ...state,
                 ...action.payload
             };
+        },
+        updateOneProduct: (state, action: PayloadAction<IResponse<Product>>) => {
+            const dataCopy = [...state.$values];
+            const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.$values[0].productsId);
+            const product = dataCopy[productIndex];
+            const updatedProduct = { ...product, ...action.payload };
+            dataCopy.splice(productIndex, 1, updatedProduct);
+            return {
+                ...state,
+                $values: dataCopy
+            };
+        },
+        deleteProductById: (state, action: PayloadAction<string>) => {
+            console.log(action);
+
+            return {
+                ...state,
+                $values: state.$values.filter((p) => p.productsId !== action.payload)
+            };
         }
     }
 });
 
-export const { getProducts } = productsSlice.actions;
+export const { getProducts, updateOneProduct, deleteProductById } = productsSlice.actions;
 
 export default productsSlice.reducer;

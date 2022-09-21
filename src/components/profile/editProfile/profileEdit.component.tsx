@@ -55,7 +55,7 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                 </div>
                 <UploadImage getImage={passData} imageSrc={imageSrc} />
                 <div className={style.image}>
-                    <img src={userImage} alt={'AltImageName'} />
+                    <img src={userImage} alt={'editAltImageText'} />
                     {errors && <div className={style.profileError}>{errors.message}</div>}
                 </div>
                 <div className={style.details}>
@@ -77,7 +77,7 @@ const ProfileEdit = (props: Props & FormikProps<FormValues>) => {
                     Save
                 </button>
             </div>
-            <button className={style.arrowBack} onClick={goBack}>
+            <button className={style.arrowBack} onClick={goBack} type="button">
                 <img src={left} alt="" />
                 Go back
             </button>

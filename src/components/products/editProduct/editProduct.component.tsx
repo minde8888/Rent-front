@@ -1,8 +1,7 @@
 import { Form, Formik } from 'formik';
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
-import { getOneProduct } from '../../../redux/slice/productSlice';
 import { getProduct, updateProduct } from '../../../services/products.services/products.services';
 import * as Yup from 'yup';
 import { TextField } from '../../validation/textField';
@@ -10,6 +9,9 @@ import { TextArea } from '../../validation/textArea';
 import UploadImages from './uploadImages/uploadImages.component';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import { ImageFiles } from '../typings';
+import { updateOneProduct } from '../../../redux/slice/productsSlice';
+import { SelectField } from '../../validation/selectField';
+import { CatValues } from '../../../models/product.model';
 
 interface FormValues {
     place?: string;
@@ -24,6 +26,7 @@ interface FormValues {
     imageWidth?: string;
     imageHeight?: string;
     productsId?: string;
+    category?: CatValues[];
 }
 
 export interface FilesUpload {
@@ -36,7 +39,7 @@ interface Props extends FormValues {
     isSubmitting: boolean;
 }
 
-export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content }: Props) => {
+export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content, category }: Props) => {
     let data: Array<ImageFiles> = [];
 
     const getImagesData = async (files: Array<ImageFiles> | undefined): Promise<void> => {
@@ -53,13 +56,9 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             let arr: Array<File> = [];
             let url: string[] = [];
 
-            console.log(window.origin);
-
             await Promise.all(
                 data.map(async (e, i) => {
                     try {
-                        console.log(typeof e.data_url);
-
                         if (e.data_url.includes('data:image/jpeg;base64') || e.data_url.includes('data:image/png;base64')) {
                             url.push('/');
                         } else {
@@ -108,6 +107,17 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
         }
     }
 
+    let words: string[] | undefined = [];
+    if (category) {
+        words = category[0].categoriesName?.split(' ');
+    }
+
+    const CategoryOptions = words?.map((r, key) => (
+        <option value={r} key={key}>
+            {r}
+        </option>
+    ));
+
     return (
         <Formik
             initialValues={{
@@ -118,6 +128,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 size: size || '',
                 productName: productName || '',
                 content: content || '',
+                category: category || [],
                 imageSrc: '',
                 file: [],
                 imageWidth: '',
@@ -127,7 +138,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             validationSchema={Yup.object().shape({
                 place: Yup.string(),
                 price: Yup.string(),
-                productCode: Yup.string(),
+                phone: Yup.string(),
                 size: Yup.string(),
                 productName: Yup.string(),
                 content: Yup.string()
@@ -147,6 +158,12 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 <TextField id="size" name="size" type="size" />
                 <label>Product name</label>
                 <TextField id="productName" name="productName" type="productName" />
+                <label>Category</label>
+                <TextField id="Category" name="category" type="category" />
+                <SelectField name="categories" as="select" value={'categories'}>
+                    <option>Choice Category</option>
+                    {CategoryOptions}
+                </SelectField>
                 <label>Description</label>
                 <TextArea className={'style.profileTextArea'} id="Content" name="content" rows="20" />
                 <button type="submit" disabled={isSubmitting}>
@@ -160,17 +177,9 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
 const EditProduct: React.FC = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
-    const product = useAppSelector((state) => state.data.product);
+    const products = useAppSelector((state) => state.data.products);
+    const product = products.$values.filter((p) => p.productsId === id);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    useEffect(() => {
-        (async () => {
-            if (id) {
-                const data = await getProduct(id);
-                dispatch(getOneProduct(data));
-            }
-        })();
-    }, []);
 
     if (Object.keys(product).length === 0) return null;
 
@@ -190,7 +199,8 @@ const EditProduct: React.FC = () => {
         try {
             const data = updateProduct(formData);
             if (!(data instanceof Error)) {
-                //     dispatch(getUserProfile(user));
+                const product = getProduct(values.productsId);
+                dispatch(updateOneProduct(await product));
             }
         } catch (error: any) {
             // dispatch(loginFail(error.message));
@@ -203,15 +213,16 @@ const EditProduct: React.FC = () => {
                 isSubmitting={isSubmitting}
                 setIsSubmitting={setIsSubmitting}
                 onSubmit={handleSubmit}
-                place={product.$values[0].place}
-                price={product.$values[0].price}
-                size={product.$values[0].size}
-                phone={product.$values[0].phone}
-                email={product.$values[0].email}
-                productName={product.$values[0].postsDto.productName}
-                content={product.$values[0].postsDto.content}
-                imageSrc={product.$values[0].imageSrc.$values}
+                place={product[0].place}
+                price={product[0].price}
+                size={product[0].size}
+                phone={product[0].phone}
+                email={product[0].email}
+                productName={product[0].postsDto.productName}
+                content={product[0].postsDto.content}
+                imageSrc={product[0].imageSrc.$values}
                 productsId={id}
+                category={product[0].categoriesDto.$values}
             />
         </div>
     );

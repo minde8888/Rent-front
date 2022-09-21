@@ -12,12 +12,14 @@ const Products: React.FC = () => {
     const products = useAppSelector((state) => state.data.products);
     const [toggle, setToggle] = useState<string>('');
 
+    /* eslint-disable */
     useEffect(() => {
         (async () => {
             const data = await getAllProducts();
             dispatch(getProducts(data));
         })();
     }, []);
+    /* eslint-disable */
 
     if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
 
@@ -55,7 +57,10 @@ const Products: React.FC = () => {
                                     <div> {data.postsDto.productName}</div>
                                     <div className={style.text}> {data.postsDto.content}</div>
                                     <div> {data.place}</div>
-                                    <div> {data.size}m<sup>2</sup></div>
+                                    <div>
+                                        {' '}
+                                        {data.size}m<sup>2</sup>
+                                    </div>
                                     <div> {data.price}</div>
                                 </Link>
                                 <button onClick={(e) => passToggle(e, data.phone)}>Contact</button>

@@ -32,7 +32,7 @@ interface Post {
 export interface CatValues {
     $id: string;
     categoriesId: string;
-    categoriesName: string;
+    categoriesName?: string;
     description?: string;
     imageName?: string;
 }

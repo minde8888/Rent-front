@@ -1,37 +1,26 @@
 import { useParams } from 'react-router-dom';
-import { getProduct } from '../../../services/products.services/products.services';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
-import { getOneProduct } from '../../../redux/slice/productSlice';
-import { useEffect } from 'react';
+import { useAppSelector } from '../../../hooks/redux.hooks'; //;
 import LightBox from './lightBox/lightBox.component';
 
 const Product: React.FC = () => {
     const { id } = useParams();
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        (async () => {
-            if (id) {
-                const data = await getProduct(id);
-                dispatch(getOneProduct(data));
-            }
-        })();
-    }, []);
-
-    const product = useAppSelector((state) => state.data.product);
+    const products = useAppSelector((state) => state.data.products);
+    const product = products.$values.filter((p) => p.productsId === id);
 
     if (Object.keys(product).length === 0) return null;
 
     return (
         <div>
-            <div>{product.$values[0].place}</div>
-            <div>{product.$values[0].price}</div>
-            <div>{product.$values[0].phone}</div>
-            <div>{product.$values[0].email}</div>
-            <div>{product.$values[0].postsDto.productName}</div>
-            <div>{product.$values[0].postsDto.content}</div>
-            <div>{product.$values[0].size}m<sup>2</sup></div>
-            <LightBox images={product.$values[0].imageSrc.$values} id={id} showLightBox={(): void => { }} closeLightBox={(): void => { }} />
+            <div>{product[0].place}</div>
+            <div>{product[0].price}</div>
+            <div>{product[0].phone}</div>
+            <div>{product[0].email}</div>
+            <div>{product[0].postsDto.productName}</div>
+            <div>{product[0].postsDto.content}</div>
+            <div>
+                {product[0].size}m<sup>2</sup>
+            </div>
+            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => {}} closeLightBox={(): void => {}} />
         </div>
     );
 };

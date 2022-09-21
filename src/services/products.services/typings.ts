@@ -4,7 +4,7 @@ export interface Products {
     imageWidth: string;
     place: string;
     price: string;
-    productCode: string;
+    phone: string;
     size: string;
     sellerId: string;
     category: Array<string>;

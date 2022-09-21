@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.hooks';
-import { getProducts } from '../../../../redux/slice/productsSlice';
+import { getProducts, deleteProductById } from '../../../../redux/slice/productsSlice';
 import { getAllProducts, removeProduct } from '../../../../services/products.services/products.services';
 import style from './editAllProducts.module.scss';
 
@@ -19,8 +19,9 @@ const EditAllProducts: React.FC = () => {
     /* eslint-disable */
 
     const deleteProduct = (id: string) => {
-        removeProduct(id)
-    }
+        removeProduct(id);
+        dispatch(deleteProductById(id));
+    };
 
     if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
 
@@ -31,7 +32,7 @@ const EditAllProducts: React.FC = () => {
                     {products.$values.map((data, index) => (
                         <div className={style.product} key={index}>
                             <Link to={data.productsId}>
-                                <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt={"edit_alt_images"} />
+                                <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt={'edit_alt_images'} />
                             </Link>
                             <div className={style.description}>
                                 <Link to={data.productsId}>
@@ -40,7 +41,10 @@ const EditAllProducts: React.FC = () => {
                                     <div> {data.postsDto.productName}</div>
                                     <div className={style.text}> {data.postsDto.content}</div>
                                     <div> {data.place}</div>
-                                    <div> {data.size}m<sup>2</sup></div>
+                                    <div>
+                                        {' '}
+                                        {data.size}m<sup>2</sup>
+                                    </div>
                                     <div> {data.price}</div>
                                 </Link>
                             </div>
@@ -54,6 +58,5 @@ const EditAllProducts: React.FC = () => {
         </div>
     );
 };
-
 
 export default EditAllProducts;

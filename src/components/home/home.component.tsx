@@ -1,5 +1,4 @@
 import style from './home.module.scss';
-import image from '../../image/benidorm-gad205453d_1920.jpg';
 import prof1 from '../../image/adult-g85d451249_640.jpg';
 import prof2 from '../../image/portrait-g64600a4f3_640.jpg';
 import prof3 from '../../image/portrait-gcf634d440_640.jpg';
@@ -13,7 +12,6 @@ const Home = () => {
     return (
         <div className={style.home}>
             <div className={style.hero}>
-                {/* <img src={image} alt="spain" /> */}
                 <Hero />
             </div>
             <div className={style.text}>Take Contact With Our Creative Team</div>

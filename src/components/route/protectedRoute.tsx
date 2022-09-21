@@ -1,4 +1,4 @@
-import { Navigate, Outlet, Route } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import AccessDenied from '../auth/login/accessDenied/accessDenied.component';
 
@@ -16,10 +16,10 @@ export const ProtectedRoute: React.FC<Props> = ({ role }) => {
         return <AccessDenied />;
     }
     if (isLoggedIn && userHasRequiredRole) {
-        return <Outlet />
+        return <Outlet />;
     }
     if (!isLoggedIn || !userHasRequiredRole) {
-        return <Navigate to="/home" replace />;
+        return <Navigate to="/" replace />;
     }
     return null;
 };

@@ -4,7 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { useAppDispatch } from '../../hooks/redux.hooks';
 import { userLogout } from '../../redux/slice/authSlice';
+import { getProducts } from '../../redux/slice/productsSlice';
 import { logout } from '../../services/auth.services/auth.services';
+import { getAllProducts } from '../../services/products.services/products.services';
 import './nav.scss';
 
 interface INavBar {}
@@ -22,6 +24,11 @@ const NavBar: FunctionComponent<INavBar> = () => {
     const onLogout = () => {
         dispatch(userLogout());
         logout();
+
+        (async () => {
+            const data = await getAllProducts();
+            dispatch(getProducts(data));
+        })();
     };
 
     return (
@@ -49,7 +56,6 @@ const NavBar: FunctionComponent<INavBar> = () => {
                         <span className="home1 nav">products</span>
                     </>
                 )}
-
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
