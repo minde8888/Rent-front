@@ -58,7 +58,6 @@ const Products: React.FC = () => {
                                     <div className={style.text}> {data.postsDto.content}</div>
                                     <div> {data.place}</div>
                                     <div>
-                                        {' '}
                                         {data.size}m<sup>2</sup>
                                     </div>
                                     <div> {data.price}</div>

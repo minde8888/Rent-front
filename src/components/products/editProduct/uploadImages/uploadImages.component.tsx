@@ -58,9 +58,9 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
     return (
         <>
             {imgSrc?.map((element, key) => (
-                <div key={key}>
+                <div className={style.images} key={key}>
                     <img src={element.data_url === undefined ? product : element.data_url} alt="alt-text" width="100" />
-                    <input type="file" onChange={(e) => onFileChange(e, key)} accept=".jpg,.jpeg,.png,.gif" />
+                    <input className={style.imgUploaded} type="file" onChange={(e) => onFileChange(e, key)} accept=".jpg,.jpeg,.png,.gif" />
                     <button className={style.close} onClick={(e) => removeImage(e, key)} type="button">
                         ❌
                     </button>

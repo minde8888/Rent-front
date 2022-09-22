@@ -12,7 +12,7 @@ interface Props {
     role2?: string;
 }
 
-const LightBox = ({ images, role = "role-images", role1 = "role-images-1", role2 = "role-images-2" }: Props) => {
+const LightBox = ({ images, role = 'role-images', role1 = 'role-images-1', role2 = 'role-images-2' }: Props) => {
     const [lightBoxDisplay, setLightBoxDisplay] = useState(false);
     const [imageToShow, setImageToShow] = useState<string | undefined>('');
 
@@ -38,7 +38,7 @@ const LightBox = ({ images, role = "role-images", role1 = "role-images-1", role2
     };
 
     return (
-        <div>
+        <div className={style.images}>
             {lightBoxDisplay ? (
                 <div className={style.lightBox}>
                     <div role={role1} className={style.close} style={{ display: lightBoxDisplay ? 'block' : 'none' }} onClick={closeLightBox}>
@@ -51,10 +51,7 @@ const LightBox = ({ images, role = "role-images", role1 = "role-images-1", role2
                     <div className={style.bigImage}>
                         <img role={role2} className={style.cursor} onClick={showLightBox} src={imageToShow === '' ? images[0] : imageToShow} alt={'product_alt_text'} />
                     </div>
-                    <div className={style.smallImagesContainer}>
-                        {imageCards}
-                    </div>
-
+                    <div className={style.smallImagesContainer}>{imageCards}</div>
                 </>
             )}
         </div>

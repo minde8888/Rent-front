@@ -27,34 +27,35 @@ const EditAllProducts: React.FC = () => {
 
     return (
         <div className={style.container}>
-            <div className={style.content}>
-                <div>
-                    {products.$values.map((data, index) => (
-                        <div className={style.product} key={index}>
-                            <Link to={data.productsId}>
-                                <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt={'edit_alt_images'} />
-                            </Link>
-                            <div className={style.description}>
-                                <Link to={data.productsId}>
-                                    <div> {data.phone}</div>
-                                    <div> {data.email}</div>
-                                    <div> {data.postsDto.productName}</div>
-                                    <div className={style.text}> {data.postsDto.content}</div>
-                                    <div> {data.place}</div>
-                                    <div>
-                                        {' '}
-                                        {data.size}m<sup>2</sup>
-                                    </div>
-                                    <div> {data.price}</div>
-                                </Link>
+            {products.$values.map((data, index) => (
+                <div className={style.product} key={index}>
+                    <div className={style.images}>
+                        <Link to={data.productsId}>
+                            <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt={'edit_alt_images'} />
+                        </Link>
+                    </div>
+                    <div className={style.description}>
+                        <Link to={data.productsId}>
+                            {/* <div> {data.phone}</div>
+                            <div> {data.email}</div> */}
+                            <h2> {data.postsDto.productName}</h2>
+                            <h3> {data.place}</h3>
+                            <div className={style.text}> {data.postsDto.content}</div>
+                            <div>
+                                <b>Size : </b>
+                                {data.size}m<sup>2</sup>
                             </div>
-                            <button className={style.close} onClick={() => deleteProduct(data.productsId)} type="button">
-                                ❌
-                            </button>
-                        </div>
-                    ))}
+                            <div>
+                                <b>Price : </b>
+                                {data.price}
+                            </div>
+                        </Link>
+                        <button className={style.close} onClick={() => deleteProduct(data.productsId)} type="button">
+                            ❌
+                        </button>
+                    </div>
                 </div>
-            </div>
+            ))}
         </div>
     );
 };

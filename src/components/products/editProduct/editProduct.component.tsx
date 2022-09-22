@@ -167,7 +167,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 <label>Description</label>
                 <TextArea className={'style.profileTextArea'} id="Content" name="content" rows="20" />
                 <button type="submit" disabled={isSubmitting}>
-                    Edit
+                    Save
                 </button>
             </Form>
         </Formik>

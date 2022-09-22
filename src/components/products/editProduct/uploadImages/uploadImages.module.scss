@@ -1,7 +1,39 @@
-.container {
-    width: 100%;
+form {
+    margin: 5px;
+
+    .images {
+        display: flex;
+        justify-content: center;
+        margin: 0 0 5px 0;
+
+        img {
+            width: 60%;
+            height: 30vh;
+            object-fit: cover;
+        }
+
+        button {
+            width: 20%;
+        }
+
+        .imgUploaded {
+            position: absolute;
+            width: 80%;
+            height: 30vh;
+            opacity: 0;
+        }
+
+        .imgUploaded:hover {
+            cursor: pointer;
+        }
+
+    }
 
     .close {
         z-index: 3;
+    }
+
+    .close:hover {
+        cursor: pointer;
     }
 }
