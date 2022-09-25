@@ -72,16 +72,14 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
                     {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => (
                         <div className={style.upload_image}>
                             {imageList.map((image, index) => (
-                                <div key={index} className={style.image_item}>
+                                <div key={index} className={style.images}>
                                     <img className={style.image_show} src={image['data_url']} alt="alt-text" width="100" />
-                                    <div className={style.image_btn_wrapper}>
-                                        <span onClick={() => onImageUpdate(index)}>add</span>
-                                        <span onClick={() => onImageRemove(index)}>❌</span>
-                                    </div>
+                                    <span className={style.update_image} onClick={() => onImageUpdate(index)}></span>
+                                    <button className={style.close_btn} onClick={() => onImageRemove(index)}>❌</button>
                                 </div>
                             ))}
                             <div className={style.clickDrop} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
-                                <div>Click or Drop image here </div>
+                                <div className={style.addImage}>Click or Drop image here </div>
                             </div>
                             {errors && (
                                 <div>

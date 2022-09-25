@@ -1,25 +1,35 @@
 form {
     margin: 5px;
 
-    .images {
+    .images,
+    .clickDrop {
         display: flex;
         justify-content: center;
         margin: 0 0 5px 0;
 
         img {
-            width: 60%;
-            height: 30vh;
+            position: relative;
+            width: 40%;
             object-fit: cover;
+            height: 300px;
         }
 
         button {
-            width: 20%;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(37, 35, 35, 0.747);
+        }
+
+        button:hover {
+            background-color: rgb(189, 199, 207);
         }
 
         .imgUploaded {
             position: absolute;
-            width: 80%;
-            height: 30vh;
+            left: 29%;
+            width: 40%;
+            height: 300px;
             opacity: 0;
         }
 
@@ -27,13 +37,43 @@ form {
             cursor: pointer;
         }
 
+        .update_image {
+            position: absolute;
+            left: 29%;
+            width: 40%;
+            height: 300px;
+            opacity: 0;
+        }
+
+        .update_image:hover {
+            cursor: pointer;
+        }
+
+        .close_btn {
+            font-size: 20px;
+        }
+
+        .addImage {
+            margin: 30px 0 30px 0;
+            font-size: 26px;
+        }
+
+        .addImage:hover {
+            color: rgba(22, 54, 22, 0.534);
+        }
     }
 
-    .close {
-        z-index: 3;
+    .close,
+    .close_btn {
+        font-size: 20px;
     }
 
-    .close:hover {
+    .close:hover,
+    .close_btn:hover {
+        cursor: pointer;
+    }
+
+    .clickDrop:hover {
         cursor: pointer;
     }
 }

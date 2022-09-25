@@ -10,8 +10,8 @@ import UploadImages from './uploadImages/uploadImages.component';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import { ImageFiles } from '../typings';
 import { updateOneProduct } from '../../../redux/slice/productsSlice';
-import { SelectField } from '../../validation/selectField';
 import { CatValues } from '../../../models/product.model';
+import style from './editProduct.module.scss'
 
 interface FormValues {
     place?: string;
@@ -26,7 +26,7 @@ interface FormValues {
     imageWidth?: string;
     imageHeight?: string;
     productsId?: string;
-    category?: CatValues[];
+    categoriesName?: string;
 }
 
 export interface FilesUpload {
@@ -37,17 +37,22 @@ interface Props extends FormValues {
     onSubmit: (values: FormValues) => Promise<void>;
     setIsSubmitting: Dispatch<SetStateAction<boolean>>;
     isSubmitting: boolean;
+    category?: CatValues[];
 }
+
+// interface Option {
+//     readonly label?: string;
+//     readonly value: string;
+// }
+
 
 export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content, category }: Props) => {
     let data: Array<ImageFiles> = [];
-
     const getImagesData = async (files: Array<ImageFiles> | undefined): Promise<void> => {
         if (files) {
             data = files;
         }
     };
-
     /* eslint-disable */
     const handleSubmit = useCallback(
         async (values: FormValues) => {
@@ -55,6 +60,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             let arrayImageHeight: number[] = [];
             let arr: Array<File> = [];
             let url: string[] = [];
+
 
             await Promise.all(
                 data.map(async (e, i) => {
@@ -90,7 +96,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                     }
                 })
             );
-
             setIsSubmitting(true);
             await onSubmit(values);
             setIsSubmitting(false);
@@ -107,16 +112,10 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
         }
     }
 
-    let words: string[] | undefined = [];
-    if (category) {
-        words = category[0].categoriesName?.split(' ');
+    let words: string | undefined = '';
+    if (category !== undefined) {
+        words = category[0].categoriesName
     }
-
-    const CategoryOptions = words?.map((r, key) => (
-        <option value={r} key={key}>
-            {r}
-        </option>
-    ));
 
     return (
         <Formik
@@ -128,7 +127,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 size: size || '',
                 productName: productName || '',
                 content: content || '',
-                category: category || [],
+                categoriesName: words || '',
                 imageSrc: '',
                 file: [],
                 imageWidth: '',
@@ -141,34 +140,54 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 phone: Yup.string(),
                 size: Yup.string(),
                 productName: Yup.string(),
-                content: Yup.string()
+                content: Yup.string(),
+                categories: Yup.string(),
             })}
         >
             <Form>
-                <UploadImages imageSrc={newData} getImages={getImagesData} />
-                <label>Place</label>
-                <TextField id="place" name="place" placeholder="place" />
-                <label>Price</label>
-                <TextField id="price" name="price" type="price" />
-                <label>Phone</label>
-                <TextField id="phone" name="phone" type="phone" />
-                <label>Email</label>
-                <TextField id="mail" name="email" type="email" />
-                <label>Size</label>
-                <TextField id="size" name="size" type="size" />
-                <label>Product name</label>
-                <TextField id="productName" name="productName" type="productName" />
-                <label>Category</label>
-                <TextField id="Category" name="category" type="category" />
-                <SelectField name="categories" as="select" value={'categories'}>
-                    <option>Choice Category</option>
-                    {CategoryOptions}
-                </SelectField>
-                <label>Description</label>
-                <TextArea className={'style.profileTextArea'} id="Content" name="content" rows="20" />
-                <button type="submit" disabled={isSubmitting}>
-                    Save
-                </button>
+                <div>
+                    <UploadImages imageSrc={newData} getImages={getImagesData} />
+                </div>
+                <div className={style.description}>
+                    <div className={style.inp}>
+                        <div>
+                            <label>Place</label>
+                            <TextField id="place" name="place" placeholder="place" />
+                        </div>
+                        <div>
+                            <label>Price</label>
+                            <TextField id="price" name="price" type="price" />
+                        </div>
+                        <div>
+                            <label>Phone</label>
+                            <TextField id="phone" name="phone" type="phone" />
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <TextField id="mail" name="email" type="email" />
+                        </div>
+                        <div>
+                            <label>Size</label>
+                            <TextField id="size" name="size" type="size" />
+                        </div>
+                    </div>
+                    <div className={style.content}>
+                        <label>Product name</label>
+                        <TextField id="productName" name="productName" type="productName" />
+                        <label>Description</label>
+                        <TextArea className={'style.profileTextArea'} id="Content" name="content" rows="20" />
+                    </div>
+                </div>
+                <div className={style.col}>
+                    <div>
+                        <label>Categories</label>
+                        <TextField id="Categories" name="categoriesName" type="categoriesName" />
+                    </div>
+                    <button type="submit" disabled={isSubmitting}>
+                        Save
+                    </button>
+                </div>
+
             </Form>
         </Formik>
     );
@@ -184,6 +203,8 @@ const EditProduct: React.FC = () => {
     if (Object.keys(product).length === 0) return null;
 
     const handleSubmit = async (values: any) => {
+        // console.log(categories);
+
         let formData = new FormData();
 
         for (const key in values) {
@@ -224,6 +245,11 @@ const EditProduct: React.FC = () => {
                 productsId={id}
                 category={product[0].categoriesDto.$values}
             />
+            {/* <Select
+                options={options}
+                isMulti={true}
+                onChange={handleChange}
+            /> */}
         </div>
     );
 };

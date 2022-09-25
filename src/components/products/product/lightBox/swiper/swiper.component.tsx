@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import useCounter from '../../../../../hooks/useCounter';
 import useDrag from '../../../../../hooks/useDrag.hooks';
 import style from '../lightBox.module.scss';
@@ -38,28 +38,43 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
     }
 
     const transition = 'transform 350ms ease-in-out 15ms';
-    let transform = TransformPosition(imagesPixelsToHide, count, marginTop);
 
-    if (isDragging) {
-        transform = {
-            transform: `translateX(${positionX}px) translateY(${marginTop}px)`,
-            transition: ''
-        };
-    }
+    // if (!isDragging) {
+    //     let transform = TransformPosition(imagesPixelsToHide, count, marginTop);
+    //     setTransform(TransformPosition(imagesPixelsToHide, index, marginTop, transition))
+    // }
 
-    if (isDragging === false) {
-        let index = Snap(imagesPixelsToHide, positionX);
-        if (positionX < imagesPixelsToHide[index] && index < imagesPixelsToHide.length - 1) {
-            ++index;
+    const [transform, setTransform] = useState(TransformPosition(imagesPixelsToHide, count, marginTop))
+
+    useEffect(() => {
+        if (isDragging) {
+            setTransform({
+                transform: `translateX(${positionX}px) translateY(${marginTop}px)`,
+                transition: ''
+            })
+        } else {
+            setCount(Snap(imagesPixelsToHide, positionX))
+            let index = Snap(imagesPixelsToHide, positionX);
+            if (positionX < imagesPixelsToHide[index] && index < imagesPixelsToHide.length - 1) {
+                ++index;
+                increment()
+            }
+            if (positionX > -startPositionX && index > 0) {
+                decrement()
+                --index;
+            }
+            setTransform(TransformPosition(imagesPixelsToHide, index, marginTop, transition))
         }
-        if (positionX > -startPositionX && index > 0) {
-            --index;
-        }
-        transform = TransformPosition(imagesPixelsToHide, index, marginTop, transition);
-    }
+    }, [isDragging])
+
     useCallback(() => {
-        transform = TransformPosition(imagesPixelsToHide, count, marginTop, transition);
+        console.log(1111);
+
+        setTransform(TransformPosition(imagesPixelsToHide, count, marginTop, transition))
+        // transform = TransformPosition(imagesPixelsToHide, count, marginTop, transition);
     }, [count]);
+    console.log(transform);
+
 
     const imageStyle = {
         width: `${window.innerWidth * 0.8}px`,

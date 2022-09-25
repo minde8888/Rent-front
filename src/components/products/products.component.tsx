@@ -40,7 +40,6 @@ const Products: React.FC = () => {
         <div className={style.container}>
             <div className={style.top}>
                 <div className={style.sort}>{cat}</div>
-                <div className={style.cat}>sort</div>
             </div>
             <div className={style.content}>
                 <div className={style.filter}>filter</div>
