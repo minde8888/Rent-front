@@ -24,8 +24,6 @@ const productsSlice = createSlice({
             };
         },
         deleteProductById: (state, action: PayloadAction<string>) => {
-            console.log(action);
-
             return {
                 ...state,
                 $values: state.$values.filter((p) => p.productsId !== action.payload)
