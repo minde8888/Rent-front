@@ -11,7 +11,7 @@ import { imageResize } from '../../../helpers/imageResize.helper';
 import { ImageFiles } from '../typings';
 import { updateOneProduct } from '../../../redux/slice/productsSlice';
 import { CatValues } from '../../../models/product.model';
-import style from './editProduct.module.scss'
+import style from './editProduct.module.scss';
 
 interface FormValues {
     place?: string;
@@ -40,12 +40,6 @@ interface Props extends FormValues {
     category?: CatValues[];
 }
 
-// interface Option {
-//     readonly label?: string;
-//     readonly value: string;
-// }
-
-
 export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content, category }: Props) => {
     let data: Array<ImageFiles> = [];
     const getImagesData = async (files: Array<ImageFiles> | undefined): Promise<void> => {
@@ -60,7 +54,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             let arrayImageHeight: number[] = [];
             let arr: Array<File> = [];
             let url: string[] = [];
-
 
             await Promise.all(
                 data.map(async (e, i) => {
@@ -112,10 +105,9 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
         }
     }
 
-    let words: string | undefined = '';
-    if (category !== undefined) {
-        words = category[0].categoriesName
-    }
+    const categories = category?.map((el) => {
+        return el.categoriesName;
+    });
 
     return (
         <Formik
@@ -127,7 +119,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 size: size || '',
                 productName: productName || '',
                 content: content || '',
-                categoriesName: words || '',
+                categoriesName: categories?.toString() || '',
                 imageSrc: '',
                 file: [],
                 imageWidth: '',
@@ -141,7 +133,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 size: Yup.string(),
                 productName: Yup.string(),
                 content: Yup.string(),
-                categories: Yup.string(),
+                categories: Yup.string()
             })}
         >
             <Form>
@@ -179,7 +171,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                     </div>
                 </div>
                 <div className={style.col}>
-                    <div>
+                    <div className={style.category}>
                         <label>Categories</label>
                         <TextField id="Categories" name="categoriesName" type="categoriesName" />
                     </div>
@@ -187,7 +179,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                         Save
                     </button>
                 </div>
-
             </Form>
         </Formik>
     );
@@ -198,13 +189,12 @@ const EditProduct: React.FC = () => {
     const dispatch = useAppDispatch();
     const products = useAppSelector((state) => state.data.products);
     const product = products.$values.filter((p) => p.productsId === id);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     if (Object.keys(product).length === 0) return null;
 
     const handleSubmit = async (values: any) => {
-        // console.log(categories);
-
         let formData = new FormData();
 
         for (const key in values) {
@@ -227,6 +217,7 @@ const EditProduct: React.FC = () => {
             // dispatch(loginFail(error.message));
         }
     };
+    console.log(product);
 
     return (
         <div>
@@ -245,11 +236,6 @@ const EditProduct: React.FC = () => {
                 productsId={id}
                 category={product[0].categoriesDto.$values}
             />
-            {/* <Select
-                options={options}
-                isMulti={true}
-                onChange={handleChange}
-            /> */}
         </div>
     );
 };

@@ -47,6 +47,8 @@ export const getAllProducts = async (): Promise<IResponse<Product>> => {
 export const getProduct = async (id: string): Promise<IResponse<Product>> => {
     try {
         const { data } = await api.get<IResponse<Product>>(PRODUCTS_URL + 'id?id=' + id);
+        console.log(data);
+
         if (!(Object.keys(data).length !== 0)) throw Error('no product found');
         return data;
     } catch (error: any) {

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import useCounter from '../../../../../hooks/useCounter';
 import useDrag from '../../../../../hooks/useDrag.hooks';
 import style from '../lightBox.module.scss';
@@ -11,12 +11,14 @@ interface ImageStyles {
     transition: string;
     transform: string;
 }
+
 const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
     const [divRef, __setDivRef] = useState<HTMLDivElement | null>(null);
     const setDivRef = useCallback((div: HTMLDivElement) => __setDivRef(div), [__setDivRef]);
     const { positionX, isDragging, startPositionX } = useDrag(divRef);
     const marginTop = 110;
-    const { count, increment, decrement, reset, setCount } = useCounter(0);
+    const { count, increment, decrement, setCount } = useCounter(0);
+    const [transform, setTransform] = useState<ImageStyles | undefined>(undefined);
 
     const bounds = divRef?.getBoundingClientRect();
     let imagesPixelsToHide: Array<number> = [];
@@ -38,43 +40,34 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
     }
 
     const transition = 'transform 350ms ease-in-out 15ms';
+    const transformDefault = TransformPosition(imagesPixelsToHide, count, marginTop);
 
-    // if (!isDragging) {
-    //     let transform = TransformPosition(imagesPixelsToHide, count, marginTop);
-    //     setTransform(TransformPosition(imagesPixelsToHide, index, marginTop, transition))
-    // }
-
-    const [transform, setTransform] = useState(TransformPosition(imagesPixelsToHide, count, marginTop))
-
+    /* eslint-disable */
     useEffect(() => {
         if (isDragging) {
+            console.log(1111111);
+
             setTransform({
                 transform: `translateX(${positionX}px) translateY(${marginTop}px)`,
                 transition: ''
-            })
+            });
         } else {
-            setCount(Snap(imagesPixelsToHide, positionX))
-            let index = Snap(imagesPixelsToHide, positionX);
-            if (positionX < imagesPixelsToHide[index] && index < imagesPixelsToHide.length - 1) {
-                ++index;
-                increment()
+            setCount(Snap(imagesPixelsToHide, positionX));
+
+            if (positionX < imagesPixelsToHide[count] && count < imagesPixelsToHide.length - 1) {
+                increment();
             }
-            if (positionX > -startPositionX && index > 0) {
-                decrement()
-                --index;
+            if (positionX > -startPositionX && count > 0) {
+                decrement();
             }
-            setTransform(TransformPosition(imagesPixelsToHide, index, marginTop, transition))
+            console.log(imagesPixelsToHide, count, marginTop, transition);
+            setTransform(TransformPosition(imagesPixelsToHide, count, marginTop, transition));
         }
-    }, [isDragging])
-
-    useCallback(() => {
-        console.log(1111);
-
-        setTransform(TransformPosition(imagesPixelsToHide, count, marginTop, transition))
-        // transform = TransformPosition(imagesPixelsToHide, count, marginTop, transition);
+    }, [isDragging]);
+    /* eslint-disable */
+    useMemo(() => {
+        setTransform(TransformPosition(imagesPixelsToHide, count, marginTop, transition));
     }, [count]);
-    console.log(transform);
-
 
     const imageStyle = {
         width: `${window.innerWidth * 0.8}px`,
@@ -92,7 +85,7 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
     return (
         <>
             <Arrows imagesPixelsToHide={imagesPixelsToHide} increment={increment} decrement={decrement} count={count} />
-            <div className={style.swiper} ref={setDivRef} style={transform}>
+            <div className={style.swiper} ref={setDivRef} style={transform !== undefined ? transform : transformDefault}>
                 {imageCards}
             </div>
         </>
@@ -109,7 +102,9 @@ function Snap(array: Array<number>, number: number): number {
     return index;
 }
 
-function TransformPosition(imagesPixelsToHide: number[], index: number, marginTop: number, transition = ''): ImageStyles {
+function TransformPosition(imagesPixelsToHide: number[], index: number, marginTop: number, transition = ''): ImageStyles | undefined {
+    if (imagesPixelsToHide.length === 0) return undefined;
+
     return {
         transform: `translateX(${imagesPixelsToHide[index]}px) translateY(${marginTop}px)`,
         transition: transition
