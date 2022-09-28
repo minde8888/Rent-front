@@ -1,4 +1,4 @@
-import { Form, Formik } from 'formik';
+import { Field, FieldArray, Form, Formik } from 'formik';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
@@ -12,6 +12,7 @@ import { ImageFiles } from '../typings';
 import { updateOneProduct } from '../../../redux/slice/productsSlice';
 import { CatValues } from '../../../models/product.model';
 import style from './editProduct.module.scss';
+import EditCategory from './editCategory/editCategory';
 
 interface FormValues {
     place?: string;
@@ -26,7 +27,7 @@ interface FormValues {
     imageWidth?: string;
     imageHeight?: string;
     productsId?: string;
-    categoriesName?: string;
+    categories?: CatValues[];
 }
 
 export interface FilesUpload {
@@ -37,10 +38,10 @@ interface Props extends FormValues {
     onSubmit: (values: FormValues) => Promise<void>;
     setIsSubmitting: Dispatch<SetStateAction<boolean>>;
     isSubmitting: boolean;
-    category?: CatValues[];
+    // category?: CatValues[];
 }
 
-export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content, category }: Props) => {
+export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content, categories }: Props) => {
     let data: Array<ImageFiles> = [];
     const getImagesData = async (files: Array<ImageFiles> | undefined): Promise<void> => {
         if (files) {
@@ -105,9 +106,9 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
         }
     }
 
-    const categories = category?.map((el) => {
-        return el.categoriesName;
-    });
+    // const categories = category?.map((el) => {
+    //     return el.categories;
+    // });
 
     return (
         <Formik
@@ -119,7 +120,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 size: size || '',
                 productName: productName || '',
                 content: content || '',
-                categoriesName: categories?.toString() || '',
+                categories: categories,
                 imageSrc: '',
                 file: [],
                 imageWidth: '',
@@ -171,10 +172,30 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                     </div>
                 </div>
                 <div className={style.col}>
+                    {/* <TextField id="Categories" name="categories" type={el.categories} /> */}
+                    {/* <div> {el.categories} </div> */}
+                    {/* <button type="button">❌</button> */}
+                    {/* <FieldArray name="categories">
+                        render={({ insert, remove, push }) => (
+                  
+                        )}
+                    </FieldArray> */}
+                    <div>
+                        {/* {categories?.map((el, index) => (
+                            <div key={index}>
+                                <TextField id="Categories" name="categories" type="categories" />
+                                <Field id="categories" name={el.categories} type="text" />
+                                <button type="button">❌</button>
+                            </div>
+                        ))} */}
+                        <EditCategory categories={categories !== undefined ? categories : []} />
+                    </div>
+                    <button className={style.plus}>✅</button>
                     <div className={style.category}>
                         <label>Categories</label>
                         <TextField id="Categories" name="categoriesName" type="categoriesName" />
                     </div>
+
                     <button type="submit" disabled={isSubmitting}>
                         Save
                     </button>
@@ -234,7 +255,7 @@ const EditProduct: React.FC = () => {
                 content={product[0].postsDto.content}
                 imageSrc={product[0].imageSrc.$values}
                 productsId={id}
-                category={product[0].categoriesDto.$values}
+                categories={product[0].categoriesDto.$values}
             />
         </div>
     );
