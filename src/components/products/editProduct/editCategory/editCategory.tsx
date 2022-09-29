@@ -5,51 +5,68 @@ import { array, object, string } from 'yup';
 import { CatValues } from '../../../../models/product.model';
 import { TextField } from '../../../validation/textField';
 // import Modal from 'react-modal';
-import ReactModal from 'react-modal';
-
-ReactModal.setAppElement('#root');
 
 export interface FormValues {
     categories: CatValues[];
 }
 
-const initialValues: FormValues = {
-    categories: [
-        {
-            $id: '',
-            categoriesId: '',
-            categoriesName: '',
-            description: '',
-            imageName: ''
-        }
-    ]
-};
+interface Props extends FormValues {
+    onCancel: () => void;
+}
+
+// const initialValues: FormValues = {
+//     categories: [
+//         {
+//             $id: '',
+//             categoriesId: '',
+//             categoriesName: '',
+//             description: '',
+//             imageName: ''
+//         }
+//     ]
+// };
 // interface Props extends FormValues {
 //     onSubmit: (values: FormValues) => Promise<void>;
 //     isSubmitting: boolean;
 //     setIsSubmitting: Dispatch<SetStateAction<boolean>>;
 // }
-const renderFieldArray = (props: FormikProps<FormValues>) => (arrayHelpers: any) => {
-    return props.values.categories?.map((x, index) => {
-        return (
-            <div key={index}>
-                <input name={`categories.${index}.categoriesName`} value={`categories.${index}.categoriesName`} onChange={props.handleChange} />
-            </div>
-        );
-    });
-};
+// const renderFieldArray = (props: FormikProps<FormValues>) => (arrayHelpers: any) => {
+//     return props.values.categories?.map((x, index) => {
+//         return (
+//             <div key={index}>
+//                 <input name={`categories.${index}.categoriesName`} value={`categories.${index}.categoriesName`} onChange={props.handleChange} />
+//             </div>
+//         );
+//     });
+// };
+// const handleOnSubmit = (values: any, actions: { setSubmitting: (arg0: boolean) => void; resetForm: () => void }) => {
+//     console.log(values);
+// };
 
-const EditCategory = ({ categories }: FormValues) => {
+const EditCategory = ({ categories, onCancel }: Props) => {
     const [modalIsOpen, setIsOpen] = React.useState(false);
-    console.log(categories);
+
+    const requiredValidator = (value?: string) =>
+  !value ? "Required" : undefined;
+    //     console.log(categories);
+    // const [initialValues, setInitialValues] = useState< CatValues[]>(categories);
 
     return (
-        <div className="App">
-            <button onClick={() => setIsOpen(true)}>Open Modal</button>
-            {/* <Modal isOpen={modalIsOpen} onRequestClose={() => setIsOpen(false)}>
-                <button onClick={() => setIsOpen(false)}>Close Modal</button>
-            </Modal> */}
-        </div>
+        // <Formik initialValues={{ categories }} onSubmit={handleOnSubmit}>
+        //     {(props) => (
+        //         <form onSubmit={props.handleSubmit}>
+        //             <FieldArray name="costs" render={renderFieldArray(props)} />
+        //         </form>
+        //     )}
+        // </Formik>
+        // <div className="">
+        //     <button onClick={onCancel} type="button">
+        //         ❌
+        //     </button>
+        //     <button className="" type="button">
+        //         ✅
+        //     </button>
+        // </div>
     );
 };
 

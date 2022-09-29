@@ -13,6 +13,8 @@ import { updateOneProduct } from '../../../redux/slice/productsSlice';
 import { CatValues } from '../../../models/product.model';
 import style from './editProduct.module.scss';
 import EditCategory from './editCategory/editCategory';
+import Modal from '../../modal/modal.component';
+import useModal from '../../../hooks/useModal';
 
 interface FormValues {
     place?: string;
@@ -42,6 +44,9 @@ interface Props extends FormValues {
 }
 
 export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content, categories }: Props) => {
+    const { isOpen, toggle } = useModal();
+    const onCancel = () => toggle();
+
     let data: Array<ImageFiles> = [];
     const getImagesData = async (files: Array<ImageFiles> | undefined): Promise<void> => {
         if (files) {
@@ -188,13 +193,17 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                                 <button type="button">❌</button>
                             </div>
                         ))} */}
-                        <EditCategory categories={categories !== undefined ? categories : []} />
+                        {/* <EditCategory categories={categories !== undefined ? categories : []} /> */}
+                        <button onClick={toggle}>Open Modal </button>
+                        <Modal isOpen={isOpen} toggle={toggle}>
+                            <EditCategory onCancel={onCancel} categories={categories !== undefined ? categories : []} />
+                        </Modal>
                     </div>
-                    <button className={style.plus}>✅</button>
-                    <div className={style.category}>
+
+                    {/* <div className={style.category}>
                         <label>Categories</label>
                         <TextField id="Categories" name="categoriesName" type="categoriesName" />
-                    </div>
+                    </div> */}
 
                     <button type="submit" disabled={isSubmitting}>
                         Save
