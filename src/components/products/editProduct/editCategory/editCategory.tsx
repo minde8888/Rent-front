@@ -1,9 +1,8 @@
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import React from 'react';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import { array, object, string } from 'yup';
+import React, { ChangeEvent } from 'react';
+import { useState } from 'react';
 import { CatValues } from '../../../../models/product.model';
-import { TextField } from '../../../validation/textField';
+import ValidityInput from '../../../validation/validityInput/validityInput';
+
 // import Modal from 'react-modal';
 
 export interface FormValues {
@@ -44,35 +43,48 @@ interface Props extends FormValues {
 // };
 
 const EditCategory = ({ categories, onCancel }: Props) => {
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [category, setCategory] = useState(categories);
 
-    const requiredValidator = (value?: string) =>
-        !value ? "Required" : undefined;
-    //     console.log(categories);
-    // const [initialValues, setInitialValues] = useState< CatValues[]>(categories);
+    const handleInput = (e: ChangeEvent, index: number) => {
+        if (e.target instanceof HTMLInputElement) {
+            const value = e.target.value;
+            setCategory((state) => state.map((val, i) => (i !== index ? val : { ...val, categoriesName: value })));
+        }
+    };
+
+    const removeCategory = (id: string) => {
+        setCategory((state) => state.filter((c) => !id.includes(c.categoriesId)));
+    };
+
+    const saveCategories = () => {
+        console.log(category);
+    };
 
     return (
-        // <Formik initialValues={{ categories }} onSubmit={handleOnSubmit}>
-        //     {(props) => (
-        //         <form onSubmit={props.handleSubmit}>
-        //             <FieldArray name="costs" render={renderFieldArray(props)} />
-        //         </form>
-        //     )}
-        // </Formik>
         <>
-            {categories?.map((e, index) =>
-
-                <div key={index}>
-                    <input name={e.categoriesName} value={e.categoriesName} />
-                </div>)}
             <button onClick={onCancel} type="button">
                 ❌
             </button>
-            <button className="" type="button">
-                ✅
+            {category.map((el, index) => (
+                <div key={index} className="month">
+                    <ValidityInput>
+                        <input
+                            type="text"
+                            value={el.categoriesName}
+                            onChange={(e) => handleInput(e, index)}
+                            pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$"
+                        // disabled={manual ? false : true}
+                        />
+                    </ValidityInput>
+                    <button onClick={() => removeCategory(el.categoriesId)} type="button">
+                        ❌
+                    </button>
+                </div>
+            ))}
+            <button onClick={saveCategories} type="button">
+                save
             </button>
         </>
-
     );
 };
 

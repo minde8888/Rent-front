@@ -1,4 +1,4 @@
-import { Field, FieldArray, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
@@ -194,7 +194,9 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                             </div>
                         ))} */}
                         {/* <EditCategory categories={categories !== undefined ? categories : []} /> */}
-                        <button onClick={toggle}>Open Modal </button>
+                        <button onClick={toggle} type="button">
+                            Open Modal{' '}
+                        </button>
                         <Modal isOpen={isOpen} toggle={toggle}>
                             <EditCategory onCancel={onCancel} categories={categories !== undefined ? categories : []} />
                         </Modal>
