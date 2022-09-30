@@ -8,18 +8,20 @@ interface RequiredInputProps {
     value?: ValueType;
 }
 
-function InputValidation<InputProps extends RequiredInputProps>(InputComponent: React.ComponentType<InputProps>, validators: ValidatorType[] = []) {
+function InputValidation<InputProps extends RequiredInputProps>(InputComponent: React.ComponentType<InputProps>, validators: ValidatorType) {
+
     return class InputWithValidation extends React.Component<InputProps> {
         render() {
             const { error, value } = this.props;
 
-            const firstInvalidValidator = validators.find((validate) => !!validate(value));
+            const firstInvalidValidator = validators.find((validate: (arg0: ValueType | undefined) => ValidatorType) => !!validate(value));
 
             const validationError = firstInvalidValidator && firstInvalidValidator(value);
 
             return <InputComponent {...this.props} error={error || validationError} />;
         }
     };
+
 }
 
 export default InputValidation;

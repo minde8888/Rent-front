@@ -47,7 +47,7 @@ const EditCategory = ({ categories, onCancel }: Props) => {
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     const requiredValidator = (value?: string) =>
-  !value ? "Required" : undefined;
+        !value ? "Required" : undefined;
     //     console.log(categories);
     // const [initialValues, setInitialValues] = useState< CatValues[]>(categories);
 
@@ -59,15 +59,27 @@ const EditCategory = ({ categories, onCancel }: Props) => {
         //         </form>
         //     )}
         // </Formik>
-        // <div className="">
-        //     <button onClick={onCancel} type="button">
-        //         ❌
-        //     </button>
-        //     <button className="" type="button">
-        //         ✅
-        //     </button>
-        // </div>
+        <>
+            {categories?.map((e, index) =>
+
+                <div key={index}>
+                    <input name={e.categoriesName} value={e.categoriesName} />
+                </div>)}
+            <button onClick={onCancel} type="button">
+                ❌
+            </button>
+            <button className="" type="button">
+                ✅
+            </button>
+        </>
+
     );
 };
 
 export default EditCategory;
+
+{/* <PasswordInput
+    type="password"
+    onChange={this.changeHandler}
+    value={this.state.value}
+/> */}
