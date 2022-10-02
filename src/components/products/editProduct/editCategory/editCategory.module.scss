@@ -1,0 +1,13 @@
+.container {
+    width: 100%;
+
+    .closeModal {
+        position: absolute;
+        top: 0;
+        left: 95%;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 1;
+    }
+}

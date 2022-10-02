@@ -1,48 +1,17 @@
 import React, { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { CatValues } from '../../../../models/product.model';
-import ValidityInput from '../../../validation/validityInput/validityInput';
+import { deleteCategory } from '../../../../services/category.services/category.services';
+import AddRemoveInputField from '../editAllProducts/addRemoveInputField';
+import style from './editCategory.module.scss'
 
-// import Modal from 'react-modal';
-
-export interface FormValues {
+interface Props {
     categories: CatValues[];
-}
-
-interface Props extends FormValues {
+    productsId: string;
     onCancel: () => void;
 }
 
-// const initialValues: FormValues = {
-//     categories: [
-//         {
-//             $id: '',
-//             categoriesId: '',
-//             categoriesName: '',
-//             description: '',
-//             imageName: ''
-//         }
-//     ]
-// };
-// interface Props extends FormValues {
-//     onSubmit: (values: FormValues) => Promise<void>;
-//     isSubmitting: boolean;
-//     setIsSubmitting: Dispatch<SetStateAction<boolean>>;
-// }
-// const renderFieldArray = (props: FormikProps<FormValues>) => (arrayHelpers: any) => {
-//     return props.values.categories?.map((x, index) => {
-//         return (
-//             <div key={index}>
-//                 <input name={`categories.${index}.categoriesName`} value={`categories.${index}.categoriesName`} onChange={props.handleChange} />
-//             </div>
-//         );
-//     });
-// };
-// const handleOnSubmit = (values: any, actions: { setSubmitting: (arg0: boolean) => void; resetForm: () => void }) => {
-//     console.log(values);
-// };
-
-const EditCategory = ({ categories, onCancel }: Props) => {
+const EditCategory = ({ categories, onCancel, productsId }: Props) => {
     const [category, setCategory] = useState(categories);
 
     const handleInput = (e: ChangeEvent, index: number) => {
@@ -54,44 +23,38 @@ const EditCategory = ({ categories, onCancel }: Props) => {
 
     const removeCategory = (id: string) => {
         setCategory((state) => state.filter((c) => !id.includes(c.categoriesId)));
+        deleteCategory(id);
     };
 
     const saveCategories = () => {
-        console.log(category);
+        console.log(category); //update categories product controller
     };
 
     return (
-        <>
-            <button onClick={onCancel} type="button">
+        <div className={style.container}>
+            <button className={style.closeModal} onClick={onCancel} type="button">
                 ❌
             </button>
             {category.map((el, index) => (
-                <div key={index} className="month">
-                    <ValidityInput>
-                        <input
-                            type="text"
-                            value={el.categoriesName}
-                            onChange={(e) => handleInput(e, index)}
-                            pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$"
-                        // disabled={manual ? false : true}
-                        />
-                    </ValidityInput>
+                <div key={index} className={style.category}>
+                    <input
+                        type="text"
+                        value={el.categoriesName}
+                        onChange={(e) => handleInput(e, index)}
+                        pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$"
+                    />
                     <button onClick={() => removeCategory(el.categoriesId)} type="button">
                         ❌
                     </button>
                 </div>
             ))}
+            <AddRemoveInputField productsId={productsId} />
             <button onClick={saveCategories} type="button">
                 save
             </button>
-        </>
+        </div>
     );
 };
 
 export default EditCategory;
 
-{/* <PasswordInput
-    type="password"
-    onChange={this.changeHandler}
-    value={this.state.value}
-/> */}

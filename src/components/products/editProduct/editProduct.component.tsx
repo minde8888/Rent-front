@@ -40,7 +40,6 @@ interface Props extends FormValues {
     onSubmit: (values: FormValues) => Promise<void>;
     setIsSubmitting: Dispatch<SetStateAction<boolean>>;
     isSubmitting: boolean;
-    // category?: CatValues[];
 }
 
 export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content, categories }: Props) => {
@@ -111,10 +110,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
         }
     }
 
-    // const categories = category?.map((el) => {
-    //     return el.categories;
-    // });
-
     return (
         <Formik
             initialValues={{
@@ -150,7 +145,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                     <div className={style.inp}>
                         <div>
                             <label>Place</label>
-                            <TextField id="place" name="place" placeholder="place" />
+                            <TextField id="place" name="place" type="place" />
                         </div>
                         <div>
                             <label>Price</label>
@@ -177,37 +172,15 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                     </div>
                 </div>
                 <div className={style.col}>
-                    {/* <TextField id="Categories" name="categories" type={el.categories} /> */}
-                    {/* <div> {el.categories} </div> */}
-                    {/* <button type="button">❌</button> */}
-                    {/* <FieldArray name="categories">
-                        render={({ insert, remove, push }) => (
-                  
-                        )}
-                    </FieldArray> */}
                     <div>
-                        {/* {categories?.map((el, index) => (
-                            <div key={index}>
-                                <TextField id="Categories" name="categories" type="categories" />
-                                <Field id="categories" name={el.categories} type="text" />
-                                <button type="button">❌</button>
-                            </div>
-                        ))} */}
-                        {/* <EditCategory categories={categories !== undefined ? categories : []} /> */}
                         <button onClick={toggle} type="button">
-                            Open Modal{' '}
+                            Edit Categories
                         </button>
                         <Modal isOpen={isOpen} toggle={toggle}>
-                            <EditCategory onCancel={onCancel} categories={categories !== undefined ? categories : []} />
+                            <EditCategory onCancel={onCancel} categories={categories !== undefined ? categories : []} productsId={productsId !== undefined ? productsId : ''} />
                         </Modal>
                     </div>
-
-                    {/* <div className={style.category}>
-                        <label>Categories</label>
-                        <TextField id="Categories" name="categoriesName" type="categoriesName" />
-                    </div> */}
-
-                    <button type="submit" disabled={isSubmitting}>
+                    <button className={style.button} type="submit" disabled={isSubmitting}>
                         Save
                     </button>
                 </div>
@@ -249,7 +222,6 @@ const EditProduct: React.FC = () => {
             // dispatch(loginFail(error.message));
         }
     };
-    console.log(product);
 
     return (
         <div>
