@@ -2,7 +2,7 @@ import React, { ChangeEvent, useCallback } from 'react';
 import { useState } from 'react';
 import { useAppDispatch } from '../../../../hooks/redux.hooks';
 import { CatValues } from '../../../../models/product.model';
-import { deleteProductById } from '../../../../redux/slice/productsSlice';
+import { deleteProductCategoryById } from '../../../../redux/slice/productsSlice';
 import { deleteCategory } from '../../../../services/category.services/category.services';
 import AddRemoveInputField from '../editAllProducts/addRemoveInputField';
 import style from './editCategory.module.scss';
@@ -28,7 +28,7 @@ const EditCategory = ({ categories, onCancel, productsId }: Props) => {
         (id: string) => {
             setCategory((state) => state.filter((c) => !id.includes(c.categoriesId)));
             deleteCategory(id);
-            dispatch(deleteProductById({ id: id, productsId: productsId }));
+            dispatch(deleteProductCategoryById({ id: id, productsId: productsId }));
         },
         [categories]
     );
@@ -36,6 +36,10 @@ const EditCategory = ({ categories, onCancel, productsId }: Props) => {
     const saveCategories = () => {
         console.log(category); //update categories product controller
     };
+
+    if (Object.keys(category).length === 0) return null;
+
+
 
     return (
         <div className={style.container}>

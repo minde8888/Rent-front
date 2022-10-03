@@ -21,6 +21,7 @@ const productsSlice = createSlice({
                 ...action.payload
             };
         },
+
         updateOneProduct: (state, action: PayloadAction<IResponse<Product>>) => {
             const dataCopy = [...state.$values];
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.$values[0].productsId);
@@ -43,9 +44,8 @@ const productsSlice = createSlice({
         addProductCategory: (state, action: PayloadAction<AddCategory>) => {
             const dataCopy = [...state.$values];
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
-            const categories = dataCopy[productIndex].categoriesDto?.$values;
-            const allCategories = categories !== undefined ? [...categories, action.payload] : [];
-            const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: { ...allCategories }, $id: '' } };
+            const categories = dataCopy[productIndex]?.categoriesDto.$values;
+            const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: [...categories, action.payload], $id: '' } };
             dataCopy.splice(productIndex, 1, productUpdate);
             return {
                 ...state,
@@ -53,10 +53,17 @@ const productsSlice = createSlice({
             };
         },
 
-        removeCategory: (state, action) => {}
+        deleteProductCategoryById: (state, action: PayloadAction<{ id: string; productsId: string }>) => {
+            const dataCopy = [...state.$values];
+            const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
+            const categoryIndex = dataCopy[productIndex]?.categoriesDto.$values.findIndex((c) => c.categoriesId === action.payload.id);
+            const categories = dataCopy[productIndex]?.categoriesDto.$values.splice(categoryIndex, 1);
+            const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: [...categories], $id: '' } };
+            dataCopy.splice(productIndex, 1, productUpdate);
+        }
     }
 });
 
-export const { getProducts, updateOneProduct, deleteProductById, addProductCategory } = productsSlice.actions;
+export const { getProducts, updateOneProduct, deleteProductById, addProductCategory, deleteProductCategoryById } = productsSlice.actions;
 
 export default productsSlice.reducer;

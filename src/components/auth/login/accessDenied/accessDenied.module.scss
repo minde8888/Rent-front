@@ -1,22 +1,20 @@
-@import url('https://fonts.googleapis.com/css?family=Lato');
-
 $animationTime: 2s;
 
 * {
-    position   : relative;
-    margin     : 0;
-    padding    : 0;
-    box-sizing : border-box;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: 'Lato', sans-serif;
 }
 
 .denied {
     background-color: azure;
-    display         : flex;
-    flex-direction  : row;
-    justify-content : center;
-    align-items     : flex-end;
-    width           : 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
 
     .message {
         margin: 200px 0 0 80px;
@@ -28,36 +26,36 @@ $animationTime: 2s;
 
 
     .lock {
-        border-radius   : 5px;
-        width           : 55px;
-        height          : 45px;
+        border-radius: 5px;
+        width: 55px;
+        height: 45px;
         background-color: rgb(128, 8, 8);
-        animation       : dip 1s;
-        animation-delay : ($animationTime - .5);
+        animation: dip 1s;
+        animation-delay: ($animationTime - .5);
 
         &::before,
         &::after {
-            content    : '';
-            position   : absolute;
+            content: '';
+            position: absolute;
             border-left: 5px solid #333;
-            height     : 20px;
-            width      : 15px;
-            left       : calc(50% - 12.5px);
+            height: 20px;
+            width: 15px;
+            left: calc(50% - 12.5px);
         }
 
         &::before {
-            top                : -30px;
-            border             : 5px solid #333;
+            top: -30px;
+            border: 5px solid #333;
             border-bottom-color: transparent;
-            border-radius      : 15px 15px 0 0;
-            height             : 30px;
-            animation          : lock $animationTime, spin $animationTime;
+            border-radius: 15px 15px 0 0;
+            height: 30px;
+            animation: lock $animationTime, spin $animationTime;
         }
 
         &::after {
-            top         : -10px;
+            top: -10px;
             border-right: 5px solid transparent;
-            animation   : spin $animationTime;
+            animation: spin $animationTime;
         }
     }
 
@@ -78,12 +76,12 @@ $animationTime: 2s;
     @keyframes spin {
         0% {
             transform: scaleX(-1);
-            left     : calc(50% - 30px);
+            left: calc(50% - 30px);
         }
 
         65% {
             transform: scaleX(1);
-            left     : calc(50% - 12.5px);
+            left: calc(50% - 12.5px);
         }
     }
 
@@ -106,10 +104,10 @@ $animationTime: 2s;
 @media only screen and (max-width: 600px) {
     .denied {
         flex-direction: column-reverse;
-        align-items   : center;
+        align-items: center;
 
         .message {
-            margin : 200px 0 40px 0;
+            margin: 200px 0 40px 0;
             padding: 0 20px;
         }
     }
