@@ -6,9 +6,9 @@ import { ServerError } from '../typings';
 const PRODUCTS_URL = 'category/';
 
 interface AddCategory {
-    categoriesName: string;
-    description: null;
-    imageName: null;
+    categoriesName?: string;
+    description?: string;
+    imageName?: string;
     productsId: string;
 }
 

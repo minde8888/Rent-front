@@ -222,7 +222,6 @@ const EditProduct: React.FC = () => {
             // dispatch(loginFail(error.message));
         }
     };
-
     return (
         <div>
             <InnerForm

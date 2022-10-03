@@ -1,9 +1,11 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { useState } from 'react';
+import { useAppDispatch } from '../../../../hooks/redux.hooks';
 import { CatValues } from '../../../../models/product.model';
+import { deleteProductById } from '../../../../redux/slice/productsSlice';
 import { deleteCategory } from '../../../../services/category.services/category.services';
 import AddRemoveInputField from '../editAllProducts/addRemoveInputField';
-import style from './editCategory.module.scss'
+import style from './editCategory.module.scss';
 
 interface Props {
     categories: CatValues[];
@@ -13,6 +15,7 @@ interface Props {
 
 const EditCategory = ({ categories, onCancel, productsId }: Props) => {
     const [category, setCategory] = useState(categories);
+    const dispatch = useAppDispatch();
 
     const handleInput = (e: ChangeEvent, index: number) => {
         if (e.target instanceof HTMLInputElement) {
@@ -21,10 +24,14 @@ const EditCategory = ({ categories, onCancel, productsId }: Props) => {
         }
     };
 
-    const removeCategory = (id: string) => {
-        setCategory((state) => state.filter((c) => !id.includes(c.categoriesId)));
-        deleteCategory(id);
-    };
+    const removeCategory = useCallback(
+        (id: string) => {
+            setCategory((state) => state.filter((c) => !id.includes(c.categoriesId)));
+            deleteCategory(id);
+            dispatch(deleteProductById({ id: id, productsId: productsId }));
+        },
+        [categories]
+    );
 
     const saveCategories = () => {
         console.log(category); //update categories product controller
@@ -37,12 +44,7 @@ const EditCategory = ({ categories, onCancel, productsId }: Props) => {
             </button>
             {category.map((el, index) => (
                 <div key={index} className={style.category}>
-                    <input
-                        type="text"
-                        value={el.categoriesName}
-                        onChange={(e) => handleInput(e, index)}
-                        pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$"
-                    />
+                    <input type="text" value={el.categoriesName} onChange={(e) => handleInput(e, index)} pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$" />
                     <button onClick={() => removeCategory(el.categoriesId)} type="button">
                         ❌
                     </button>
@@ -57,4 +59,3 @@ const EditCategory = ({ categories, onCancel, productsId }: Props) => {
 };
 
 export default EditCategory;
-

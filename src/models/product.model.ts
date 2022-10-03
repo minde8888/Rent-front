@@ -19,7 +19,7 @@ interface Images {
 
 interface Categories {
     $id: string;
-    $values?: CatValues[];
+    $values: CatValues[];
 }
 
 interface Post {
