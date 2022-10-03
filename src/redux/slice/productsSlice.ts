@@ -33,15 +33,10 @@ const productsSlice = createSlice({
             };
         },
 
-        deleteProductById: (state, action: PayloadAction<{ id: string; productsId: string }>) => {
-            const dataCopy = [...state.$values];
-            const product = dataCopy.filter((p) => p.productsId === action.payload.productsId);
-            const removedCategory = product.map((e) => e.categoriesDto.$values.filter((c) => !action.payload.id.includes(c.categoriesId)));
-            // product.filter
-            // const newSate = dataCopy.map((p) => p.productsId === action.payload.productsId ?.filter((e) => !action.payload.includes(e.categoriesId)));
+        deleteProductById: (state, action: PayloadAction<string>) => {
             return {
-                ...state
-                // $values: state.$values.filter((p) => p.categoriesDto.$values?.filter((e) => !action.payload.includes(e.categoriesId)))
+                ...state,
+                $values: state.$values.filter((p) => p.productsId !== action.payload)
             };
         },
 
@@ -50,7 +45,7 @@ const productsSlice = createSlice({
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
             const categories = dataCopy[productIndex].categoriesDto?.$values;
             const allCategories = categories !== undefined ? [...categories, action.payload] : [];
-            const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: [...allCategories], $id: '' } };
+            const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: { ...allCategories }, $id: '' } };
             dataCopy.splice(productIndex, 1, productUpdate);
             return {
                 ...state,
