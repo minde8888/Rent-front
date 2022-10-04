@@ -45,8 +45,6 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
     /* eslint-disable */
     useEffect(() => {
         if (isDragging) {
-            console.log(1111111);
-
             setTransform({
                 transform: `translateX(${positionX}px) translateY(${marginTop}px)`,
                 transition: ''
@@ -60,7 +58,6 @@ const Swipe = ({ images, role = 'role-images' }: Props): JSX.Element | null => {
             if (positionX > -startPositionX && count > 0) {
                 decrement();
             }
-            console.log(imagesPixelsToHide, count, marginTop, transition);
             setTransform(TransformPosition(imagesPixelsToHide, count, marginTop, transition));
         }
     }, [isDragging]);
