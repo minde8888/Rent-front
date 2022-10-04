@@ -13,7 +13,7 @@ interface Props {
     onCancel: () => void;
 }
 
-const EditCategory = ({ categories, onCancel, productsId }: Props) => {
+const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element | null => {
     const [category, setCategory] = useState(categories);
     const dispatch = useAppDispatch();
 
@@ -39,8 +39,6 @@ const EditCategory = ({ categories, onCancel, productsId }: Props) => {
 
     if (Object.keys(category).length === 0) return null;
 
-
-
     return (
         <div className={style.container}>
             <button className={style.closeModal} onClick={onCancel} type="button">
@@ -54,7 +52,7 @@ const EditCategory = ({ categories, onCancel, productsId }: Props) => {
                     </button>
                 </div>
             ))}
-            <AddRemoveInputField productsId={productsId} />
+            <AddRemoveInputField productsId={productsId} categories={categories} />
             <button onClick={saveCategories} type="button">
                 save
             </button>

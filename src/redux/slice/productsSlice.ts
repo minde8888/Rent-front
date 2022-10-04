@@ -1,13 +1,13 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Product } from '../../models/product.model';
 import { IResponse } from '../../services/typings';
 
-interface AddCategory {
+export interface AddCategory {
     $id: string;
     categoriesId: string;
     categoriesName: string;
-    description: string;
-    imageName: string;
+    description?: string;
+    imageName?: string;
     productsId: string;
 }
 

@@ -1,20 +1,23 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AddCategory } from '../../redux/slice/productsSlice';
 import api from '../api.services/instanceApi.service';
 import RegisterError from '../handleServerError/RegisterError';
 import { ServerError } from '../typings';
 
 const PRODUCTS_URL = 'category/';
 
-interface AddCategory {
+interface AddCategoryProps {
     categoriesName?: string;
     description?: string;
     imageName?: string;
     productsId: string;
 }
 
-export const addNewCategory = async (categoriesDto: AddCategory) => {
+export const addNewCategory = async (categoriesDto: AddCategoryProps): Promise<AddCategory> => {
     try {
-        return await api.post<AxiosResponse>(PRODUCTS_URL, { ...categoriesDto });
+        const { data } = await api.post<AddCategory>(PRODUCTS_URL, { ...categoriesDto });
+        if (!(Object.keys(data).length !== 0)) throw Error('no product found');
+        return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
