@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../../../hooks/redux.hooks';
 import { CatValues } from '../../../../models/product.model';
 import { deleteProductCategoryById } from '../../../../redux/slice/productsSlice';
 import { deleteCategory } from '../../../../services/category.services/category.services';
-import AddRemoveInputField from '../editAllProducts/addRemoveInputField';
+import AddRemoveInputField from './addRemoveInputField/addRemoveInputField';
 import style from './editCategory.module.scss';
 
 interface Props {
