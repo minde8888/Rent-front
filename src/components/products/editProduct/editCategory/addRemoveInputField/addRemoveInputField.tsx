@@ -41,7 +41,7 @@ const AddRemoveInputField = ({ productsId, categories }: Props): JSX.Element => 
         list[index].category = value;
         setInputFields(list);
     };
-
+    /* eslint-disable */
     const addCategory = useCallback(
         async (index: number) => {
             const categoriesDto = {
@@ -58,6 +58,7 @@ const AddRemoveInputField = ({ productsId, categories }: Props): JSX.Element => 
         },
         [categories, inputFields]
     );
+    /* eslint-disable */
 
     return (
         <>

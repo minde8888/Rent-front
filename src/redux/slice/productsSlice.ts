@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product } from '../../models/product.model';
+import { CatValues, Product } from '../../models/product.model';
 import { IResponse } from '../../services/typings';
 
 export interface AddCategory {
@@ -8,6 +8,11 @@ export interface AddCategory {
     categoriesName: string;
     description?: string;
     imageName?: string;
+    productsId: string;
+}
+
+interface UpdateCategories {
+    category: CatValues[];
     productsId: string;
 }
 
@@ -52,6 +57,18 @@ const productsSlice = createSlice({
                 $values: [...dataCopy]
             };
         },
+        updateProductCategory: (state, action: PayloadAction<UpdateCategories>) => {
+            const dataCopy = [...state.$values];
+            const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
+            const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: [...action.payload.category], $id: '' } };
+            console.log(productUpdate);
+
+            dataCopy.splice(productIndex, 1, productUpdate);
+            return {
+                ...state,
+                $values: [...dataCopy]
+            };
+        },
 
         deleteProductCategoryById: (state, action: PayloadAction<{ id: string; productsId: string }>) => {
             const dataCopy = [...state.$values];
@@ -64,6 +81,6 @@ const productsSlice = createSlice({
     }
 });
 
-export const { getProducts, updateOneProduct, deleteProductById, addProductCategory, deleteProductCategoryById } = productsSlice.actions;
+export const { getProducts, updateOneProduct, deleteProductById, addProductCategory, updateProductCategory, deleteProductCategoryById } = productsSlice.actions;
 
 export default productsSlice.reducer;

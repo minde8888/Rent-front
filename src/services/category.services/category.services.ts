@@ -10,7 +10,11 @@ interface AddCategoryProps {
     categoriesName?: string;
     description?: string;
     imageName?: string;
-    productsId: string;
+    productsId?: string;
+}
+
+interface CategoryUpdate extends AddCategoryProps {
+    categoriesUpdateId: string;
 }
 
 export const addNewCategory = async (categoriesDto: AddCategoryProps): Promise<AddCategory> => {
@@ -30,9 +34,24 @@ export const addNewCategory = async (categoriesDto: AddCategoryProps): Promise<A
     }
 };
 
-export const deleteCategory = async (id: string) => {
+export const updateCategory = (categories: CategoryUpdate): Promise<AxiosResponse<AddCategory, any>> => {
     try {
-        return await api.delete<AxiosResponse>(PRODUCTS_URL + 'delete/' + id);
+        return api.put(PRODUCTS_URL + 'update/', { ...categories });
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const serverError = error as AxiosError<ServerError>;
+            if (serverError && serverError.response) {
+                throw new RegisterError(serverError.response.data.errors.$values[0]);
+            }
+            throw new RegisterError(error.message);
+        }
+        throw error;
+    }
+};
+
+export const deleteCategory = async (id: string): Promise<void> => {
+    try {
+        await api.delete<AxiosResponse>(PRODUCTS_URL + 'delete/' + id);
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;

@@ -2,8 +2,8 @@ import React, { ChangeEvent, useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { useAppDispatch } from '../../../../hooks/redux.hooks';
 import { CatValues } from '../../../../models/product.model';
-import { deleteProductCategoryById } from '../../../../redux/slice/productsSlice';
-import { deleteCategory } from '../../../../services/category.services/category.services';
+import { deleteProductCategoryById, updateProductCategory } from '../../../../redux/slice/productsSlice';
+import { deleteCategory, updateCategory } from '../../../../services/category.services/category.services';
 import AddRemoveInputField from './addRemoveInputField/addRemoveInputField';
 import style from './editCategory.module.scss';
 
@@ -14,11 +14,11 @@ interface Props {
 }
 
 const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element | null => {
-    const [category, setCategory] = useState(categories);
+    const [category, setCategory] = useState<CatValues[]>(categories);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        setCategory(categories)
+        setCategory(categories);
     }, [categories]);
 
     const handleInput = (e: ChangeEvent, index: number) => {
@@ -27,7 +27,7 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
             setCategory((state) => state.map((val, i) => (i !== index ? val : { ...val, categoriesName: value })));
         }
     };
-
+    /* eslint-disable */
     const removeCategory = useCallback(
         (id: string) => {
             setCategory((state) => state.filter((c) => !id.includes(c.categoriesId)));
@@ -36,9 +36,19 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
         },
         [categories]
     );
+    /* eslint-disable */
+    const saveCategories = (productsId: string) => {
+        const stringCat = category.map((e) => e.categoriesName);
+        const stringCatId = category.map((e) => e.categoriesId);
+        const obj = {
+            categoriesUpdateId: stringCatId.toString(),
+            categoriesName: stringCat.toString(),
+            imageName: ''
+        };
+        updateCategory(obj);
+        console.log(category);
 
-    const saveCategories = () => {
-        console.log(category); //update categories product controller
+        dispatch(updateProductCategory({ category, productsId: productsId }));
     };
 
     if (Object.keys(category).length === 0) return null;
@@ -57,7 +67,7 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
                 </div>
             ))}
             <AddRemoveInputField productsId={productsId} categories={categories} />
-            <button onClick={saveCategories} type="button">
+            <button onClick={() => saveCategories(productsId)} type="button">
                 save
             </button>
         </div>
