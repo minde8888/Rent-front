@@ -54,10 +54,11 @@ const AddRemoveInputField = ({ productsId, categories }: Props): JSX.Element => 
             const data = await addNewCategory(categoriesDto);
             setIsLoaded(true);
             dispatch(addProductCategory({ ...data, productsId: productsId }));
+            removeInputFields(index);
         },
         [categories, inputFields]
     );
-    console.log(categories);
+
     return (
         <>
             {isLoaded ? (

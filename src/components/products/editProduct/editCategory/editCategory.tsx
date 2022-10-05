@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from 'react';
+import React, { ChangeEvent, useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { useAppDispatch } from '../../../../hooks/redux.hooks';
 import { CatValues } from '../../../../models/product.model';
@@ -16,6 +16,10 @@ interface Props {
 const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element | null => {
     const [category, setCategory] = useState(categories);
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        setCategory(categories)
+    }, [categories]);
 
     const handleInput = (e: ChangeEvent, index: number) => {
         if (e.target instanceof HTMLInputElement) {
