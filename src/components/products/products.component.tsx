@@ -25,12 +25,15 @@ const Products: React.FC = () => {
 
     const Categories = (cat: CatValues) => {
         if (cat.categoriesName !== null) {
-            return <Link to={cat.categoriesId}>{cat.categoriesName}</Link>;
+            return <Link to={`${cat.categoriesName}`}>{cat.categoriesName}</Link>;
         }
         return null;
     };
 
-    let cat = products.$values.map((arr) => arr.categoriesDto.$values?.map((el, k) => <Categories key={k} categoriesName={el.categoriesName} $id={el.$id} categoriesId={el.categoriesId} />));
+    let cat = products.$values.map((arr) =>
+        arr.categoriesDto.$values?.map((el, k) =>
+            <Categories key={k} categoriesName={el.categoriesName} $id={el.$id} categoriesId={el.categoriesId} />
+        ));
 
     const passToggle = (e: React.MouseEvent<HTMLButtonElement>, value: string): void => {
         setToggle(value);

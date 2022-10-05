@@ -83,7 +83,7 @@ const AddRemoveInputField = ({ productsId, categories }: Props): JSX.Element => 
                         );
                     })}
                     <div className={style.addNew}>
-                        <button className={style.addNewButton} onClick={addInputField}>
+                        <button className={style.addNewButton} onClick={addInputField} type="button">
                             Add New
                         </button>
                     </div>

@@ -46,12 +46,8 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
             imageName: ''
         };
         updateCategory(obj);
-        console.log(category);
-
         dispatch(updateProductCategory({ category, productsId: productsId }));
     };
-
-    if (Object.keys(category).length === 0) return null;
 
     return (
         <div className={style.container}>
