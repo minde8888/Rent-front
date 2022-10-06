@@ -49,8 +49,6 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
         dispatch(updateProductCategory({ category, productsId: productsId }));
     };
 
-    if (Object.keys(category).length === 0) return null;
-
     return (
         <div className={style.container}>
             <button className={style.closeModal} onClick={onCancel} type="button">
