@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import useCounter from '../../../../../hooks/useCounter';
+import useCounter from '../../../../../hooks/useCounter.hooks';
 import useDrag from '../../../../../hooks/useDrag.hooks';
 import style from '../lightBox.module.scss';
 
