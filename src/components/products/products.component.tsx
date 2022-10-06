@@ -23,17 +23,7 @@ const Products: React.FC = () => {
 
     if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
 
-    const Categories = (cat: CatValues) => {
-        if (cat.categoriesName !== null) {
-            return <Link to={`${cat.categoriesName}`}>{cat.categoriesName}</Link>;
-        }
-        return null;
-    };
-
-    let cat = products.$values.map((arr) =>
-        arr.categoriesDto.$values?.map((el, k) =>
-            <Categories key={k} categoriesName={el.categoriesName} $id={el.$id} categoriesId={el.categoriesId} />
-        ));
+    let cat = products.$values.map((arr) => arr.categoriesDto.$values?.map((el, k) => <Categories key={k} categoriesName={el.categoriesName} $id={el.$id} categoriesId={el.categoriesId} />));
 
     const passToggle = (e: React.MouseEvent<HTMLButtonElement>, value: string): void => {
         setToggle(value);
@@ -41,11 +31,11 @@ const Products: React.FC = () => {
 
     return (
         <div className={style.container}>
-            <div className={style.top}>
-                <div className={style.sort}>{cat}</div>
-            </div>
             <div className={style.content}>
-                <div className={style.filter}>filter</div>
+                <div className={style.filter}>
+                    <div>Property type</div>
+                    <div>{cat}</div>
+                </div>
                 <div>
                     {products.$values.map((data, index) => (
                         <div className={style.product} key={index}>
@@ -73,6 +63,17 @@ const Products: React.FC = () => {
             </div>
         </div>
     );
+};
+
+const Categories = (cat: CatValues): JSX.Element | null => {
+    if (cat.categoriesName !== null) {
+        return (
+            <div>
+                <Link to={`cat/${cat.categoriesName}`}>{cat.categoriesName}</Link>
+            </div>
+        );
+    }
+    return null;
 };
 
 export default Products;

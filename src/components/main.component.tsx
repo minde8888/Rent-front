@@ -15,6 +15,7 @@ import style from './main.module.scss';
 import Product from './products/product/product.component';
 import EditProduct from './products/editProduct/editProduct.component';
 import EditAllProducts from './products/editProduct/editAllProducts/editAllProducts.component';
+import Categories from './products/product/categories/categories.componenet';
 
 function Main(): JSX.Element {
     return (
@@ -28,6 +29,7 @@ function Main(): JSX.Element {
                     <Route path="*" element={<p>There's nothing here: 404!</p>} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/products/:id" element={<Product />} />
+                    <Route path="/products/cat/:cat" element={<Categories />} />
                     <Route path="/" element={<Home />} />
                     <Route element={<ProtectedRoute role={[Roles.user, Roles.admin]} />}>
                         <Route path="/add-products" element={<AddProduct />} />
