@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './route/protectedRoute';
 import { Roles } from './auth/roles/roles.const';
@@ -15,7 +15,9 @@ import style from './main.module.scss';
 import Product from './products/product/product.component';
 import EditProduct from './products/editProduct/editProduct.component';
 import EditAllProducts from './products/editProduct/editAllProducts/editAllProducts.component';
-import Categories from './products/product/categories/categories.componenet';
+import Categories from './products/product/categories/categories.component';
+import Footer from './footer/footer.component';
+
 
 function Main(): JSX.Element {
     return (
@@ -39,6 +41,7 @@ function Main(): JSX.Element {
                     </Route>
                 </Routes>
             </Suspense>
+            <Footer />
         </div>
     );
 }

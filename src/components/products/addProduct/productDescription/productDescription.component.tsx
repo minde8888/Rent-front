@@ -11,11 +11,12 @@ interface Props {
     phone?: string;
     email?: string;
     category?: string;
+    uniqueCat: string[];
 }
 
-const ProductDescription = ({ productName, size, price, place, category, phone, email }: Props) => {
-    const cat = ['Roles.user', 'Roles.customer'];
-    const CategoryOptions = cat.map((r, key) => (
+const ProductDescription = ({ productName, size, price, place, category, phone, email, uniqueCat }: Props) => {
+
+    const CategoryOptions = uniqueCat.map((r, key) => (
         <option value={r} key={key}>
             {r}
         </option>
@@ -53,3 +54,7 @@ const ProductDescription = ({ productName, size, price, place, category, phone, 
 };
 
 export default ProductDescription;
+function useAppSelector(arg0: (state: any) => any) {
+    throw new Error('Function not implemented.');
+}
+

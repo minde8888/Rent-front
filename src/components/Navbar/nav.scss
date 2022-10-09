@@ -8,11 +8,21 @@ $background-color:#1d242d;
 
 
 .navBar {
+    position: fixed;
+    top: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: $background-color;
     height: 65px;
+    z-index: 1;
+    width: 100%;
+
+    .logo {
+        color: white;
+        font-size: 40px;
+    }
 
     .menu {
         position: relative;

@@ -9,7 +9,7 @@ import { logout } from '../../services/auth.services/auth.services';
 import { getAllProducts } from '../../services/products.services/products.services';
 import './nav.scss';
 
-interface INavBar {}
+interface INavBar { }
 
 const NavBar: FunctionComponent<INavBar> = () => {
     const dispatch = useAppDispatch();
@@ -62,6 +62,7 @@ const NavBar: FunctionComponent<INavBar> = () => {
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
             </button>
+            <div className="logo">LOGO</div>
             <div className="links">
                 {!isLoggedIn ? (
                     <>

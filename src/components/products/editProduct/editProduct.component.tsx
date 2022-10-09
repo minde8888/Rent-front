@@ -52,6 +52,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             data = files;
         }
     };
+
     /* eslint-disable */
     const handleSubmit = useCallback(
         async (values: FormValues) => {
@@ -68,7 +69,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                         } else {
                             url.push(e.data_url.replace('https://localhost:44346/Images/', ''));
                         }
-
                         if (e.file) {
                             const image = await imageResize(e.file, 'Product_image');
                             if (image?.width !== undefined && image?.height !== undefined) {
@@ -94,7 +94,10 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                     }
                 })
             );
+
             setIsSubmitting(true);
+            console.log(values);
+
             await onSubmit(values);
             setIsSubmitting(false);
         },
@@ -103,7 +106,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
     /* eslint-disable */
 
     let newData: Array<ImageFiles> = [];
-
     if (imageSrc !== undefined) {
         for (let i = 0; i < imageSrc.length; i++) {
             newData = [...newData, { file: undefined, data_url: imageSrc[i] }];
@@ -120,7 +122,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 size: size || '',
                 productName: productName || '',
                 content: content || '',
-                categories: categories,
                 imageSrc: '',
                 file: [],
                 imageWidth: '',
@@ -130,59 +131,67 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             validationSchema={Yup.object().shape({
                 place: Yup.string(),
                 price: Yup.string(),
-                phone: Yup.string(),
+                phone: Yup.string()
+                    .matches(/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/, 'Phone number is not valid')
+                    .min(11, 'Must be 10 characters')
+                    .max(11, 'Must be 10 characters'),
+                email: Yup.string().email('Email not valid').required('Email is required'),
                 size: Yup.string(),
                 productName: Yup.string(),
                 content: Yup.string(),
-                categories: Yup.string()
+                //pabaigti
             })}
         >
             <Form>
-                <div>
-                    <UploadImages imageSrc={newData} getImages={getImagesData} />
-                </div>
-                <div className={style.description}>
-                    <div className={style.inp}>
-                        <div>
-                            <label>Place</label>
-                            <TextField id="place" name="place" type="place" />
-                        </div>
-                        <div>
-                            <label>Price</label>
-                            <TextField id="price" name="price" type="price" />
-                        </div>
-                        <div>
-                            <label>Phone</label>
-                            <TextField id="phone" name="phone" type="phone" />
-                        </div>
-                        <div>
-                            <label>Email</label>
-                            <TextField id="mail" name="email" type="email" />
-                        </div>
-                        <div>
-                            <label>Size</label>
-                            <TextField id="size" name="size" type="size" />
-                        </div>
-                    </div>
-                    <div className={style.content}>
-                        <label>Product name</label>
-                        <TextField id="productName" name="productName" type="productName" />
-                        <label>Description</label>
-                        <TextArea className={'style.profileTextArea'} id="Content" name="content" rows="20" />
-                    </div>
-                </div>
-                <div className={style.col}>
+                <div className={style.container}>
                     <div>
-                        <button onClick={toggle} type="button">
-                            Edit Categories
-                        </button>
-                        <Modal isOpen={isOpen} toggle={toggle}>
-                            <EditCategory onCancel={onCancel} categories={categories !== undefined ? categories : []} productsId={productsId !== undefined ? productsId : ''} />
-                        </Modal>
+                        <UploadImages imageSrc={newData} getImages={getImagesData} />
                     </div>
-                    <button className={style.button} type="submit" disabled={isSubmitting}>
-                        Save
-                    </button>
+                    <div className={style.description}>
+                        <div className={style.inp}>
+                            <div>
+                                <label>Place</label>
+                                <TextField id="place" name="place" type="place" />
+                            </div>
+                            <div>
+                                <label>Price</label>
+                                <TextField id="price" name="price" type="price" />
+                            </div>
+                            <div>
+                                <label>Phone</label>
+                                <TextField id="phone" name="phone" type="phone" />
+                            </div>
+                            <div>
+                                <label>Email</label>
+                                <TextField id="mail" name="email" type="email" />
+                            </div>
+                            <div>
+                                <label>Size</label>
+                                <TextField id="size" name="size" type="size" />
+                            </div>
+                        </div>
+                        <div className={style.content}>
+                            <label>Product name</label>
+                            <TextField id="productName" name="productName" type="productName" />
+                            <label>Description</label>
+                            <TextArea className={'style.profileTextArea'} id="Content" name="content" rows="20" />
+                        </div>
+                    </div>
+                    <div className={style.col}>
+                        <div>
+                            <button onClick={toggle} type="button">
+                                Edit Categories
+                            </button>
+                            <Modal isOpen={isOpen} toggle={toggle}>
+                                <EditCategory onCancel={onCancel}
+                                    categories={categories !== undefined ? categories : []}
+                                    productsId={productsId !== undefined ? productsId : ''} />
+                            </Modal>
+                        </div>
+                        <button className={style.button} type="submit" disabled={isSubmitting}>
+                            Save
+                        </button>
+                    </div>
                 </div>
             </Form>
         </Formik>
@@ -194,14 +203,14 @@ const EditProduct: React.FC = () => {
     const dispatch = useAppDispatch();
     const products = useAppSelector((state) => state.data.products);
     const product = products.$values.filter((p) => p.productsId === id);
-
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     if (Object.keys(product).length === 0) return null;
 
     const handleSubmit = async (values: any) => {
-        let formData = new FormData();
+        console.log(3333);
 
+        let formData = new FormData();
         for (const key in values) {
             if (Object.prototype.hasOwnProperty.call(values, key) && typeof values[key] === 'string') {
                 formData.append(key, values[key]);
@@ -218,8 +227,8 @@ const EditProduct: React.FC = () => {
                 const product = getProduct(values.productsId);
                 dispatch(updateOneProduct(await product));
             }
-        } catch (error: any) {
-            // dispatch(loginFail(error.message));
+        } catch (err) {
+            throw err;
         }
     };
     return (
