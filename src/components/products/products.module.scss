@@ -3,6 +3,7 @@
     width: 100%;
     flex-direction: column;
     align-items: center;
+    margin: 65px 0 20px 0;
 
     .top {
         display: flex;
@@ -31,28 +32,26 @@
 
         .product {
             display: flex;
-            height: 200px;
             margin-top: 20px;
+            flex-direction: column;
+            align-items: center;
 
             a {
-                width: 40%;
-                margin: 0 0 0 20px;
+                width: 80%;
 
                 img {
+                    border-radius: 10px 10px 0 0;
                     height: 100%;
                     width: 100%;
                     object-fit: cover;
                 }
             }
 
-
             .description {
                 display: flex;
-                width: 70%;
+                width: 80%;
                 justify-content: space-evenly;
                 flex-direction: column;
-                margin: 0 0 0 20px;
-
 
                 a {
                     text-decoration: none;
@@ -60,11 +59,20 @@
 
                     .text {
                         overflow: hidden;
-                        height: 60px;
+                        height: 40px;
                     }
                 }
 
+                .contact {
+                    transition: 1s;
+                    width: 60px;
+                    height: 20px;
+                    overflow: hidden;
+                }
 
+                .contact:hover {
+                    width: 160px;
+                }
             }
         }
     }

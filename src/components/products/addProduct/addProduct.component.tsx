@@ -12,13 +12,16 @@ import { addProduct } from '../../../services/products.services/products.service
 interface ProductProps extends Product {
     productName?: string;
     dispatch: Dispatch<AnyAction>;
+
 }
 
 interface FormValues extends Product {
     productName: string;
+    uniqueCat: string[];
 }
 
 const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProps<FormValues>) => {
+
     const getImagesData = async (files: Array<ImageFiles>): Promise<void> => {
         let arrayImageWidth: number[] = [];
         let arrayImageHeight: number[] = [];
@@ -39,7 +42,14 @@ const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProp
         }
     };
 
-    const { productName, price, place, phone, category } = values;
+    const {
+        productName,
+        price,
+        place,
+        phone,
+        category,
+        uniqueCat
+    } = values;
 
     return (
         <div className={style.container}>
@@ -48,7 +58,14 @@ const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProp
                     <UploadProductImages getImages={getImagesData} />
                 </div>
                 <div className={style.columns}>
-                    <ProductDescription productName={productName} price={price} place={place} phone={phone} category={category} />
+                    <ProductDescription
+                        productName={productName}
+                        price={price}
+                        place={place}
+                        phone={phone}
+                        category={category}
+                        uniqueCat={uniqueCat}
+                    />
                     <div className={style.saveProduct}>
                         <button type="submit" disabled={isSubmitting}>
                             Save
@@ -74,7 +91,8 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             phone: props.phone || '',
             email: props.email || '',
             category: props.category || '',
-            sellerId: props.sellerId || ''
+            sellerId: props.sellerId || '',
+            uniqueCat: props.uniqueCat || []
         };
     },
     validationSchema: Yup.object().shape({
@@ -119,10 +137,22 @@ const ProductForm = withFormik<ProductProps, FormValues>({
 
 const AddProduct = () => {
     const { id } = useAppSelector((state) => state.data.user);
+    const products = useAppSelector((state) => state.data.products);
+
+    if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
+
+    let arrayCat: string[] = [];
+    products.$values.map((arr) =>
+        arr.categoriesDto.$values?.map((el, k) => {
+            if (el.categoriesName) {
+                arrayCat = [...arrayCat, el.categoriesName];
+            }
+        }));
+    const uniqueCat = [...new Set(arrayCat)];
 
     return (
         <div className={style.auth}>
-            <ProductForm dispatch={useAppDispatch()} sellerId={id} />
+            <ProductForm dispatch={useAppDispatch()} sellerId={id} uniqueCat={uniqueCat} />
         </div>
     );
 };

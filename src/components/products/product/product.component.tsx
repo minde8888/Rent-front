@@ -5,7 +5,6 @@ import style from './product.module.scss';
 
 const Product: React.FC = () => {
     const { id } = useParams();
-
     const products = useAppSelector((state) => state.data.products);
     const product = products.$values.filter((p) => p.productsId === id);
 
@@ -13,7 +12,7 @@ const Product: React.FC = () => {
 
     return (
         <div className={style.container}>
-            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => {}} closeLightBox={(): void => {}} />
+            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => { }} closeLightBox={(): void => { }} />
             <div className={style.content}>
                 <h1>{product[0].place}</h1>
                 <h2>{product[0].postsDto.productName}</h2>

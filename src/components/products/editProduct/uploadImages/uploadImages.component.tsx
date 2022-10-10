@@ -75,7 +75,7 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
                                 <div key={index} className={style.images}>
                                     <img className={style.image_show} src={image['data_url']} alt="alt-text" width="100" />
                                     <span className={style.update_image} onClick={() => onImageUpdate(index)}></span>
-                                    <button className={style.close_btn} onClick={() => onImageRemove(index)}>❌</button>
+                                    <button className={style.close_btn} onClick={() => onImageRemove(index)} type="button">❌</button>
                                 </div>
                             ))}
                             <div className={style.clickDrop} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
@@ -90,7 +90,7 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
                         </div>
                     )}
                 </ImageUploading>
-            </div>
+            </div >
         </>
     );
 };

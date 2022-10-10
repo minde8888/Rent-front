@@ -1,29 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
-import { CatValues } from '../../models/product.model';
-import { getProducts } from '../../redux/slice/productsSlice';
-import { getAllProducts } from '../../services/products.services/products.services';
+import { useAppSelector } from '../../hooks/redux.hooks';
 import Contact from './contact/contact.component';
 import style from './products.module.scss';
 
 const Products: React.FC = () => {
-    const dispatch = useAppDispatch();
     const products = useAppSelector((state) => state.data.products);
     const [toggle, setToggle] = useState<string>('');
 
-    /* eslint-disable */
-    useEffect(() => {
-        (async () => {
-            const data = await getAllProducts();
-            dispatch(getProducts(data));
-        })();
-    }, []);
-    /* eslint-disable */
-
     if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
 
-    let cat = products.$values.map((arr) => arr.categoriesDto.$values?.map((el, k) => <Categories key={k} categoriesName={el.categoriesName} $id={el.$id} categoriesId={el.categoriesId} />));
+    let arrayCat: string[] = [];
+    products.$values.map((arr) =>
+        arr.categoriesDto.$values?.map((el, k) => {
+            if (el.categoriesName) {
+                arrayCat = [...arrayCat, el.categoriesName];
+            }
+        }));
+    const uniqueCat = [...new Set(arrayCat)];
 
     const passToggle = (e: React.MouseEvent<HTMLButtonElement>, value: string): void => {
         setToggle(value);
@@ -34,7 +28,7 @@ const Products: React.FC = () => {
             <div className={style.content}>
                 <div className={style.filter}>
                     <div>Property type</div>
-                    <div>{cat}</div>
+                    <Categories category={uniqueCat} />
                 </div>
                 <div>
                     {products.$values.map((data, index) => (
@@ -44,18 +38,16 @@ const Products: React.FC = () => {
                             </Link>
                             <div className={style.description}>
                                 <Link to={data.productsId}>
-                                    <div> {data.phone}</div>
-                                    <div> {data.email}</div>
-                                    <div> {data.postsDto.productName}</div>
-                                    <div className={style.text}> {data.postsDto.content}</div>
                                     <div> {data.place}</div>
+                                    <h2> {data.postsDto.productName}</h2>
+                                    <div className={style.text}> {data.postsDto.content}</div>
+
                                     <div>
-                                        {data.size}m<sup>2</sup>
+                                        Size:  {data.size}m<sup>2</sup>
                                     </div>
-                                    <div> {data.price}</div>
+                                    <div>Price:  {data.price}</div>
                                 </Link>
-                                <button onClick={(e) => passToggle(e, data.phone)}>Contact</button>
-                                {toggle === data.phone && <Contact setToggle={setToggle} phone={data.phone} id={data.productsId} />}
+                                <button className={style.contact} type='button'>Contact  {data.phone}</button>
                             </div>
                         </div>
                     ))}
@@ -65,12 +57,20 @@ const Products: React.FC = () => {
     );
 };
 
-const Categories = (cat: CatValues): JSX.Element | null => {
-    if (cat.categoriesName !== null) {
+interface Cat {
+    category: string[];
+}
+
+const Categories = ({ category }: Cat): JSX.Element | null => {
+    if (Array.isArray(category) && category.length !== 0) {
         return (
-            <div>
-                <Link to={`cat/${cat.categoriesName}`}>{cat.categoriesName}</Link>
-            </div>
+            <>
+                {category.map((e, k) =>
+                    <div key={k}>
+                        <Link to={`cat/${e}`}>{e}</Link>
+                    </div>
+                )}
+            </>
         );
     }
     return null;

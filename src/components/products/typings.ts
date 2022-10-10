@@ -13,6 +13,7 @@ export interface Product {
     phone?: string;
     email?: string;
     category?: string;
+    uniqueCat: string[];
 }
 
 export interface ImageFiles {
