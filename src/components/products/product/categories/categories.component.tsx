@@ -1,23 +1,48 @@
 import { Link, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../../../hooks/redux.hooks';
 import { Product } from '../../../../models/product.model';
+import style from './categories.module.scss';
 
 const Categories: React.FC = () => {
     const { cat } = useParams();
     const products = useAppSelector((state) => state.data.products);
 
     return (
-        <div>
-            {filterObject(products.$values, cat).map((e, k) => (
-                <div key={k}>
-                    <Link to={e.productsId}>
-                        <img src={e.imageSrc.$values !== undefined ? e.imageSrc.$values[0] : 'null'} alt={'cat-alt'} />
-                    </Link>
-                    <div>{e.postsDto.productName}</div>
-                    <div>{e.postsDto.content}</div>
-                </div>
-            ))}
+        <div className={style.container}>
+            <div className={style.content}>
+                {filterObject(products.$values, cat).map((data, index) => (
+                    // <div key={k}>
+                    //     <Link to={e.productsId}>
+                    //         <img src={e.imageSrc.$values !== undefined ? e.imageSrc.$values[0] : 'null'} alt={'cat-alt'} />
+                    //     </Link>
+                    //     <div>{e.postsDto.productName}</div>
+                    //     <div>{e.postsDto.content}</div>
+                    // </div>
+                    <div className={style.product} key={index}>
+                        <Link to={data.productsId}>
+                            <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} />
+                        </Link>
+                        <div className={style.description}>
+                            <Link to={data.productsId}>
+                                <div className={style.place}> {data.place}</div>
+                                <h2> {data.postsDto.productName}</h2>
+                                <div className={style.text}> {data.postsDto.content}</div>
+                                <div className={style.size}>
+                                    <b>Size:</b> {data.size}m<sup>2</sup>{' '}
+                                </div>
+                                <div>
+                                    <b>Price : </b> {data.price}
+                                </div>
+                            </Link>
+                            <button className={style.contact} type="button">
+                                Contact &#10093;&#10093;&#10093; {data.phone}
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
+
     );
 };
 

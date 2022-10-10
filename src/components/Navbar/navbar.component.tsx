@@ -62,7 +62,9 @@ const NavBar: FunctionComponent<INavBar> = () => {
                 <div className="nav_button"></div>
                 <div className="nav_button"></div>
             </button>
-            <div className="logo">LOGO</div>
+            <NavLink to={'/'} className="logo">
+                LOGO
+            </NavLink>
             <div className="links">
                 {!isLoggedIn ? (
                     <>

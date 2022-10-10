@@ -1,4 +1,4 @@
-$border_color:2px ridge rgba(64, 65, 63, 0.103);
+$border_color:2px ridge rgba(64, 65, 63, 0.24);
 
 .container {
     display: flex;
@@ -24,13 +24,12 @@ $border_color:2px ridge rgba(64, 65, 63, 0.103);
     }
 
     .content {
-
         display: flex;
         width: 80%;
 
         .filter {
             width: 50%;
-            border: 1px solid rgba(64, 65, 63, 0.103);
+            border: 1px solid rgba(64, 65, 63, 0.315);
             height: 70vh;
             padding: 10px;
             display: flex;
@@ -38,15 +37,16 @@ $border_color:2px ridge rgba(64, 65, 63, 0.103);
 
             h2 {
                 margin: 5px 0 15px 0;
+                text-align: center;
             }
 
             a {
-                height: 26px;
+                height: 30px;
                 text-align: center;
                 border-radius: 5px;
                 margin: 8px 0 8px 0;
-                box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
-                    10px 10px 15px rgba(70, 70, 70, 0.12);
+                box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.795),
+                    10px 10px 15px rgba(70, 70, 70, 0.274);
                 line-height: 30px;
                 text-decoration: none;
                 color: black;
@@ -54,7 +54,7 @@ $border_color:2px ridge rgba(64, 65, 63, 0.103);
 
             a:hover {
                 box-shadow: inset -10px -10px 15px rgba(255, 255, 255, 0.5),
-                    inset 10px 10px 15px rgba(70, 70, 70, 0.12);
+                    inset 10px 10px 15px rgba(70, 70, 70, 0.24);
                 cursor: pointer;
             }
         }
@@ -67,7 +67,6 @@ $border_color:2px ridge rgba(64, 65, 63, 0.103);
 
             a {
                 width: 80%;
-
 
                 img {
                     border-radius: 10px 10px 0 0;
