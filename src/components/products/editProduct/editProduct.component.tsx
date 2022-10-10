@@ -138,7 +138,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 email: Yup.string().email('Email not valid').required('Email is required'),
                 size: Yup.string(),
                 productName: Yup.string(),
-                content: Yup.string(),
+                content: Yup.string()
                 //pabaigti
             })}
         >
@@ -178,14 +178,12 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                         </div>
                     </div>
                     <div className={style.col}>
-                        <div>
+                        <div className={style.editCatBtn}>
                             <button onClick={toggle} type="button">
                                 Edit Categories
                             </button>
                             <Modal isOpen={isOpen} toggle={toggle}>
-                                <EditCategory onCancel={onCancel}
-                                    categories={categories !== undefined ? categories : []}
-                                    productsId={productsId !== undefined ? productsId : ''} />
+                                <EditCategory onCancel={onCancel} categories={categories !== undefined ? categories : []} productsId={productsId !== undefined ? productsId : ''} />
                             </Modal>
                         </div>
                         <button className={style.button} type="submit" disabled={isSubmitting}>

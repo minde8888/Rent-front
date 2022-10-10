@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './route/protectedRoute';
 import { Roles } from './auth/roles/roles.const';
@@ -17,7 +17,6 @@ import EditProduct from './products/editProduct/editProduct.component';
 import EditAllProducts from './products/editProduct/editAllProducts/editAllProducts.component';
 import Categories from './products/product/categories/categories.component';
 import Footer from './footer/footer.component';
-
 
 function Main(): JSX.Element {
     return (

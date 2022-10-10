@@ -37,10 +37,10 @@ const UploadProductImages = ({ getImages }: ImagesProps) => {
                                 <img className={style.image_show} src={image['data_url']} alt="" width="100" />
                                 <div className={style.image_btn_wrapper}>
                                     <span onClick={() => onImageUpdate(index)}>
-                                        <img src={upload} />
+                                        <img src={upload} alt={'uploaded-alt'} />
                                     </span>
                                     <span onClick={() => onImageRemove(index)}>
-                                        <img src={close} />
+                                        <img src={close} alt={'close-alt'} />
                                     </span>
                                 </div>
                             </div>

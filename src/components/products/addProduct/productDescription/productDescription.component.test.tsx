@@ -24,6 +24,6 @@ const setup = (properties: ComponentProps<typeof ProductDescription>) => {
 
 describe('<ProductDescription />', () => {
     test('renders', async () => {
-        setup({ productName: 'description' });
+        setup({ productName: 'description', uniqueCat: [] });
     });
 });

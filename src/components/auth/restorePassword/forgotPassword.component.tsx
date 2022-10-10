@@ -1,13 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import * as Yup from 'yup';
 import { withFormik, FormikProps, Form } from 'formik';
-// import { login } from '../../../services/auth.services/auth.services';
-// import { useAppDispatch } from '../../../hooks/redux.hooks';
-// import { AnyAction } from 'redux';
-// import { loginFail, loginSuccess } from '../../../redux/slice/authSlice';
 import { TextField } from '../../validation/textField';
-// import { Navigate, NavLink } from 'react-router-dom';
-// import { useAppSelector } from '../../../hooks/redux.hooks';
 import style from '../auth.module.scss';
 import { sendPasswordToEmail } from '../../../services/auth.services/password.services/password.services';
 
@@ -26,13 +20,13 @@ type MyFormProps = {
 };
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-    // var search = window.location.search;
-    // var params = new URLSearchParams(search);
+    let search = window.location.search;
+    let params = new URLSearchParams(search);
 
-    // const [tokenEmail, setTokenEmail] = useState({
-    //     token: params.get("token"),
-    //     email: params.get("email")
-    // });
+    const [tokenEmail, setTokenEmail] = useState({
+        token: params.get('token'),
+        email: params.get('email')
+    });
 
     const [error, setError] = useState<string>('');
 

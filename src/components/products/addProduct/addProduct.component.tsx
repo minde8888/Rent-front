@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 import { Form, FormikProps, withFormik } from 'formik';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
-import { AnyAction, Dispatch } from '@reduxjs/toolkit';
+import { useAppSelector } from '../../../hooks/redux.hooks';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import style from './addProduct.module.scss';
 import UploadProductImages from './uploadImages/uploadProductImages.component';
@@ -11,8 +10,6 @@ import { addProduct } from '../../../services/products.services/products.service
 
 interface ProductProps extends Product {
     productName?: string;
-    dispatch: Dispatch<AnyAction>;
-
 }
 
 interface FormValues extends Product {
@@ -21,7 +18,6 @@ interface FormValues extends Product {
 }
 
 const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProps<FormValues>) => {
-
     const getImagesData = async (files: Array<ImageFiles>): Promise<void> => {
         let arrayImageWidth: number[] = [];
         let arrayImageHeight: number[] = [];
@@ -42,14 +38,7 @@ const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProp
         }
     };
 
-    const {
-        productName,
-        price,
-        place,
-        phone,
-        category,
-        uniqueCat
-    } = values;
+    const { productName, price, place, phone, category, uniqueCat } = values;
 
     return (
         <div className={style.container}>
@@ -58,14 +47,7 @@ const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProp
                     <UploadProductImages getImages={getImagesData} />
                 </div>
                 <div className={style.columns}>
-                    <ProductDescription
-                        productName={productName}
-                        price={price}
-                        place={place}
-                        phone={phone}
-                        category={category}
-                        uniqueCat={uniqueCat}
-                    />
+                    <ProductDescription productName={productName} price={price} place={place} phone={phone} category={category} uniqueCat={uniqueCat} />
                     <div className={style.saveProduct}>
                         <button type="submit" disabled={isSubmitting}>
                             Save
@@ -147,12 +129,13 @@ const AddProduct = () => {
             if (el.categoriesName) {
                 arrayCat = [...arrayCat, el.categoriesName];
             }
-        }));
+        })
+    );
     const uniqueCat = [...new Set(arrayCat)];
 
     return (
         <div className={style.auth}>
-            <ProductForm dispatch={useAppDispatch()} sellerId={id} uniqueCat={uniqueCat} />
+            <ProductForm sellerId={id} uniqueCat={uniqueCat} />
         </div>
     );
 };

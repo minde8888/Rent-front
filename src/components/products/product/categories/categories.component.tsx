@@ -11,7 +11,7 @@ const Categories: React.FC = () => {
             {filterObject(products.$values, cat).map((e, k) => (
                 <div key={k}>
                     <Link to={e.productsId}>
-                        <img src={e.imageSrc.$values !== undefined ? e.imageSrc.$values[0] : 'null'} />
+                        <img src={e.imageSrc.$values !== undefined ? e.imageSrc.$values[0] : 'null'} alt={'cat-alt'} />
                     </Link>
                     <div>{e.postsDto.productName}</div>
                     <div>{e.postsDto.content}</div>

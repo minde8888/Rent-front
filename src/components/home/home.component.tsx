@@ -11,14 +11,12 @@ import image3 from '../../image/hotel-389256_640.jpg';
 import image4 from '../../image/bedroom-490779_640.jpg';
 import image5 from '../../image/bedroom-5664221_640.jpg';
 import image6 from '../../image/hotel-1831072_640.jpg';
-import image7 from '../../image/beach-6301597_640.jpg'
-import image8 from '../../image/bedroom-490779_640.jpg'
-import Footer from '../footer/footer.component';
+import image7 from '../../image/beach-6301597_640.jpg';
+import image8 from '../../image/bedroom-490779_640.jpg';
 import Hero from './hero/hero.component';
 import ReactPlayer from 'react-player/youtube';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { Link } from 'react-router-dom';
-
 
 const Home = () => {
     const products = useAppSelector((state) => state.data.products);
@@ -43,41 +41,25 @@ const Home = () => {
                 <div className={style.box_1}>
                     <div className={style.box}>
                         <img src={image3} alt="hotel" />
-                        <h2>
-                            Lorem Ipsum
-                        </h2>
-                        <div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        </div>
+                        <h2>Lorem Ipsum</h2>
+                        <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</div>
                     </div>
                     <div className={style.box}>
                         <img src={image4} alt="hotel" />
-                        <h2>
-                            Lorem Ipsum
-                        </h2>
-                        <div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        </div>
+                        <h2>Lorem Ipsum</h2>
+                        <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</div>
                     </div>
                 </div>
                 <div className={style.box_2}>
                     <div className={style.box}>
                         <img src={image5} alt="hotel" />
-                        <h2>
-                            Lorem Ipsum
-                        </h2>
-                        <div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        </div>
+                        <h2>Lorem Ipsum</h2>
+                        <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</div>
                     </div>
                     <div className={style.box}>
                         <img src={image6} alt="hotel" />
-                        <h2>
-                            Lorem Ipsum
-                        </h2>
-                        <div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        </div>
+                        <h2>Lorem Ipsum</h2>
+                        <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</div>
                     </div>
                 </div>
             </div>
@@ -86,7 +68,7 @@ const Home = () => {
             </div>
             <Hero />
             <div className={style.title}>
-                <h1 className={style.desc_1} >Lorem Ipsum</h1>
+                <h1 className={style.desc_1}>Lorem Ipsum</h1>
             </div>
             <div className={style.col_3}>
                 <div className={style.box}>
@@ -94,7 +76,10 @@ const Home = () => {
                     <div className={style.box_desc}>
                         <h2>Why do we use it?</h2>
                         <div>
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
+                            more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and
+                            web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
+                            evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
                         </div>
                     </div>
                 </div>
@@ -102,7 +87,10 @@ const Home = () => {
                     <div className={style.box_desc}>
                         <h2>What is Lorem Ipsum?</h2>
                         <div>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                            printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                            remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                         </div>
                     </div>
                     <img src={image8} />
@@ -110,48 +98,34 @@ const Home = () => {
             </div>
 
             <div className={style.container}>
-                <h2 className={style.text}>
-                    Take Contact With Our Creative Team
-                </h2>
+                <h2 className={style.text}>Take Contact With Our Creative Team</h2>
                 <div className={`${style.row} ${style.up}`}>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>
-                            +11111111111111111
-                        </div>
+                        <div className={style.phone}>+11111111111111111</div>
                         <img src={prof1} alt="prof1" />
                     </div>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>
-                            +11111111111111111
-                        </div>
+                        <div className={style.phone}>+11111111111111111</div>
                         <img src={prof2} alt="prof2" />
                     </div>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>
-                            +11111111111111111
-                        </div>
+                        <div className={style.phone}>+11111111111111111</div>
                         <img src={prof3} alt="prof3" />
                     </div>
                 </div>
                 <div className={`${style.row} ${style.up}`}>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>
-                            +11111111111111111
-                        </div>
+                        <div className={style.phone}>+11111111111111111</div>
                         <img src={prof4} alt="prof4" />
                     </div>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>
-                            +11111111111111111
-                        </div>
+                        <div className={style.phone}>+11111111111111111</div>
                         <img src={prof5} alt="prof5" />
                     </div>
                 </div>
                 <div className={`${style.row} ${style.up}`}>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>
-                            +11111111111111111
-                        </div>
+                        <div className={style.phone}>+11111111111111111</div>
                         <img src={prof6} alt="prof6" />
                     </div>
                 </div>
@@ -166,14 +140,19 @@ const Home = () => {
                 {products.$values.map((data, index) => (
                     <div className={style.box} key={index}>
                         <Link to={`products/${data.productsId}`}>
+                            <div className={style.place}>{data.place}</div>
                             <img src={data.imageSrc.$values !== undefined && index < 4 ? data.imageSrc.$values[0] : 'null'} />
                             <div className={style.desc}>
-                                <div>{data.place}</div>
-                                <div>{data.size}m<sup>2</sup></div>
-                                <div>{data.price} €</div>
+                                <div>
+                                    Size: {data.size}m<sup>2</sup>
+                                </div>
+                                <div>
+                                    Price:{data.price} €<sup></sup>
+                                </div>
                             </div>
                         </Link>
-                    </div>))}
+                    </div>
+                ))}
             </div>
         </div>
     );

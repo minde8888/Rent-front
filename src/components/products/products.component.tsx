@@ -1,33 +1,27 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
-import Contact from './contact/contact.component';
 import style from './products.module.scss';
 
 const Products: React.FC = () => {
     const products = useAppSelector((state) => state.data.products);
-    const [toggle, setToggle] = useState<string>('');
 
     if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
 
     let arrayCat: string[] = [];
     products.$values.map((arr) =>
-        arr.categoriesDto.$values?.map((el, k) => {
+        arr.categoriesDto.$values?.map((el) => {
             if (el.categoriesName) {
                 arrayCat = [...arrayCat, el.categoriesName];
             }
-        }));
+        })
+    );
     const uniqueCat = [...new Set(arrayCat)];
-
-    const passToggle = (e: React.MouseEvent<HTMLButtonElement>, value: string): void => {
-        setToggle(value);
-    };
 
     return (
         <div className={style.container}>
             <div className={style.content}>
                 <div className={style.filter}>
-                    <div>Property type</div>
+                    <h2>Property type</h2>
                     <Categories category={uniqueCat} />
                 </div>
                 <div>
@@ -38,16 +32,19 @@ const Products: React.FC = () => {
                             </Link>
                             <div className={style.description}>
                                 <Link to={data.productsId}>
-                                    <div> {data.place}</div>
+                                    <div className={style.place}> {data.place}</div>
                                     <h2> {data.postsDto.productName}</h2>
                                     <div className={style.text}> {data.postsDto.content}</div>
-
-                                    <div>
-                                        Size:  {data.size}m<sup>2</sup>
+                                    <div className={style.size}>
+                                        <b>Size:</b> {data.size}m<sup>2</sup>{' '}
                                     </div>
-                                    <div>Price:  {data.price}</div>
+                                    <div>
+                                        <b>Price : </b> {data.price}
+                                    </div>
                                 </Link>
-                                <button className={style.contact} type='button'>Contact  {data.phone}</button>
+                                <button className={style.contact} type="button">
+                                    Contact &#10093;&#10093;&#10093; {data.phone}
+                                </button>
                             </div>
                         </div>
                     ))}
@@ -65,11 +62,11 @@ const Categories = ({ category }: Cat): JSX.Element | null => {
     if (Array.isArray(category) && category.length !== 0) {
         return (
             <>
-                {category.map((e, k) =>
-                    <div key={k}>
-                        <Link to={`cat/${e}`}>{e}</Link>
-                    </div>
-                )}
+                {category.map((e, k) => (
+                    <Link key={k} to={`cat/${e}`}>
+                        {e}
+                    </Link>
+                ))}
             </>
         );
     }

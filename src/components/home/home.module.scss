@@ -22,7 +22,6 @@
 
         .desc_2 {
             font-size: 40px;
-            border-top: 2px ridge rgba(64, 65, 63, 0.103);
             margin: -10px 0 0 0;
             line-height: 60px;
         }
@@ -73,6 +72,7 @@
     .col_2 {
         display: flex;
         width: 100%;
+        margin: 0 0 40px 0;
 
         .box_1 {
             display: flex;
@@ -89,7 +89,8 @@
                 width: 80%;
                 margin: 20px 2%;
                 overflow: hidden;
-                background-color: white;
+                background-color: rgba(219, 217, 217, 0.507);
+
 
                 h2 {
                     border-bottom: 2px ridge rgba(64, 65, 63, 0.103);
@@ -135,13 +136,12 @@
     }
 
     .col_3 {
-        height: 820px;
         display: flex;
         align-items: center;
         flex-direction: column;
         width: 100%;
         gap: 1%;
-        margin: 40px 0 80px 0;
+        margin: 40px 0 30px 0;
 
         .box {
             display: flex;
@@ -149,13 +149,15 @@
             height: 500px;
             width: 60%;
             color: black;
-            overflow: hidden;
+            margin: 10px 0;
+
             padding: 20px;
             background-color: rgba(219, 217, 217, 0.507);
 
             .box_desc {
-                margin: 20px 20px;
+                margin: 15px 20px;
                 width: 60%;
+                overflow: hidden;
 
                 h2 {
                     margin: 0 0 40px 0;
@@ -163,7 +165,7 @@
             }
 
             img {
-                width: 100%;
+                width: 70%;
                 object-fit: cover;
             }
         }
@@ -198,6 +200,7 @@
             }
 
             a {
+                width: 98%;
                 text-decoration: none;
                 display: flex;
                 flex-direction: column;
@@ -212,6 +215,14 @@
                     display: flex;
                     color: black;
                     justify-content: space-evenly;
+                    margin: 10px 0 0 0;
+                    font-weight: 700;
+                    text-align: justify;
+                }
+
+                .place {
+                    font-weight: 700;
+                    color: black;
                 }
             }
         }
@@ -227,6 +238,7 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+
 
         .row {
             overflow: hidden;
@@ -254,7 +266,7 @@
             }
 
             .hexagon:hover {
-                transition-duration: 500ms;
+                transition-duration: 1s;
                 transition: scale(0.0);
                 cursor: pointer;
                 padding: 120px;

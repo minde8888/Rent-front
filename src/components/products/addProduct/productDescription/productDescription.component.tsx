@@ -15,7 +15,6 @@ interface Props {
 }
 
 const ProductDescription = ({ productName, size, price, place, category, phone, email, uniqueCat }: Props) => {
-
     const CategoryOptions = uniqueCat.map((r, key) => (
         <option value={r} key={key}>
             {r}
@@ -54,7 +53,3 @@ const ProductDescription = ({ productName, size, price, place, category, phone, 
 };
 
 export default ProductDescription;
-function useAppSelector(arg0: (state: any) => any) {
-    throw new Error('Function not implemented.');
-}
-
