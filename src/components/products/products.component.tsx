@@ -24,7 +24,7 @@ const Products: React.FC = () => {
                     <h2>Property type</h2>
                     <Categories category={uniqueCat} />
                 </div>
-                <div>
+                <div className={style.col}>
                     {products.$values.map((data, index) => (
                         <div className={style.product} key={index}>
                             <Link to={data.productsId}>

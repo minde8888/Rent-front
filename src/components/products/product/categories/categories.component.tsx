@@ -6,7 +6,6 @@ import style from './categories.module.scss';
 const Categories: React.FC = () => {
     const { cat } = useParams();
     const products = useAppSelector((state) => state.data.products);
-    console.log(cat);
 
     return (
         <div className={style.container}>

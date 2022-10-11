@@ -28,12 +28,12 @@ $border_color:2px ridge rgba(64, 65, 63, 0.24);
         width: 80%;
 
         .filter {
-            width: 50%;
+            width: 100%;
             border: 1px solid rgba(64, 65, 63, 0.315);
-            // height: 70vh;
-            padding: 10px;
+            padding: 30px;
             display: flex;
             flex-direction: column;
+            margin: 0 2% 0 0;
 
             h2 {
                 margin: 5px 0 15px 0;
@@ -59,94 +59,137 @@ $border_color:2px ridge rgba(64, 65, 63, 0.24);
             }
         }
 
-        .product {
+        .col {
             display: flex;
-            margin-top: 20px;
-            flex-direction: column;
-            align-items: center;
+            flex-wrap: wrap;
+            flex-direction: row;
+            gap: 1%;
 
-            a {
-                width: 80%;
-
-                img {
-                    border-radius: 10px 10px 0 0;
-                    height: 300px;
-                    width: 100%;
-                    object-fit: cover;
-
-                }
-            }
-
-            .description {
-                display: flex;
-                width: 80%;
-                justify-content: space-evenly;
-                flex-direction: column;
-                border-bottom: $border_color;
-                border-right: $border_color;
-                border-left: $border_color;
-                margin: -4px 0 0 0;
-                padding: 10px;
-                box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
+            .product {
+                margin-top: 20px;
+                width: 49%;
+                align-items: center;
 
                 a {
-                    text-decoration: none;
-                    color: black;
-                    width: 100%;
+                    width: 80%;
 
-                    .place {
-                        text-align: right;
+                    img {
+                        border-radius: 10px 10px 0 0;
+                        height: 300px;
                         width: 100%;
-                    }
+                        object-fit: cover;
 
-                    h2 {
-                        text-align: center;
-                        margin: 10px;
-                    }
-
-                    .text {
-                        overflow: hidden;
-                        height: 38px;
-                        margin: 0 0 10px 0;
-                    }
-
-                    .size {
-                        margin: 0 0 10px 0;
                     }
                 }
 
-                .contact {
-                    transition: 1s;
-                    width: 100px;
-                    height: 26px;
-                    overflow: hidden;
-                    margin: 10px 0;
-                    border: none;
-                    text-align: left;
-                    line-height: 1.2;
-                    font-size: 20px;
-                    background-color: transparent;
-                    cursor: pointer;
+                .description {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-evenly;
+                    flex-direction: column;
                     border-bottom: $border_color;
-                }
+                    border-right: $border_color;
+                    border-left: $border_color;
+                    margin: -4px 0 0 0;
+                    padding: 10px;
+                    box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
 
-                .contact:hover {
-                    width: 235px;
+                    a {
+                        text-decoration: none;
+                        color: black;
+                        width: 100%;
+
+                        .place {
+                            text-align: right;
+                            width: 100%;
+                        }
+
+                        h2 {
+                            text-align: center;
+                            margin: 10px;
+                        }
+
+                        .text {
+                            overflow: hidden;
+                            height: 38px;
+                            margin: 0 0 10px 0;
+                        }
+
+                        .size {
+                            margin: 0 0 10px 0;
+                        }
+                    }
+
+                    .contact {
+                        transition: 1s;
+                        width: 100px;
+                        height: 26px;
+                        overflow: hidden;
+                        margin: 10px 0;
+                        border: none;
+                        text-align: left;
+                        line-height: 1.2;
+                        font-size: 20px;
+                        background-color: transparent;
+                        cursor: pointer;
+                        border-bottom: $border_color;
+                    }
+
+                    .contact:hover {
+                        width: 235px;
+                    }
                 }
             }
         }
     }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 1350px) {
+    .container {
+        .content {
+            .col {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+
+                .product {
+                    width: 100%;
+                }
+            }
+
+            .filter {
+                width: 30%;
+                margin: 0 2% 0 0;
+
+            }
+        }
+
+    }
+}
+
+@media (max-width: 620px) {
     .container {
         .content {
             flex-direction: column;
             align-items: center;
-            width: 100%;
+            width: 95%;
 
             .filter {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
                 border: none;
+                width: 95%;
+
+                h2 {
+                    display: none;
+                }
+
+                a {
+                    margin: 5px 5px;
+                    padding: 0 10px;
+                }
             }
         }
 
