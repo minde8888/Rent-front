@@ -51,20 +51,21 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
 
     return (
         <div className={style.container}>
+            <h2>Add/Edit Category</h2>
             <button className={style.closeModal} onClick={onCancel} type="button">
                 ❌
             </button>
             {category.map((el, index) => (
                 <div key={index} className={style.category}>
-                    <input type="text" value={el.categoriesName} onChange={(e) => handleInput(e, index)} pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$" />
-                    <button onClick={() => removeCategory(el.categoriesId)} type="button">
+                    <input className={style.inp} type="text" value={el.categoriesName} onChange={(e) => handleInput(e, index)} pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$" />
+                    <button className={style.button} onClick={() => removeCategory(el.categoriesId)} type="button">
                         ❌
                     </button>
                 </div>
             ))}
             <AddRemoveInputField productsId={productsId} categories={categories} />
-            <button onClick={() => saveCategories(productsId)} type="button">
-                save
+            <button className={style.saveBtn} onClick={() => saveCategories(productsId)} type="button">
+                Save
             </button>
         </div>
     );

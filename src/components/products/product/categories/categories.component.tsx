@@ -6,21 +6,15 @@ import style from './categories.module.scss';
 const Categories: React.FC = () => {
     const { cat } = useParams();
     const products = useAppSelector((state) => state.data.products);
+    console.log(cat);
 
     return (
         <div className={style.container}>
             <div className={style.content}>
                 {filterObject(products.$values, cat).map((data, index) => (
-                    // <div key={k}>
-                    //     <Link to={e.productsId}>
-                    //         <img src={e.imageSrc.$values !== undefined ? e.imageSrc.$values[0] : 'null'} alt={'cat-alt'} />
-                    //     </Link>
-                    //     <div>{e.postsDto.productName}</div>
-                    //     <div>{e.postsDto.content}</div>
-                    // </div>
                     <div className={style.product} key={index}>
                         <Link to={data.productsId}>
-                            <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} />
+                            <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt="cat-img" />
                         </Link>
                         <div className={style.description}>
                             <Link to={data.productsId}>
@@ -42,7 +36,6 @@ const Categories: React.FC = () => {
                 ))}
             </div>
         </div>
-
     );
 };
 

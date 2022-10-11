@@ -30,7 +30,7 @@ const UploadProductImages = ({ getImages }: ImagesProps) => {
                     <div className={style.upload_image}>
                         <div className={style.clickDrop} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
                             <div>Click or Drop image here </div>
-                            <img className={style.image_show} src={temp_image} alt="" width="100" />
+                            <img className={style.image_show} src={temp_image} alt="alt_uploaded_img" width="100" />
                         </div>
                         {imageList.map((image, index) => (
                             <div key={index} className={style.image_item}>
@@ -47,7 +47,7 @@ const UploadProductImages = ({ getImages }: ImagesProps) => {
                         ))}
                         {errors && (
                             <div>
-                                {errors.maxNumber && <span>Number of selected images exceed max 20</span>}
+                                {errors.maxNumber && <span>Number of selected images exceed max 10</span>}
                                 {errors.acceptType && <div className={'style.profileError'}>Your selected file type is not allow</div>}
                             </div>
                         )}

@@ -11,7 +11,7 @@ const Products: React.FC = () => {
     products.$values.map((arr) =>
         arr.categoriesDto.$values?.map((el) => {
             if (el.categoriesName) {
-                arrayCat = [...arrayCat, el.categoriesName];
+                return (arrayCat = [...arrayCat, el.categoriesName.trim()]);
             }
         })
     );
@@ -28,7 +28,7 @@ const Products: React.FC = () => {
                     {products.$values.map((data, index) => (
                         <div className={style.product} key={index}>
                             <Link to={data.productsId}>
-                                <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} />
+                                <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt="alt-product" />
                             </Link>
                             <div className={style.description}>
                                 <Link to={data.productsId}>

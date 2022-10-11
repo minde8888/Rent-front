@@ -78,7 +78,6 @@ export const InnerForm = (props: { onSubmit: (values: FormValues) => Promise<voi
 
 const Login = () => {
     const dispatch = useAppDispatch();
-    dispatch(loginFail(''));
     const handleSubmit = async (values: FormValues) => {
         try {
             const user = await login(values.email, values.password);

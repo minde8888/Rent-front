@@ -17,7 +17,7 @@ interface FormValues extends Product {
     uniqueCat: string[];
 }
 
-const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProps<FormValues>) => {
+const ProductEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProps<FormValues>) => {
     const getImagesData = async (files: Array<ImageFiles>): Promise<void> => {
         let arrayImageWidth: number[] = [];
         let arrayImageHeight: number[] = [];
@@ -38,7 +38,7 @@ const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProp
         }
     };
 
-    const { productName, price, place, phone, category, uniqueCat } = values;
+    const { productName, price, place, phone, categoriesName, uniqueCat } = values;
 
     return (
         <div className={style.container}>
@@ -47,7 +47,7 @@ const ProfileEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProp
                     <UploadProductImages getImages={getImagesData} />
                 </div>
                 <div className={style.columns}>
-                    <ProductDescription productName={productName} price={price} place={place} phone={phone} category={category} uniqueCat={uniqueCat} />
+                    <ProductDescription productName={productName} price={price} place={place} phone={phone} category={categoriesName} uniqueCat={uniqueCat} />
                     <div className={style.saveProduct}>
                         <button type="submit" disabled={isSubmitting}>
                             Save
@@ -72,11 +72,13 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             place: props.place || '',
             phone: props.phone || '',
             email: props.email || '',
-            category: props.category || '',
+            categoriesName: props.categoriesName || '',
             sellerId: props.sellerId || '',
+            categories: props.categories || '',
             uniqueCat: props.uniqueCat || []
         };
     },
+
     validationSchema: Yup.object().shape({
         productName: Yup.string(),
         imageName: Yup.string(),
@@ -90,10 +92,15 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             .min(11, 'Must be 10 characters')
             .max(11, 'Must be 10 characters'),
         email: Yup.string().email('Email not valid').required('Email is required'),
-        category: Yup.string(),
+        categoriesName: Yup.string(),
         sellerId: Yup.string()
     }),
+
     handleSubmit: async (values: any, { setErrors }) => {
+        if (values.categories !== 'Choice Category' && values.categoriesName !== '') {
+            values.categoriesName = `${values.categoriesName}, ${values.categories}`;
+        }
+        console.log(values);
         let formData = new FormData();
 
         for (const key in values) {
@@ -115,7 +122,7 @@ const ProductForm = withFormik<ProductProps, FormValues>({
             setErrors(error);
         }
     }
-})(ProfileEdit);
+})(ProductEdit);
 
 const AddProduct = () => {
     const { id } = useAppSelector((state) => state.data.user);

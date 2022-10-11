@@ -12,7 +12,8 @@ export interface Product {
     size?: string;
     phone?: string;
     email?: string;
-    category?: string;
+    categoriesName?: string;
+    categories?: string;
     uniqueCat: string[];
 }
 

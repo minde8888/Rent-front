@@ -5,6 +5,7 @@ import style from './product.module.scss';
 
 const Product: React.FC = () => {
     const { id } = useParams();
+
     const products = useAppSelector((state) => state.data.products);
     const product = products.$values.filter((p) => p.productsId === id);
 

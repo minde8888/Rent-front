@@ -1,14 +1,79 @@
 .container {
-    width: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    h2 {
+        margin: 10px 0 20px 0;
+    }
+
+    .editCategory {
+        height: 100%;
+    }
 
     .closeModal {
         position: absolute;
         top: 0;
-        left: 95%;
+        left: 105%;
         border: none;
         font-size: 20px;
         cursor: pointer;
         z-index: 1;
         background-color: white;
+    }
+
+    .closeModal:hover {
+        font-size: 24px;
+    }
+
+    .category {
+        width: 70%;
+        display: flex;
+        height: 40px;
+
+        .inp {
+            border: 1px solid rgba(0, 0, 0, 0.169);
+            border-radius: 5px;
+            height: 35px;
+            letter-spacing: 1px;
+        }
+
+        .button {
+            border: none;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            color: rgb(236, 52, 52);
+            font-size: 20px;
+        }
+    }
+
+    .saveBtn {
+        position: absolute;
+        top: 90%;
+        left: 30%;
+        margin: 10px 0 10px 0;
+        box-shadow: inset 0px 0px 0px 0px #ffffff;
+        background: linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+        background-color: #ededed;
+        border-radius: 8px;
+        border: 2px solid #dcdcdc;
+        display: inline-block;
+        cursor: pointer;
+        color: #777777;
+        font-family: Arial;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 6px 26px;
+        text-decoration: none;
+        text-shadow: 41px 0px 19px #ffffff;
+    }
+
+    .saveBtn:hover {
+        background: linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+        background-color: #dfdfdf;
     }
 }

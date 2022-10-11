@@ -2,6 +2,7 @@ import { TextArea } from '../../../validation/textArea';
 import { SelectField } from '../../../validation/selectField';
 import { TextField } from '../../../validation/textField';
 import style from '../addProduct.module.scss';
+import { FormEvent, useState } from 'react';
 
 interface Props {
     productName: string;
@@ -15,11 +16,15 @@ interface Props {
 }
 
 const ProductDescription = ({ productName, size, price, place, category, phone, email, uniqueCat }: Props) => {
+    const [value, setValue] = useState<string>('');
     const CategoryOptions = uniqueCat.map((r, key) => (
         <option value={r} key={key}>
             {r}
         </option>
     ));
+    const handler = (e: FormEvent<HTMLSelectElement>): void => {
+        setValue((e.target as HTMLInputElement).value);
+    };
 
     return (
         <>
@@ -42,8 +47,8 @@ const ProductDescription = ({ productName, size, price, place, category, phone, 
                         <TextField label="Price" className={style.numberItem} id="price" name="price" placeholder="price" value={price} />
                     </div>
                 </div>
-                <TextField label="New Category" className={style.profileInput} id="category" name="category" placeholder="category" value={category} />
-                <SelectField name="categories" as="select" value={'categories'}>
+                <TextField label="New Category" className={style.profileInput} id="category" name="categoriesName" placeholder="category" value={category} />
+                <SelectField name="categories" as="select" value={value} onChange={(e) => handler(e)}>
                     <option>Choice Category</option>
                     {CategoryOptions}
                 </SelectField>

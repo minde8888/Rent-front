@@ -1,8 +1,68 @@
 .addContainer {
-    width: 100%;
+    width: 70%;
+
+    .addCategory {
+        display: flex;
+
+        .buttons {
+            display: flex;
+
+            .removeButton {
+                border: none;
+                background-color: white;
+                cursor: pointer;
+            }
+
+            .removeButton:hover {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .addCategory input {
+        border: 1px solid rgba(0, 0, 0, 0.169);
+        border-radius: 5px;
+        height: 35px;
+        margin: 0 0 5px 0;
+    }
 
     .addButton {
+        border: none;
+        background-color: white;
+        cursor: pointer;
         color: green;
         width: 23px;
+        font-size: 20px;
     }
+
+    .addButton:hover {
+        color: rgb(34, 184, 34);
+        font-size: 28px;
+
+    }
+
+    .addNewButton {
+        margin: 10px 0 10px 0;
+        box-shadow: inset 0px 0px 0px 0px #ffffff;
+        background: linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+        background-color: #ededed;
+        border-radius: 8px;
+        border: 2px solid #dcdcdc;
+        display: inline-block;
+        cursor: pointer;
+        color: #777777;
+        font-family: Arial;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 6px 26px;
+        text-decoration: none;
+        text-shadow: 41px 0px 19px #ffffff;
+    }
+
+    .addNewButton:hover {
+        background: linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+        background-color: #dfdfdf;
+
+    }
+
 }

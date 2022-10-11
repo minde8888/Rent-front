@@ -1,13 +1,12 @@
-import { Dispatch, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import * as Yup from 'yup';
-import { withFormik, FormikProps, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { register } from '../../../services/auth.services/auth.services';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
-import { AnyAction } from 'redux';
 import { SelectField } from '../../validation/selectField';
 import { TextField } from '../../validation/textField';
 import style from '../auth.module.scss';
-import { NavigateFunction, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Roles } from '../roles/roles.const';
 import { registerFail } from '../../../redux/slice/authSlice';
 
@@ -21,10 +20,6 @@ interface FormValues {
     role: string;
 }
 
-interface OtherProps {
-    message: string;
-}
-
 export const InnerForm = (props: { onSubmit: (values: FormValues) => Promise<void>; message: string }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     let { error } = useAppSelector((state) => state.data.auth);
@@ -35,6 +30,7 @@ export const InnerForm = (props: { onSubmit: (values: FormValues) => Promise<voi
             {r}
         </option>
     ));
+    /* eslint-disable */
     const handleSubmit = useCallback(
         async (values: FormValues) => {
             setIsSubmitting(true);
@@ -43,6 +39,7 @@ export const InnerForm = (props: { onSubmit: (values: FormValues) => Promise<voi
         },
         [props.onSubmit]
     );
+    /* eslint-disable */
     return (
         <Formik
             initialValues={{

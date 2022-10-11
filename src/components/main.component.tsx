@@ -31,6 +31,7 @@ function Main(): JSX.Element {
                     <Route path="/products" element={<Products />} />
                     <Route path="/products/:id" element={<Product />} />
                     <Route path="/products/cat/:cat" element={<Categories />} />
+                    <Route path="/products/cat/:cat/:id" element={<Product />} />
                     <Route path="/" element={<Home />} />
                     <Route element={<ProtectedRoute role={[Roles.user, Roles.admin]} />}>
                         <Route path="/add-products" element={<AddProduct />} />

@@ -68,16 +68,16 @@ const AddRemoveInputField = ({ productsId, categories }: Props): JSX.Element => 
                         const { category } = data;
                         return (
                             <div className={style.addCategory} key={index}>
-                                <input autoComplete="false" onChange={(event) => handleChange(index, event)} value={category} type="text" />
+                                <input className={style.inp} autoComplete="false" onChange={(event) => handleChange(index, event)} value={category} type="text" />
                                 {inputFields.length > 0 && (
-                                    <>
+                                    <div className={style.buttons}>
                                         <button className={style.addButton} onClick={() => addCategory(index)} type="button">
                                             &#10004;
                                         </button>
-                                        <button onClick={() => removeInputFields(index)} type="button">
+                                        <button className={style.removeButton} onClick={() => removeInputFields(index)} type="button">
                                             ❌
                                         </button>
-                                    </>
+                                    </div>
                                 )}
                             </div>
                         );
