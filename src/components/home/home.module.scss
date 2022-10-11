@@ -179,7 +179,6 @@
 
     .col_4 {
         display: flex;
-        flex-wrap: wrap;
         justify-content: space-around;
         height: 320px;
         gap: 1%;
@@ -218,7 +217,6 @@
                     margin: 10px 0 0 0;
                     font-weight: 700;
                     text-align: justify;
-                    flex-wrap: wrap;
                 }
 
                 .place {
@@ -298,5 +296,18 @@
     .cal_desc {
         text-align: center;
         margin: 20px 0 20px 0;
+    }
+}
+
+@media (max-width: 770px) {
+    .col_4 {
+        flex-direction: column;
+        align-items: center;
+        // width: 100%;
+
+        // .box {
+        //     width: 90%;
+        //     height: 200px;
+        // }
     }
 }

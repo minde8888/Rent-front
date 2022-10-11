@@ -137,22 +137,25 @@ const Home = () => {
                 Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
             </div>
             <div className={style.col_4}>
-                {products.$values.map((data, index) => (
-                    <div className={style.box} key={index}>
-                        <Link to={`products/${data.productsId}`}>
-                            <div className={style.place}>{data.place}</div>
-                            <img src={data.imageSrc.$values !== undefined && index < 4 ? data.imageSrc.$values[0] : 'null'} />
-                            <div className={style.desc}>
-                                <div>
-                                    Size: {data.size}m<sup>2</sup>
-                                </div>
-                                <div>
-                                    Price:{data.price} €<sup></sup>
-                                </div>
+                {products.$values.map(
+                    (data, index) =>
+                        index < 4 && (
+                            <div className={style.box} key={index}>
+                                <Link to={`products/${data.productsId}`}>
+                                    <div className={style.place}>{data.place}</div>
+                                    <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} />
+                                    <div className={style.desc}>
+                                        <div>
+                                            Size: {data.size}m<sup>2</sup>
+                                        </div>
+                                        <div>
+                                            Price:{data.price} €<sup></sup>
+                                        </div>
+                                    </div>
+                                </Link>
                             </div>
-                        </Link>
-                    </div>
-                ))}
+                        )
+                )}
             </div>
         </div>
     );

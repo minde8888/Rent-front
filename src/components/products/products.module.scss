@@ -30,7 +30,7 @@ $border_color:2px ridge rgba(64, 65, 63, 0.24);
         .filter {
             width: 50%;
             border: 1px solid rgba(64, 65, 63, 0.315);
-            height: 70vh;
+            // height: 70vh;
             padding: 10px;
             display: flex;
             flex-direction: column;
@@ -70,7 +70,7 @@ $border_color:2px ridge rgba(64, 65, 63, 0.24);
 
                 img {
                     border-radius: 10px 10px 0 0;
-                    height: 400px;
+                    height: 300px;
                     width: 100%;
                     object-fit: cover;
 
@@ -135,5 +135,20 @@ $border_color:2px ridge rgba(64, 65, 63, 0.24);
                 }
             }
         }
+    }
+}
+
+@media (max-width: 560px) {
+    .container {
+        .content {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+
+            .filter {
+                border: none;
+            }
+        }
+
     }
 }
