@@ -1,13 +1,16 @@
     .images {
         width: 60%;
+        margin: 0;
+        border: 1px ridge rgba(64, 65, 63, 0.24);
+        border-radius: 10px 10px 0 0;
 
         .bigImage {
             height: 60vh;
             width: 100%;
-            padding: 5px;
-            margin: 5px 0 0 0;
 
             img {
+
+                border-radius: 10px 10px 0 0;
                 height: 100%;
                 width: 100%;
                 object-fit: cover;
@@ -16,9 +19,9 @@
 
         .smallImagesContainer {
             display: flex;
-            margin: 0 0 20px 0;
+            margin: 40px 0 20px 0;
             width: 100%;
-            height: 22vh;
+            height: 24vh;
             overflow-y: hidden;
             justify-content: flex-start;
 
@@ -28,7 +31,7 @@
 
                 img {
                     height: 100%;
-                    width: 200px;
+                    width: 260px;
                     object-fit: cover;
                 }
             }
@@ -53,7 +56,7 @@
     .lightBox {
         display: flex;
         position: fixed;
-        z-index: 1;
+        z-index: 2;
         top: 0;
         left: 0;
         right: 0;
@@ -117,4 +120,10 @@
 
     .cursor {
         cursor: pointer;
+    }
+
+    @media (max-width: 750px) {
+        .images {
+            width: 95%;
+        }
     }

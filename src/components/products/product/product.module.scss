@@ -6,14 +6,60 @@
 
     .content {
         width: 30%;
-        padding: 5px;
-        margin: 20px 0 0 0;
+        margin: 0 0 0 20px;
 
-        .text,
-        .size,
-        .price,
-        h2 {
-            margin: 10px 0 0 0;
+
+        .col {
+            border: 1px ridge rgba(64, 65, 63, 0.24);
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            margin: 0 15px 0 -10px;
+
+            .text,
+            .size,
+            .price,
+            .contact,
+            h2 {
+                margin: 10px 0 0 0;
+            }
+        }
+
+        .categories {
+            padding: 0 0 20px 0;
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            .cat {
+                border: none;
+                background-color: white;
+                margin: 0 0 0 5px;
+                float: right;
+                z-index: 1;
+            }
+
+            .cat:hover {
+                cursor: pointer;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+@media (max-width: 750px) {
+    .container {
+        .content {
+            flex-direction: column;
+            align-items: center;
+            width: 95%;
+
+            .col {
+                height: auto;
+                margin: 0 10px 0 -10px;
+                border-radius: 0;
+            }
         }
     }
 }

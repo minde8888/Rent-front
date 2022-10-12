@@ -122,3 +122,11 @@ $grid-width : 100%;
         }
     }
 }
+
+@media (max-width:1000px) {
+    .container {
+        .auth {
+            margin: 20% auto;
+        }
+    }
+}

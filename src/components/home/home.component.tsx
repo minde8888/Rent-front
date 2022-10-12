@@ -30,8 +30,8 @@ const Home = () => {
                     <ReactPlayer url="https://www.youtube.com/watch?v=6F-hjdpMc1U" width="100%" height="100%" playing controls={false} muted={true} />
                 </div>
                 <div className={style.row_2}>
-                    <img src={image1} />
-                    <img src={image2} />
+                    <img src={image1} alt={'alt-home'} />
+                    <img src={image2} alt={'alt-home'} />
                 </div>
             </div>
             <div className={style.title}>
@@ -72,7 +72,7 @@ const Home = () => {
             </div>
             <div className={style.col_3}>
                 <div className={style.box}>
-                    <img src={image7} />
+                    <img src={image7} alt={'alt-home'} />
                     <div className={style.box_desc}>
                         <h2>Why do we use it?</h2>
                         <div>
@@ -93,7 +93,7 @@ const Home = () => {
                             publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                         </div>
                     </div>
-                    <img src={image8} />
+                    <img src={image8} alt={'alt-home'} />
                 </div>
             </div>
 
@@ -101,31 +101,31 @@ const Home = () => {
                 <h2 className={style.text}>Take Contact With Our Creative Team</h2>
                 <div className={`${style.row} ${style.up}`}>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>+11111111111111111</div>
+                        <div className={style.phone}>+4798745632</div>
                         <img src={prof1} alt="prof1" />
                     </div>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>+11111111111111111</div>
+                        <div className={style.phone}>+4798745632</div>
                         <img src={prof2} alt="prof2" />
                     </div>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>+11111111111111111</div>
+                        <div className={style.phone}>+4798745632</div>
                         <img src={prof3} alt="prof3" />
                     </div>
                 </div>
                 <div className={`${style.row} ${style.up}`}>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>+11111111111111111</div>
+                        <div className={style.phone}>+4798745632</div>
                         <img src={prof4} alt="prof4" />
                     </div>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>+11111111111111111</div>
+                        <div className={style.phone}>+4798745632</div>
                         <img src={prof5} alt="prof5" />
                     </div>
                 </div>
                 <div className={`${style.row} ${style.up}`}>
                     <div className={style.hexagon}>
-                        <div className={style.phone}>+11111111111111111</div>
+                        <div className={style.phone}>+4798745632</div>
                         <img src={prof6} alt="prof6" />
                     </div>
                 </div>
@@ -143,7 +143,7 @@ const Home = () => {
                             <div className={style.box} key={index}>
                                 <Link to={`products/${data.productsId}`}>
                                     <div className={style.place}>{data.place}</div>
-                                    <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} />
+                                    <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt={'alt-home'} />
                                     <div className={style.desc}>
                                         <div>
                                             Size: {data.size}m<sup>2</sup>

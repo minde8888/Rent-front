@@ -9,17 +9,12 @@
 
         .content {
             display: flex;
-            flex-direction: column;
-            width: 100%;
+            flex-wrap: wrap;
+            flex-direction: row;
+            width: 80%;
+            gap: 1%;
 
             .filter {
-                width: 50%;
-                border: 1px solid rgba(64, 65, 63, 0.315);
-                height: 70vh;
-                padding: 10px;
-                display: flex;
-                flex-direction: column;
-
                 h2 {
                     margin: 5px 0 15px 0;
                     text-align: center;
@@ -45,9 +40,8 @@
             }
 
             .product {
-                display: flex;
                 margin-top: 20px;
-                flex-direction: column;
+                width: 49%;
                 align-items: center;
 
                 a {
@@ -64,7 +58,7 @@
 
                 .description {
                     display: flex;
-                    width: 80%;
+                    width: 100%;
                     justify-content: space-evenly;
                     flex-direction: column;
                     border-bottom: $border_color;
@@ -117,6 +111,57 @@
 
                     .contact:hover {
                         width: 235px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1350px) {
+
+        .container {
+            .content {
+
+                flex-direction: column;
+                align-items: center;
+
+
+                .product {
+                    width: 100%;
+                }
+
+                .filter {
+                    width: 30%;
+                    margin: 0 2% 0 0;
+
+                }
+            }
+        }
+    }
+
+
+    @media (max-width: 620px) {
+        .container {
+            .content {
+                flex-direction: column;
+                align-items: center;
+                width: 95%;
+
+                .filter {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    border: none;
+                    width: 95%;
+
+                    h2 {
+                        display: none;
+                    }
+
+                    a {
+                        margin: 5px 5px;
+                        padding: 0 10px;
                     }
                 }
             }

@@ -3,6 +3,7 @@ import Main from './components/main.component';
 import { useAppDispatch } from './hooks/redux.hooks';
 import { getProducts } from './redux/slice/productsSlice';
 import { getAllProducts } from './services/products.services/products.services';
+import style from './App.module.scss';
 
 function App(): JSX.Element {
     const dispatch = useAppDispatch();
@@ -10,15 +11,15 @@ function App(): JSX.Element {
     const fetchData = useCallback(async () => {
         const data = await getAllProducts();
         dispatch(getProducts(data));
-    }, [])
+    }, []);
 
     useEffect(() => {
-        fetchData()
-    }, [fetchData])
+        fetchData();
+    }, [fetchData]);
     /* eslint-disable */
 
     return (
-        <div className="App">
+        <div className={style.App}>
             <Main />
         </div>
     );

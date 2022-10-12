@@ -5,6 +5,7 @@ const Footer = () => {
     return (
         <div className={style.footer}>
             <Social />
+            <div className={style.copy}>© Copyright 2022 Mindaugas Baltrunas . All rights reserved.</div>
         </div>
     );
 };

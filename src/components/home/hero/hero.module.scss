@@ -94,3 +94,10 @@
         transform: rotateY(-360deg);
     }
 }
+
+@media (max-width: 600px) {
+    .container {
+        display: none;
+    }
+
+}
