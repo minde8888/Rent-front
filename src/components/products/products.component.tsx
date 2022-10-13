@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hooks';
+import Pagination from '../pagination/pagination';
 import style from './products.module.scss';
 
 const Products: React.FC = () => {
     const products = useAppSelector((state) => state.data.products);
+    const [currentPage, setCurrentPage] = useState(1);
+    const lastPage = 3;
 
-    if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
+    if (!Array.isArray(products.productDto.$values) || products.productDto.$values.length < 0) return null;
 
     let arrayCat: string[] = [];
-    products.$values.map((arr) =>
+    products.productDto.$values.map((arr) =>
         arr.categoriesDto.$values?.map((el) => {
             if (el.categoriesName) {
                 return (arrayCat = [...arrayCat, el.categoriesName.trim()]);
@@ -25,7 +29,7 @@ const Products: React.FC = () => {
                     <Categories category={uniqueCat} />
                 </div>
                 <div className={style.col}>
-                    {products.$values.map((data, index) => (
+                    {products.productDto.$values.map((data, index) => (
                         <div className={style.product} key={index}>
                             <Link to={data.productsId}>
                                 <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt="alt-product" />
@@ -49,6 +53,15 @@ const Products: React.FC = () => {
                         </div>
                     ))}
                 </div>
+            </div>
+            <div className="container">
+                <h1>React TypeScript Pagination</h1>
+                <Pagination
+                    currentPage={currentPage}
+                    lastPage={lastPage}
+                    maxLength={7}
+                    setCurrentPage={setCurrentPage}
+                />
             </div>
         </div>
     );

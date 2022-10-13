@@ -8,7 +8,7 @@ const Product: React.FC = () => {
     const navigate = useNavigate();
 
     const products = useAppSelector((state) => state.data.products);
-    const product = products.$values.filter((p) => p.productsId === id);
+    const product = products.productDto.$values.filter((p) => p.productsId === id);
 
     if (Object.keys(product).length === 0) return null;
 
@@ -18,7 +18,7 @@ const Product: React.FC = () => {
 
     return (
         <div className={style.container}>
-            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => {}} closeLightBox={(): void => {}} />
+            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => { }} closeLightBox={(): void => { }} />
             <div className={style.content}>
                 <div className={style.col}>
                     <h1>{product[0].place}</h1>

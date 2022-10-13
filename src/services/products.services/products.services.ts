@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { Product } from '../../models/product.model';
+import { Product, ResponseProducts } from '../../models/product.model';
 import api from '../api.services/instanceApi.service';
 import AuthError from '../handleServerError/AuthServerError';
 import RegisterError from '../handleServerError/RegisterError';
@@ -27,9 +27,9 @@ export const addProduct = async (formData: FormData): Promise<Products> => {
     }
 };
 
-export const getAllProducts = async (): Promise<IResponse<Product>> => {
+export const getAllProducts = async (): Promise<ResponseProducts> => {
     try {
-        const { data } = await api.get<IResponse<Product>>(PRODUCTS_URL);
+        const { data } = await api.get<ResponseProducts>(PRODUCTS_URL);
         if (!(Object.keys(data).length !== 0)) throw Error('no products found');
         return data;
     } catch (error: any) {

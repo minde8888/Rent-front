@@ -1,3 +1,21 @@
+export interface ResponseProducts {
+    $id: string;
+    pageNumber?: number;
+    pageSize?: number;
+    firstPage?: string;
+    lastPage?: string;
+    totalPages?: number;
+    totalRecords?: number;
+    nextPage?: string;
+    previousPage?: string;
+    productDto: Products;
+}
+
+interface Products {
+    $id: string;
+    $values: Product[];
+}
+
 export interface Product {
     imageName: string;
     place: string;

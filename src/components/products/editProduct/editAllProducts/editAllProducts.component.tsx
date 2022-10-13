@@ -23,11 +23,11 @@ const EditAllProducts: React.FC = () => {
         dispatch(deleteProductById(id));
     };
 
-    if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
+    if (!Array.isArray(products.productDto.$values) || products.productDto.$values.length < 0) return null;
 
     return (
         <div className={style.container}>
-            {products.$values.map((data, index) => (
+            {products.productDto.$values.map((data, index) => (
                 <div className={style.product} key={index}>
                     <div className={style.images}>
                         <Link to={data.productsId}>

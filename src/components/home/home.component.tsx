@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     const products = useAppSelector((state) => state.data.products);
 
-    if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
+    if (!Array.isArray(products.productDto.$values) || products.productDto.$values.length < 0) return null;
 
     return (
         <div className={style.home}>
@@ -137,7 +137,7 @@ const Home = () => {
                 Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
             </div>
             <div className={style.col_4}>
-                {products.$values.map(
+                {products.productDto.$values.map(
                     (data, index) =>
                         index < 4 && (
                             <div className={style.box} key={index}>

@@ -200,7 +200,7 @@ const EditProduct: React.FC = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
     const products = useAppSelector((state) => state.data.products);
-    const product = products.$values.filter((p) => p.productsId === id);
+    const product = products.productDto.$values.filter((p) => p.productsId === id);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     if (Object.keys(product).length === 0) return null;

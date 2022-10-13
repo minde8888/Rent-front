@@ -128,10 +128,10 @@ const AddProduct = () => {
     const { id } = useAppSelector((state) => state.data.user);
     const products = useAppSelector((state) => state.data.products);
 
-    if (!Array.isArray(products.$values) || products.$values.length < 0) return null;
+    if (products.productDto?.$values.length < 0 || !Array.isArray(products.productDto?.$values)) return null;
 
     let arrayCat: string[] = [];
-    products.$values.map((arr) =>
+    products.productDto.$values.map((arr) =>
         arr.categoriesDto.$values?.map((el, k) => {
             if (el.categoriesName) {
                 arrayCat = [...arrayCat, el.categoriesName];
