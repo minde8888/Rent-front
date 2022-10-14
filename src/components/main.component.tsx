@@ -17,6 +17,7 @@ import EditProduct from './products/editProduct/editProduct.component';
 import EditAllProducts from './products/editProduct/editAllProducts/editAllProducts.component';
 import Categories from './products/product/categories/categories.component';
 import Footer from './footer/footer.component';
+import PageNotFound from './pageNotFound/pageNotFound';
 
 function Main(): JSX.Element {
     return (
@@ -27,7 +28,7 @@ function Main(): JSX.Element {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="*" element={<p>There's nothing here: 404!</p>} />
+                    <Route path="*" element={<PageNotFound />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/products/:id" element={<Product />} />
                     <Route path="/products/cat/:cat" element={<Categories />} />

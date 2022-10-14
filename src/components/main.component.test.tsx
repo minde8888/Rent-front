@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { renderBrowserWithContext } from '../helpers/renderWithContext.helper';
 
-
 describe('<Main />', () => {
     test('renders', () => {
         const { baseElement } = renderBrowserWithContext(<Main />);
@@ -16,7 +15,7 @@ describe('<Main />', () => {
     test('landing on a 404 page', () => {
         const badRoute = '/some/bad/route';
         const { getByText } = renderMemoryRouterWithContext(badRoute, <Main />);
-        expect(getByText(/There's nothing here: 404!/i)).toBeInTheDocument();
+        expect(getByText(/OOPS, THE PAGE YOU ARE LOOKING FOR CAN'T BE/i)).toBeInTheDocument();
     });
     test('rendering a forgot password component that uses useLocation', () => {
         const route = '/forgot-password';
@@ -44,7 +43,3 @@ function renderMemoryRouterWithContext(route: string, element: React.ReactElemen
         </MemoryRouter>
     );
 }
-
-
-
-

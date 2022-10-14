@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     const products = useAppSelector((state) => state.data.products);
 
-    if (!Array.isArray(products.productDto.$values) || products.productDto.$values.length < 0) return null;
+    if (!Array.isArray(products.productDto?.$values) || products.productDto?.$values.length < 0) return null;
 
     return (
         <div className={style.home}>

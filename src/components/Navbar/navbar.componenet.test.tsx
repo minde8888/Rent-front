@@ -17,10 +17,11 @@ describe('<NavBar />', () => {
         const links: HTMLAnchorElement[] = screen.getAllByRole('link');
         expect(links[0].href).toContain('/');
         expect(links[1].href).toContain('/products');
-        expect(links[2].href).toContain('/login');
-        expect(links[2].textContent).toEqual('Login');
-        expect(links[3].href).toContain('/signup');
-        expect(links[3].textContent).toEqual('Sign Up');
+        expect(links[2].textContent).toEqual('LOGO');
+        expect(links[3].href).toContain('/login');
+        expect(links[3].textContent).toEqual('Login');
+        expect(links[4].href).toContain('/signup');
+        expect(links[4].textContent).toEqual('Sign Up');
     });
 
     test('render links after login', () => {

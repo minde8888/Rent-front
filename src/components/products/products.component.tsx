@@ -7,9 +7,9 @@ import style from './products.module.scss';
 const Products: React.FC = () => {
     const products = useAppSelector((state) => state.data.products);
     const [currentPage, setCurrentPage] = useState(1);
-    const lastPage = 3;
 
     if (!Array.isArray(products.productDto.$values) || products.productDto.$values.length < 0) return null;
+    const { firstPage, lastPage, previousPage, nextPage, pageNumber, pageSize, totalPages, totalRecords } = products;
 
     let arrayCat: string[] = [];
     products.productDto.$values.map((arr) =>
@@ -55,13 +55,7 @@ const Products: React.FC = () => {
                 </div>
             </div>
             <div className="container">
-                <h1>React TypeScript Pagination</h1>
-                <Pagination
-                    currentPage={currentPage}
-                    lastPage={lastPage}
-                    maxLength={7}
-                    setCurrentPage={setCurrentPage}
-                />
+                <Pagination previousPage={previousPage} nextPage={nextPage} currentPage={pageNumber} totalPages={totalPages} maxLength={7} setCurrentPage={setCurrentPage} />
             </div>
         </div>
     );

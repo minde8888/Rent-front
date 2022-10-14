@@ -23,7 +23,7 @@ const EditAllProducts: React.FC = () => {
         dispatch(deleteProductById(id));
     };
 
-    if (!Array.isArray(products.productDto.$values) || products.productDto.$values.length < 0) return null;
+    if (!Array.isArray(products.productDto?.$values) || products.productDto?.$values.length < 0) return null;
 
     return (
         <div className={style.container}>

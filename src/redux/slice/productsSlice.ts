@@ -21,7 +21,6 @@ const productsSlice = createSlice({
     initialState: {} as ResponseProducts,
     reducers: {
         getProducts: (state, action: PayloadAction<ResponseProducts>) => {
-            // console.log('before', current(state.));
             return {
                 ...state,
                 ...action.payload
@@ -29,7 +28,7 @@ const productsSlice = createSlice({
         },
 
         updateOneProduct: (state, action: PayloadAction<IResponse<Product>>) => {
-            const dataCopy = [...state.productDto.$values];
+            const dataCopy = [...state.productDto?.$values];
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.$values[0].productsId);
             const product = dataCopy[productIndex];
             const updatedProduct = { ...product, ...action.payload };
