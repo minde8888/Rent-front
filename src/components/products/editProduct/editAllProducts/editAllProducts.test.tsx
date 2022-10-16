@@ -1,15 +1,8 @@
-import { act, fireEvent, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { renderWithContext } from '../../../../helpers/renderWithContext.helper';
+import { act, fireEvent, screen } from '@testing-library/react';
+import { renderBrowserWithContext, renderWithContext } from '../../../../helpers/renderWithContext.helper';
+import { getProducts } from '../../../../redux/slice/productsSlice';
 import { store } from '../../../../redux/store';
 import EditAllProducts from './editAllProducts.component';
-
-// import { act, fireEvent, render } from '@testing-library/react';
-// import Edit from './profileEdit.component';
-// import { Provider } from 'react-redux';
-// import { store } from '../../../redux/store';
-// import { renderWithContext } from '../../../helpers/renderWithContext.helper';
 
 describe('<EditAllProducts />', () => {
     test('renders', () => {
@@ -17,27 +10,62 @@ describe('<EditAllProducts />', () => {
         expect(baseElement).toBeVisible();
     });
 
-    test('renders edit button', () => {
-        // const passToggle = jest.fn();
-        const { container } = render(
-            <Provider store={store}>
-                <EditAllProducts />
-            </Provider>
-        );
-        const button = getByTestId(container, 'btn-how-to-choose-provider');
+    test('renders edit button', async () => {
+        const { getByTestId } = renderBrowserWithContext(<EditAllProducts />);
+        await act(async () => {
+            store.dispatch(getProducts(data));
+        });
+        const button = getByTestId('test-deleteBtn');
+        expect(button).toBeVisible();
         fireEvent.click(button);
-        // const removeButton = getByRole('button');
-        // const mockCallBack = mySpy.fn();
-        // const button = shallow(<Button onClick={mockCallBack}>Ok!</Button>);
-        // const removeButton = getByRole('button');
-        // userEvent.click(removeButton);
-        // expect(removeButton).toBeCalledTimes(1);
+        expect(button).not.toBeVisible();
+    });
 
-        // const goBackButton = getByText(/Go back/);
-        // expect(goBackButton).toBeVisible();
-        // await act(async () => {
-        //     fireEvent.click(goBackButton);
-        // });
-        // expect(passToggle).toHaveBeenCalled();
+    test('renders images', async () => {
+        const { getByAltText } = renderBrowserWithContext(<EditAllProducts />);
+        await act(async () => {
+            store.dispatch(getProducts(data));
+        });
+        const image = getByAltText('edit_alt_images');
+        expect(image).toHaveAttribute('src', 'test-image');
+    });
+    test('should link', () => {
+        renderBrowserWithContext(<EditAllProducts />);
+        const links: HTMLAnchorElement[] = screen.getAllByRole('link');
+        expect(links[0].href).toContain('/');
+        expect(links[1].href).toContain('/');
     });
 });
+
+const product = {
+    imageName: '',
+    place: '',
+    price: '',
+    phone: '',
+    email: '',
+    size: '',
+    productsId: '',
+    sellerId: '',
+    imageSrc: { $id: '', $values: ['test-image'] },
+    categoriesDto: { $id: '', $values: [] },
+    postsDto: {
+        $id: '',
+        content: '',
+        postsId: '',
+        productName: ''
+    }
+};
+
+const data = {
+    $id: '',
+    pageNumber: 0,
+    pageSize: 0,
+    firstPage: '',
+    lastPage: '',
+    totalPages: 0,
+    totalRecords: 0,
+    nextPage: '',
+    previousPage: '',
+    productDto: { $id: '', $values: [product] }
+};
+

@@ -14,7 +14,9 @@ interface Props {
 }
 
 const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element | null => {
+
     const [category, setCategory] = useState<CatValues[]>(categories);
+    const [isLoaded, setIsLoaded] = useState<boolean>(true);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -37,7 +39,7 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
         [categories]
     );
     /* eslint-disable */
-    const saveCategories = (productsId: string) => {
+    const saveCategories = async (productsId: string) => {
         const stringCat = category.map((e) => e.categoriesName);
         const stringCatId = category.map((e) => e.categoriesId);
         const obj = {
@@ -45,28 +47,33 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
             categoriesName: stringCat.toString(),
             imageName: ''
         };
-        updateCategory(obj);
+
         dispatch(updateProductCategory({ category, productsId: productsId }));
+        const response = await updateCategory(obj);
+        setIsLoaded(false)
+        if (response.status === 200) {
+            setIsLoaded(true)
+        }
     };
 
     return (
         <div className={style.container}>
             <h2>Add/Edit Category</h2>
-            <button className={style.closeModal} onClick={onCancel} type="button">
+            <button data-testid="test-close-id" className={style.closeModal} onClick={onCancel} type="button">
                 ❌
             </button>
             {category.map((el, index) => (
                 <div key={index} className={style.category}>
-                    <input className={style.inp} type="text" value={el.categoriesName} onChange={(e) => handleInput(e, index)} pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$" />
-                    <button className={style.button} onClick={() => removeCategory(el.categoriesId)} type="button">
+                    <input data-testid="test-inputs-id" className={style.inp} type="text" value={el.categoriesName} onChange={(e) => handleInput(e, index)} pattern="^([A-Z][a-z]+)\s([A-Z][a-z]+)$" />
+                    <button data-testid="test-removeCategory-id" className={style.button} onClick={() => removeCategory(el.categoriesId)} type="button">
                         ❌
                     </button>
                 </div>
             ))}
             <AddRemoveInputField productsId={productsId} categories={categories} />
-            <button className={style.saveBtn} onClick={() => saveCategories(productsId)} type="button">
+            <button disabled={isLoaded} className={style.saveBtn} onClick={() => saveCategories(productsId)} type="button">
                 Save
-            </button>
+            </button >
         </div>
     );
 };

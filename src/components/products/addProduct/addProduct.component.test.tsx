@@ -3,7 +3,8 @@ import AddProduct from './addProduct.component';
 
 describe('<CurrentProfile />', () => {
     test('renders', () => {
-        const { baseElement } = renderWithContext(<AddProduct />);
+        const { baseElement, debug } = renderWithContext(<AddProduct />);
         expect(baseElement).toBeVisible();
+        debug()
     });
 });

@@ -1,10 +1,8 @@
-import { render } from '@testing-library/react';
+import { act } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router-dom';
 import Main from './main.component';
-import { Provider } from 'react-redux';
-import { store } from '../redux/store';
-import { renderBrowserWithContext } from '../helpers/renderWithContext.helper';
+import { renderBrowserWithContext, renderMemoryRouterWithContext } from '../helpers/renderWithContext.helper';
+
 
 describe('<Main />', () => {
     test('renders', () => {
@@ -22,24 +20,16 @@ describe('<Main />', () => {
         const { getByText } = renderMemoryRouterWithContext(route, <Main />);
         expect(getByText('Forgot Password')).toBeInTheDocument();
     });
-    test('rendering a signup component that uses useLocation', () => {
-        const route = '/signup';
-        const { getByText } = renderMemoryRouterWithContext(route, <Main />);
-        expect(getByText('Sign up')).toBeInTheDocument();
-    });
     test('rendering a login component that uses useLocation', () => {
         const route = '/login';
         const { container } = renderMemoryRouterWithContext(route, <Main />);
         expect(container.querySelector('h1')?.innerHTML).toEqual('Login');
     });
+    test('rendering a signup component that uses useLocation', () => {
+        const route = '/signup';
+        const { getByText } = renderMemoryRouterWithContext(route, <Main />);
+        expect(getByText('Sign up')).toBeInTheDocument();
+    });
 });
 
-function renderMemoryRouterWithContext(route: string, element: React.ReactElement) {
-    return render(
-        <MemoryRouter initialEntries={[route]}>
-            <Provider store={store}>
-                <Main />
-            </Provider>
-        </MemoryRouter>
-    );
-}
+

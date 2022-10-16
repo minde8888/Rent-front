@@ -5,10 +5,12 @@ import style from './product.module.scss';
 
 const Product: React.FC = () => {
     const { id } = useParams();
+    console.log(id);
+
     const navigate = useNavigate();
 
     const products = useAppSelector((state) => state.data.products);
-    const product = products.productDto.$values.filter((p) => p.productsId === id);
+    const product = products.productDto?.$values.filter((p) => p.productsId === id);
 
     if (Object.keys(product).length === 0) return null;
 
@@ -34,7 +36,7 @@ const Product: React.FC = () => {
                     </div>
                     <div className={style.categories}>
                         {product[0].categoriesDto.$values.map((e, i) => (
-                            <button className={style.cat} onClick={() => onNavigate(e.categoriesName)} key={i}>
+                            <button data-testid='test-saveBtn' className={style.cat} onClick={() => onNavigate(e.categoriesName)} key={i}>
                                 {e.categoriesName}
                             </button>
                         ))}

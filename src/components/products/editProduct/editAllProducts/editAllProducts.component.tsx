@@ -50,7 +50,7 @@ const EditAllProducts: React.FC = () => {
                                 {data.price}
                             </div>
                         </Link>
-                        <button className={style.close} onClick={() => deleteProduct(data.productsId)} type="button">
+                        <button data-testid='test-deleteBtn' className={style.close} onClick={() => deleteProduct(data.productsId)} type="button">
                             ❌
                         </button>
                     </div>

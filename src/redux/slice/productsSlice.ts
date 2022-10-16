@@ -56,6 +56,8 @@ const productsSlice = createSlice({
             const dataCopy = [...state.productDto.$values];
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
             const categories = dataCopy[productIndex]?.categoriesDto.$values;
+            console.log(categories);
+
             const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: [...categories, action.payload], $id: '' } };
             dataCopy.splice(productIndex, 1, productUpdate);
             return {
@@ -67,7 +69,7 @@ const productsSlice = createSlice({
             };
         },
         updateProductCategory: (state, action: PayloadAction<UpdateCategories>) => {
-            const dataCopy = [...state.productDto.$values];
+            const dataCopy = [...state.productDto?.$values];
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
             const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: [...action.payload.category], $id: '' } };
             dataCopy.splice(productIndex, 1, productUpdate);
@@ -81,7 +83,7 @@ const productsSlice = createSlice({
         },
 
         deleteProductCategoryById: (state, action: PayloadAction<{ id: string; productsId: string }>) => {
-            const dataCopy = [...state.productDto.$values];
+            const dataCopy = [...state.productDto?.$values];
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
             const categoryIndex = dataCopy[productIndex]?.categoriesDto.$values.findIndex((c) => c.categoriesId === action.payload.id);
             const categories = dataCopy[productIndex]?.categoriesDto.$values.splice(categoryIndex, 1);

@@ -17,8 +17,8 @@ export default function Pagination({ nextPage, previousPage, currentPage, totalP
             <PageLink href="#" disabled={currentPage === 1} onClick={() => setCurrentPage(pageNumber - 1)}>
                 Previous
             </PageLink>
-            {pageNum.map((pageNum, idx) => (
-                <PageLink key={idx} href="#" active={currentPage === pageNum} disabled={isNaN(pageNum)} onClick={() => setCurrentPage(pageNum)}>
+            {pageNum.map((pageNum, i) => (
+                <PageLink key={i} href="#" active={currentPage === pageNum} disabled={isNaN(pageNum)} onClick={() => setCurrentPage(pageNum)}>
                     {pageNum}
                 </PageLink>
             ))}
