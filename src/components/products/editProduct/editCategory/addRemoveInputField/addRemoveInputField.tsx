@@ -68,13 +68,13 @@ const AddRemoveInputField = ({ productsId, categories }: Props): JSX.Element => 
                         const { category } = data;
                         return (
                             <div className={style.addCategory} key={index}>
-                                <input className={style.inp} autoComplete="false" onChange={(event) => handleChange(index, event)} value={category} type="text" />
+                                <input className={style.inp} autoComplete="false" onChange={(event) => handleChange(index, event)} value={category} type="text" data-testid="test-input-id" />
                                 {inputFields.length > 0 && (
                                     <div className={style.buttons}>
-                                        <button className={style.addButton} onClick={() => addCategory(index)} type="button">
+                                        <button className={style.addButton} onClick={() => addCategory(index)} type="button" data-testid="test-addNew-id">
                                             &#10004;
                                         </button>
-                                        <button className={style.removeButton} onClick={() => removeInputFields(index)} type="button">
+                                        <button className={style.removeButton} onClick={() => removeInputFields(index)} type="button" data-testid="test-remove-id">
                                             ❌
                                         </button>
                                     </div>
@@ -83,7 +83,7 @@ const AddRemoveInputField = ({ productsId, categories }: Props): JSX.Element => 
                         );
                     })}
                     <div className={style.addNew}>
-                        <button className={style.addNewButton} onClick={addInputField} type="button">
+                        <button className={style.addNewButton} onClick={addInputField} type="button" data-testid="test-addField-id">
                             Add New
                         </button>
                     </div>

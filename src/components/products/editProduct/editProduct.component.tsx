@@ -139,7 +139,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 size: Yup.string(),
                 productName: Yup.string(),
                 content: Yup.string()
-                //pabaigti
             })}
         >
             <Form>
@@ -200,14 +199,12 @@ const EditProduct: React.FC = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
     const products = useAppSelector((state) => state.data.products);
-    const product = products.productDto.$values.filter((p) => p.productsId === id);
+    const product = products.productDto?.$values.filter((p) => p.productsId === id);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     if (Object.keys(product).length === 0) return null;
 
     const handleSubmit = async (values: any) => {
-        console.log(3333);
-
         let formData = new FormData();
         for (const key in values) {
             if (Object.prototype.hasOwnProperty.call(values, key) && typeof values[key] === 'string') {

@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { BrowserRouter, MemoryRouter, Route } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
 import { store } from '../redux/store';
 import { render } from '@testing-library/react';
 
@@ -18,10 +18,19 @@ export function renderWithContext(element: React.ReactElement) {
 export function renderMemoryRouterWithContext(route: string, element: React.ReactElement) {
     return render(
         <MemoryRouter initialEntries={[route]}>
-            <Provider store={store}>
-                {element}
-            </Provider>
+            <Provider store={store}>{element}</Provider>
         </MemoryRouter>
     );
 }
 
+export function renderWithRouterWrapper(route: string, path: string, element: React.ReactElement) {
+    return render(
+        <MemoryRouter initialEntries={[route]}>
+            <Provider store={store}>
+                <Routes>
+                    <Route path={path} element={element} />
+                </Routes>
+            </Provider>
+        </MemoryRouter>
+    );
+}

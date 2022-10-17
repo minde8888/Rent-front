@@ -5,6 +5,5 @@ describe('<CurrentProfile />', () => {
     test('renders', () => {
         const { baseElement, debug } = renderWithContext(<AddProduct />);
         expect(baseElement).toBeVisible();
-        debug()
     });
 });

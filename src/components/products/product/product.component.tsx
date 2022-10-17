@@ -5,8 +5,6 @@ import style from './product.module.scss';
 
 const Product: React.FC = () => {
     const { id } = useParams();
-    console.log(id);
-
     const navigate = useNavigate();
 
     const products = useAppSelector((state) => state.data.products);
@@ -20,7 +18,7 @@ const Product: React.FC = () => {
 
     return (
         <div className={style.container}>
-            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => { }} closeLightBox={(): void => { }} />
+            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => {}} closeLightBox={(): void => {}} />
             <div className={style.content}>
                 <div className={style.col}>
                     <h1>{product[0].place}</h1>
@@ -36,7 +34,7 @@ const Product: React.FC = () => {
                     </div>
                     <div className={style.categories}>
                         {product[0].categoriesDto.$values.map((e, i) => (
-                            <button data-testid='test-saveBtn' className={style.cat} onClick={() => onNavigate(e.categoriesName)} key={i}>
+                            <button data-testid="test-saveBtn" className={style.cat} onClick={() => onNavigate(e.categoriesName)} key={i}>
                                 {e.categoriesName}
                             </button>
                         ))}

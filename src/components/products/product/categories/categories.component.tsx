@@ -10,7 +10,7 @@ const Categories: React.FC = () => {
     return (
         <div className={style.container}>
             <div className={style.content}>
-                {filterObject(products.productDto.$values, cat).map((data, index) => (
+                {filterObject(products.productDto?.$values, cat).map((data, index) => (
                     <div className={style.product} key={index}>
                         <Link to={data.productsId}>
                             <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt="cat-img" />

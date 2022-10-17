@@ -1,27 +1,13 @@
-import { act, fireEvent } from '@testing-library/react';
-import React from 'react';
-import { renderWithRouterWrapper } from '../../../helpers/renderWithContext.helper';
+import { renderBrowserWithContext } from '../../../helpers/renderWithContext.helper';
 import { getProducts } from '../../../redux/slice/productsSlice';
 import { store } from '../../../redux/store';
-import Product from './product.component';
+import EditProduct from './editProduct.component';
 
-describe('<Product />', () => {
+describe('<EditProduct />', () => {
     test('renders', () => {
         store.dispatch(getProducts(data));
-        const { baseElement } = renderWithRouterWrapper('/products/123', '/products/:id', <Product />);
+        const { baseElement } = renderBrowserWithContext(<EditProduct />);
         expect(baseElement).toBeVisible();
-    });
-
-    test('Navigate button to category', async () => {
-        store.dispatch(getProducts(data));
-        const { getByTestId } = renderWithRouterWrapper('/products/123', '/products/:id', <Product />);
-
-        const saveButton = getByTestId('test-saveBtn');
-        expect(saveButton).toBeVisible();
-        act(() => {
-            fireEvent.click(saveButton);
-        });
-        expect(saveButton).not.toBeVisible();
     });
 });
 
