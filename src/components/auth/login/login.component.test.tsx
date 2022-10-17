@@ -5,7 +5,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 
 
-const setupForm = (properties: ComponentProps<typeof InnerForm>) => {
+const setupForm = async (properties: ComponentProps<typeof InnerForm>) => {
     return renderBrowserWithContext(<InnerForm {...properties} />);
 };
 
@@ -36,7 +36,7 @@ describe('<Login />', () => {
             onSubmit: jest.fn(),
             message: 'mock msg'
         };
-        const { getByPlaceholderText, getByText } = setupForm({ ...props });
+        const { getByPlaceholderText, getByText } = await setupForm({ ...props });
 
         emailNode = getByPlaceholderText('Email') as HTMLInputElement;
         passwordNode = getByPlaceholderText('Password') as HTMLInputElement;

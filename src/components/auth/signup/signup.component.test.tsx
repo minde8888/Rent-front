@@ -1,15 +1,28 @@
+import { act, waitFor } from '@testing-library/react';
 import { renderBrowserWithContext } from '../../../helpers/renderWithContext.helper';
 import SignUp from './signup.component';
 
 describe('<SignUp />', () => {
-    test('renders', () => {
-        const { baseElement } = renderBrowserWithContext(<SignUp />);
-        expect(baseElement).toBeVisible();
+    const setup = async () => {
+        const utils = renderBrowserWithContext(<SignUp />)
+        return {
+            ...utils
+        };
+    };
+    test('renders', async () => {
+        const { baseElement } = await setup();
+        act(() => {
+            expect(baseElement).toBeVisible()
+        });
     });
-    test('should link', () => {
-        const { getByText } = renderBrowserWithContext(<SignUp />);
+    test('should link', async () => {
+        const { getByText } = await setup();
         const LoginLink = getByText('Login');
-        expect(LoginLink.textContent).toEqual('Login');
-        expect(LoginLink).toBeInTheDocument();
+        act(() => {
+            expect(LoginLink.textContent).toEqual('Login')
+        });
+        act(() => {
+            expect(LoginLink).toBeInTheDocument()
+        });
     });
 });

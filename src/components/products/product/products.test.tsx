@@ -1,21 +1,25 @@
 import { act, fireEvent } from '@testing-library/react';
-import React from 'react';
 import { renderWithRouterWrapper } from '../../../helpers/renderWithContext.helper';
 import { getProducts } from '../../../redux/slice/productsSlice';
 import { store } from '../../../redux/store';
 import Product from './product.component';
 
 describe('<Product />', () => {
-    test('renders', () => {
+    const setup = async () => {
         store.dispatch(getProducts(data));
-        const { baseElement } = renderWithRouterWrapper('/products/123', '/products/:id', <Product />);
+        const utils = renderWithRouterWrapper('/products/123', '/products/:id', <Product />);
+        return {
+            ...utils
+        };
+    };
+
+    test('renders', async () => {
+        const { baseElement } = await setup();
         expect(baseElement).toBeVisible();
     });
 
     test('Navigate button to category', async () => {
-        store.dispatch(getProducts(data));
-        const { getByTestId } = renderWithRouterWrapper('/products/123', '/products/:id', <Product />);
-
+        const { getByTestId } = await setup();
         const saveButton = getByTestId('test-saveBtn');
         expect(saveButton).toBeVisible();
         act(() => {

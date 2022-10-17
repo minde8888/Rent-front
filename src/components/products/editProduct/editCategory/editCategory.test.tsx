@@ -15,6 +15,7 @@ describe('<EditCategory />', () => {
             onCancel
         };
     };
+
     test('renders', () => {
         const { baseElement } = setup();
         expect(baseElement).toBeVisible();

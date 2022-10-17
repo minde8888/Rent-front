@@ -1,22 +1,41 @@
-import { render } from 'react-dom';
 import { renderBrowserWithContext, renderWithRouterWrapper } from '../../../../helpers/renderWithContext.helper';
 import { getProducts } from '../../../../redux/slice/productsSlice';
 import { store } from '../../../../redux/store';
 import Categories from './categories.component';
+import { act, screen } from '@testing-library/react';
 
 describe('<Categories />', () => {
-    test('renders', () => {
+    const setup = async () => {
         store.dispatch(getProducts(response));
-        const { baseElement, debug } = renderWithRouterWrapper('/products/cat/123', '/products/cat/:cat', <Categories />);
-        debug();
+        const utils = renderWithRouterWrapper('/products/cat/test-1234', '/products/cat/:cat', <Categories />);
+        return {
+            ...utils
+        };
+    };
+
+    test('renders', async () => {
+        const { baseElement } = await setup();
         expect(baseElement).toBeVisible();
     });
+
+    test('render links', async () => {
+        await setup();
+        const links: HTMLAnchorElement[] = screen.getAllByRole("link");
+        expect(links[0].href).toContain("/products/cat/test-1234/88e40544-0959-441a-b403-62ebcc9947ce");
+        expect(links[1].href).toContain("/products/cat/test-1234/88e40544-0959-441a-b403-62ebcc9947ce");
+    })
+
+    test('render image', async () => {
+        const { getByRole } = await setup();
+        const image = getByRole('img');
+        expect(image).toHaveAttribute('src', 'test-img');
+    });
 });
-sad;
+
 const catValues = {
     $id: '',
     categoriesId: '123',
-    categoriesName: '',
+    categoriesName: 'test-1234',
     description: '',
     imageName: ''
 };

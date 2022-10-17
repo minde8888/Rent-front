@@ -7,13 +7,19 @@ import { getUserProfile } from '../../redux/slice/userSlice';
 import { User } from '../../models/user.model';
 
 describe('<NavBar />', () => {
-    test('renders', () => {
-        const { baseElement } = renderBrowserWithContext(<NavBar />);
+    const setup = async () => {
+        const utils = renderBrowserWithContext(<NavBar />)
+        return {
+            ...utils
+        };
+    };
+    test('renders', async () => {
+        const { baseElement } = await setup();
         expect(baseElement).toBeVisible();
     });
 
-    test('render link', () => {
-        renderBrowserWithContext(<NavBar />);
+    test('render link', async () => {
+        await setup();
         const links: HTMLAnchorElement[] = screen.getAllByRole('link');
         expect(links[0].href).toContain('/');
         expect(links[1].href).toContain('/products');
@@ -24,12 +30,12 @@ describe('<NavBar />', () => {
         expect(links[4].textContent).toEqual('Sign Up');
     });
 
-    test('render links after login', () => {
+    test('render links after login', async () => {
         const payload = { token: 'string1', refreshToken: 'string2' };
         const slug = '123';
         store.dispatch(loginSuccess(payload));
         store.dispatch(getUserProfile({ id: slug, name: 'Tester1', surname: 'Tester2' } as unknown as User));
-        renderBrowserWithContext(<NavBar />);
+        await setup();
         const links: HTMLAnchorElement[] = screen.getAllByRole('link');
         expect(links[0].href).toContain('/');
         // expect(links[1].href).toContain('/products');
@@ -37,10 +43,10 @@ describe('<NavBar />', () => {
         // expect(links[3].href).toContain(`/profile/${slug}`);
     });
 
-    test('render logout button', () => {
+    test('render logout button', async () => {
         const payload = { token: 'string1', refreshToken: 'string2' };
         store.dispatch(loginSuccess(payload));
-        const { getByText } = renderBrowserWithContext(<NavBar />);
+        const { getByText } = await setup();;
         fireEvent.click(getByText('Logout'));
         expect(getByText('Login')).toBeInTheDocument();
     });

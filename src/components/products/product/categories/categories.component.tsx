@@ -5,8 +5,9 @@ import style from './categories.module.scss';
 
 const Categories: React.FC = () => {
     const { cat } = useParams();
-    const products = useAppSelector((state) => state.data.products);
 
+    const products = useAppSelector((state) => state.data.products);
+    console.log(products);
     return (
         <div className={style.container}>
             <div className={style.content}>
@@ -40,6 +41,7 @@ const Categories: React.FC = () => {
 
 const filterObject = (array: Product[], cat: string | undefined): Product[] => {
     let object: Product[] = [];
+
     if (cat !== undefined) {
         for (let i = 0; i < array.length; i++) {
             for (let j = 0; j < array[i].categoriesDto.$values.length; j++) {
