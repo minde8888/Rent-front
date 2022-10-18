@@ -1,6 +1,6 @@
-// import { useState } from 'react';
 import { fireEvent } from '@testing-library/react';
 import { renderBrowserWithContext } from '../../../../../helpers/renderWithContext.helper';
+import { catValues } from '../../../variables/variables';
 import AddRemoveInputField from './addRemoveInputField';
 
 describe('<EditProduct />', () => {
@@ -20,7 +20,6 @@ describe('<EditProduct />', () => {
     });
     test('Add/Remove new category buttons', () => {
         const { getByTestId } = renderBrowserWithContext(<AddRemoveInputField productsId={'88e40544-0959-441a-b403-62ebcc9947ca'} categories={[catValues]} />);
-
         const addNewCategoryField = getByTestId('test-addField-id');
         expect(addNewCategoryField).toBeVisible();
         fireEvent.click(addNewCategoryField);
@@ -62,11 +61,3 @@ describe('<EditProduct />', () => {
         expect(result_2).toBe('');
     });
 });
-
-const catValues = {
-    $id: '',
-    categoriesId: '88e40544-0959-441a-b403-62ebcc9947ce',
-    categoriesName: 'test-category',
-    description: '',
-    imageName: ''
-};

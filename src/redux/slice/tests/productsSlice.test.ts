@@ -1,4 +1,4 @@
-import reducer, { getProducts, updateOneProduct } from '../productsSlice';
+import reducer, { deleteProductById, getProducts, updateOneProduct } from '../productsSlice';
 import { ResponseProducts } from '../../../models/product.model';
 
 describe('productsSlice', () => {
@@ -8,11 +8,30 @@ describe('productsSlice', () => {
         expect(newState).toEqual({ ...newState, ...response });
     });
 
-    xtest('returns updated products data', () => {
-        const initialState = {} as ResponseProducts;
+    test('returns updated products data', () => {
+        const initialState = response_1 as ResponseProducts;
         const newState = reducer(initialState, updateOneProduct(products));
+        expect(newState).toEqual({ response });
+    });
 
-        // expect(newState).toEqual({ ...newState, ...userUpdate });
+    test('delete products data', () => {
+        const initialState = response as ResponseProducts;
+        const newState = reducer(initialState, deleteProductById('123'));
+        expect(newState).toEqual({
+            $id: '',
+            pageNumber: 0,
+            pageSize: 0,
+            firstPage: '',
+            lastPage: '',
+            totalPages: 0,
+            totalRecords: 0,
+            nextPage: '',
+            previousPage: '',
+            productDto: {
+                $id: '',
+                $values: []
+            }
+        });
     });
 });
 
@@ -25,21 +44,21 @@ const CatValues = {
 };
 
 const product = {
-    imageName: '',
-    place: '',
-    price: '',
-    phone: '',
-    email: '',
-    size: '',
-    productsId: '',
-    sellerId: '',
-    imageSrc: { $id: '', $values: [''] },
+    imageName: 'test',
+    place: 'test',
+    price: 'test',
+    phone: 'test',
+    email: 'test',
+    size: 'test',
+    productsId: '123',
+    sellerId: 'test',
+    imageSrc: { $id: 'test', $values: ['test'] },
     categoriesDto: { $id: '', $values: [CatValues] },
     postsDto: {
-        $id: '',
-        content: '',
-        postsId: '',
-        productName: ''
+        $id: 'test',
+        content: 'test',
+        postsId: 'test',
+        productName: 'test'
     }
 };
 
@@ -57,5 +76,17 @@ const response = {
     totalRecords: 0,
     nextPage: '',
     previousPage: '',
-    productDto: { $id: '', $values: [product] }
+    productDto: { $id: '1', $values: [product] }
+};
+const response_1 = {
+    $id: '',
+    pageNumber: 0,
+    pageSize: 0,
+    firstPage: '',
+    lastPage: '',
+    totalPages: 0,
+    totalRecords: 0,
+    nextPage: '',
+    previousPage: '',
+    productDto: { $id: '1', $values: [] }
 };

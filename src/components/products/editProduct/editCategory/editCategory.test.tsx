@@ -109,10 +109,6 @@ const product = {
     }
 };
 
-const products = {
-    $id: '',
-    $values: [{ ...product }]
-};
 const response = {
     $id: '',
     pageNumber: 0,

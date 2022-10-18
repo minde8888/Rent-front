@@ -47,7 +47,7 @@ const productsSlice = createSlice({
                 ...state,
                 productDto: {
                     $id: '',
-                    $values: state.productDto.$values.filter((p) => p.productsId !== action.payload)
+                    $values: state.productDto?.$values.filter((p) => p.productsId !== action.payload)
                 }
             };
         },

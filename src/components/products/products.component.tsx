@@ -8,12 +8,12 @@ const Products: React.FC = () => {
     const products = useAppSelector((state) => state.data.products);
     const [currentPage, setCurrentPage] = useState(1);
 
-    if (!Array.isArray(products.productDto.$values) || products.productDto.$values.length < 0) return null;
+    if (!Array.isArray(products.productDto?.$values) || products.productDto?.$values.length < 0) return null;
     const { firstPage, lastPage, previousPage, nextPage, pageNumber, pageSize, totalPages, totalRecords } = products;
 
     let arrayCat: string[] = [];
-    products.productDto.$values.map((arr) =>
-        arr.categoriesDto.$values?.map((el) => {
+    products.productDto?.$values.map((arr) =>
+        arr.categoriesDto?.$values?.map((el) => {
             if (el.categoriesName) {
                 return (arrayCat = [...arrayCat, el.categoriesName.trim()]);
             }

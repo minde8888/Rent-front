@@ -7,7 +7,7 @@ const Categories: React.FC = () => {
     const { cat } = useParams();
 
     const products = useAppSelector((state) => state.data.products);
-    console.log(products);
+
     return (
         <div className={style.container}>
             <div className={style.content}>

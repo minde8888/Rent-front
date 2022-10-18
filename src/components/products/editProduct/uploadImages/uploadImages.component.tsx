@@ -60,7 +60,7 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
             {imgSrc?.map((element, key) => (
                 <div className={style.images} key={key}>
                     <img src={element.data_url === undefined ? product : element.data_url} alt="alt-text" width="100" />
-                    <input className={style.imgUploaded} type="file" onChange={(e) => onFileChange(e, key)} accept=".jpg,.jpeg,.png,.gif" />
+                    <input className={style.imgUploaded} type="file" onChange={(e) => onFileChange(e, key)} accept=".jpg,.jpeg,.png,.gif" data-testid="upload-test-id" />
                     <button className={style.close} onClick={(e) => removeImage(e, key)} type="button">
                         ❌
                     </button>
@@ -75,7 +75,9 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
                                 <div key={index} className={style.images}>
                                     <img className={style.image_show} src={image['data_url']} alt="alt-text" width="100" />
                                     <span className={style.update_image} onClick={() => onImageUpdate(index)}></span>
-                                    <button className={style.close_btn} onClick={() => onImageRemove(index)} type="button">❌</button>
+                                    <button className={style.close_btn} onClick={() => onImageRemove(index)} type="button">
+                                        ❌
+                                    </button>
                                 </div>
                             ))}
                             <div className={style.clickDrop} style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps}>
@@ -90,7 +92,7 @@ const UploadImages = ({ imageSrc, getImages }: Props) => {
                         </div>
                     )}
                 </ImageUploading>
-            </div >
+            </div>
         </>
     );
 };
