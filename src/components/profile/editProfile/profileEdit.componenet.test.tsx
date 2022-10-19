@@ -1,7 +1,5 @@
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent } from '@testing-library/react';
 import Edit from './profileEdit.component';
-import { Provider } from 'react-redux';
-import { store } from '../../../redux/store';
 import { renderWithContext } from '../../../helpers/renderWithContext.helper';
 
 describe('<Edit />', () => {
@@ -17,11 +15,7 @@ describe('<Edit />', () => {
 
     test('renders go back button', async () => {
         const passToggle = jest.fn();
-        const { getByText } = render(
-            <Provider store={store}>
-                <Edit passToggle={passToggle} />
-            </Provider>
-        );
+        const { getByText } = renderWithContext(<Edit passToggle={passToggle} />);
         const goBackButton = getByText(/Go back/);
         expect(goBackButton).toBeVisible();
         await act(async () => {

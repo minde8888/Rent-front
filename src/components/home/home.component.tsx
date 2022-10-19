@@ -40,24 +40,24 @@ const Home = () => {
             <div className={style.col_2}>
                 <div className={style.box_1}>
                     <div className={style.box}>
-                        <img src={image3} alt="hotel" />
+                        <img src={image3} alt="alt_hotel" />
                         <h2>Lorem Ipsum</h2>
                         <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</div>
                     </div>
                     <div className={style.box}>
-                        <img src={image4} alt="hotel" />
+                        <img src={image4} alt="alt_hotel" />
                         <h2>Lorem Ipsum</h2>
                         <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</div>
                     </div>
                 </div>
                 <div className={style.box_2}>
                     <div className={style.box}>
-                        <img src={image5} alt="hotel" />
+                        <img src={image5} alt="alt_hotel" />
                         <h2>Lorem Ipsum</h2>
                         <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</div>
                     </div>
                     <div className={style.box}>
-                        <img src={image6} alt="hotel" />
+                        <img src={image6} alt="alt_hotel" />
                         <h2>Lorem Ipsum</h2>
                         <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</div>
                     </div>
@@ -102,31 +102,31 @@ const Home = () => {
                 <div className={`${style.row} ${style.up}`}>
                     <div className={style.hexagon}>
                         <div className={style.phone}>+4798745632</div>
-                        <img src={prof1} alt="prof1" />
+                        <img src={prof1} alt="alt_prof" />
                     </div>
                     <div className={style.hexagon}>
                         <div className={style.phone}>+4798745632</div>
-                        <img src={prof2} alt="prof2" />
+                        <img src={prof2} alt="alt_prof" />
                     </div>
                     <div className={style.hexagon}>
                         <div className={style.phone}>+4798745632</div>
-                        <img src={prof3} alt="prof3" />
-                    </div>
-                </div>
-                <div className={`${style.row} ${style.up}`}>
-                    <div className={style.hexagon}>
-                        <div className={style.phone}>+4798745632</div>
-                        <img src={prof4} alt="prof4" />
-                    </div>
-                    <div className={style.hexagon}>
-                        <div className={style.phone}>+4798745632</div>
-                        <img src={prof5} alt="prof5" />
+                        <img src={prof3} alt="alt_prof" />
                     </div>
                 </div>
                 <div className={`${style.row} ${style.up}`}>
                     <div className={style.hexagon}>
                         <div className={style.phone}>+4798745632</div>
-                        <img src={prof6} alt="prof6" />
+                        <img src={prof4} alt="alt_prof" />
+                    </div>
+                    <div className={style.hexagon}>
+                        <div className={style.phone}>+4798745632</div>
+                        <img src={prof5} alt="alt_prof" />
+                    </div>
+                </div>
+                <div className={`${style.row} ${style.up}`}>
+                    <div className={style.hexagon}>
+                        <div className={style.phone}>+4798745632</div>
+                        <img src={prof6} alt="alt_prof" />
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@ const Home = () => {
                             <div className={style.box} key={index}>
                                 <Link to={`products/${data.productsId}`}>
                                     <div className={style.place}>{data.place}</div>
-                                    <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt={'alt-home'} />
+                                    <img src={data.imageSrc.$values !== undefined ? data.imageSrc.$values[0] : 'null'} alt={'alt-product'} />
                                     <div className={style.desc}>
                                         <div>
                                             Size: {data.size}m<sup>2</sup>

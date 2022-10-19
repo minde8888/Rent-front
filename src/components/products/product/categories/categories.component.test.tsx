@@ -15,7 +15,8 @@ describe('<Categories />', () => {
     };
 
     test('renders', async () => {
-        const { baseElement } = await setup();
+        const { baseElement, debug } = await setup();
+        debug();
         expect(baseElement).toBeVisible();
     });
 

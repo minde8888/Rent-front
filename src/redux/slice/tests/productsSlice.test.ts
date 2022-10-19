@@ -1,4 +1,4 @@
-import reducer, { deleteProductById, getProducts, updateOneProduct } from '../productsSlice';
+import reducer, { addProductCategory, deleteProductById, deleteProductCategoryById, getProducts, updateOneProduct, updateProductCategory } from '../productsSlice';
 import { ResponseProducts } from '../../../models/product.model';
 
 describe('productsSlice', () => {
@@ -9,52 +9,47 @@ describe('productsSlice', () => {
     });
 
     test('returns updated products data', () => {
-        const initialState = response_1 as ResponseProducts;
+        const initialState = responseEmptyProduct as ResponseProducts;
         const newState = reducer(initialState, updateOneProduct(products));
-        expect(newState).toEqual({
-            $id: '',
-            pageNumber: 0,
-            pageSize: 0,
-            firstPage: '',
-            lastPage: '',
-            totalPages: 0,
-            totalRecords: 0,
-            nextPage: '',
-            previousPage: '',
-            productDto: {
-                $id: '',
-                $values: [products]
-            }
-        });
+        expect(newState).toEqual({ ...responseWithProducts });
     });
 
     test('delete products data', () => {
         const initialState = response as ResponseProducts;
         const newState = reducer(initialState, deleteProductById('123'));
-        expect(newState).toEqual({
-            $id: '',
-            pageNumber: 0,
-            pageSize: 0,
-            firstPage: '',
-            lastPage: '',
-            totalPages: 0,
-            totalRecords: 0,
-            nextPage: '',
-            previousPage: '',
-            productDto: {
-                $id: '',
-                $values: []
-            }
-        });
+        expect(newState).toEqual({ ...responseEmptyProduct });
+    });
+    test('add category to product', () => {
+        const initialState = response as ResponseProducts;
+        const newState = reducer(initialState, addProductCategory(categories));
+        expect(newState).toEqual({ ...responseWithProductsCategory });
+    });
+
+    test('edit category values', () => {
+        const initialState = response as ResponseProducts;
+        const newState = reducer(initialState, updateProductCategory(catValues));
+        expect(newState).toEqual({ ...responseWithProductsCategory });
+    });
+
+    test('edit category values', () => {
+        const initialState = response as ResponseProducts;
+        const newState = reducer(initialState, deleteProductCategoryById({ id: '1234', productsId: '123' }));
+        expect(newState).toEqual({ ...response });
     });
 });
 
-const CatValues = {
+const categories = {
     $id: '',
-    categoriesId: '',
+    categoriesId: '1234',
     categoriesName: '',
     description: '',
-    imageName: ''
+    imageName: '',
+    productsId: '123'
+};
+
+const catValues = {
+    category: [categories],
+    productsId: '123'
 };
 
 const product = {
@@ -68,6 +63,24 @@ const product = {
     sellerId: '',
     imageSrc: { $id: '', $values: [''] },
     categoriesDto: { $id: '', $values: [] },
+    postsDto: {
+        $id: '',
+        content: '',
+        postsId: '',
+        productName: ''
+    }
+};
+const productWithCategory = {
+    imageName: '',
+    place: '',
+    price: '',
+    phone: '',
+    email: '',
+    size: '',
+    productsId: '123',
+    sellerId: '',
+    imageSrc: { $id: '', $values: [''] },
+    categoriesDto: { $id: '', $values: [categories] },
     postsDto: {
         $id: '',
         content: '',
@@ -91,29 +104,13 @@ const response = {
     totalRecords: 0,
     nextPage: '',
     previousPage: '',
-    productDto: { $id: '', $values: [product] }
-};
-
-const product_1 = {
-    imageName: 'test',
-    place: 'test',
-    price: 'test',
-    phone: 'test',
-    email: 'test',
-    size: 'test',
-    productsId: '123',
-    sellerId: 'test',
-    imageSrc: { $id: 'test', $values: ['test'] },
-    categoriesDto: { $id: '', $values: [] },
-    postsDto: {
-        $id: 'test',
-        content: 'test',
-        postsId: 'test',
-        productName: 'test'
+    productDto: {
+        $id: '',
+        $values: [product]
     }
 };
 
-const response_1 = {
+const responseWithProducts = {
     $id: '',
     pageNumber: 0,
     pageSize: 0,
@@ -123,5 +120,40 @@ const response_1 = {
     totalRecords: 0,
     nextPage: '',
     previousPage: '',
-    productDto: { $id: '', $values: [] }
+    productDto: {
+        $id: '',
+        $values: [products]
+    }
+};
+
+const responseWithProductsCategory = {
+    $id: '',
+    pageNumber: 0,
+    pageSize: 0,
+    firstPage: '',
+    lastPage: '',
+    totalPages: 0,
+    totalRecords: 0,
+    nextPage: '',
+    previousPage: '',
+    productDto: {
+        $id: '',
+        $values: [productWithCategory]
+    }
+};
+
+const responseEmptyProduct = {
+    $id: '',
+    pageNumber: 0,
+    pageSize: 0,
+    firstPage: '',
+    lastPage: '',
+    totalPages: 0,
+    totalRecords: 0,
+    nextPage: '',
+    previousPage: '',
+    productDto: {
+        $id: '',
+        $values: []
+    }
 };

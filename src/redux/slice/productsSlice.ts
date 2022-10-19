@@ -56,8 +56,6 @@ const productsSlice = createSlice({
             const dataCopy = [...state.productDto.$values];
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
             const categories = dataCopy[productIndex]?.categoriesDto.$values;
-            console.log(categories);
-
             const productUpdate = { ...dataCopy[productIndex], categoriesDto: { $values: [...categories, action.payload], $id: '' } };
             dataCopy.splice(productIndex, 1, productUpdate);
             return {

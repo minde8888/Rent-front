@@ -22,9 +22,8 @@ describe('<Products />', () => {
     });
 
     test('Toggle button, visible', () => {
-        const { mock, getByTestId, getByText, debug } = setup(true, Html);
+        const { mock, getByTestId, getByText } = setup(true, Html);
         const closeBtn = getByTestId('test-toggle-id');
-        debug();
         const visible = getByText('test-modal');
         expect(visible).toBeVisible();
         fireEvent.click(closeBtn);
