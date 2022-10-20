@@ -1,28 +1,31 @@
 import PageLink from './pageLink';
 
-export type Props = {
+interface Props {
+    firstPage?: string;
+    lastPage?: string;
     nextPage?: string;
     previousPage?: string;
-    currentPage?: number;
-    totalPages?: number;
-    maxLength: number;
-    setCurrentPage: (page: number) => void;
-};
+    pageNumber: number;
+    pageSize: number;
+    totalPages: number;
+    totalRecords: number;
+    // setCurrentPage: (page: number) => void;
+}
 
-export default function Pagination({ nextPage, previousPage, currentPage, totalPages, maxLength, setCurrentPage }: Props) {
-    let pageNumber = currentPage ?? 0;
+export default function Pagination({ firstPage, lastPage, nextPage, previousPage, pageNumber, pageSize, totalPages, totalRecords }: Props) {
+    // let pageNumber = currentPage ?? 0;
     const pageNum = [pageNumber - 1, pageNumber, pageNumber + 1];
     return (
         <nav className="pagination" aria-label="Pagination">
-            <PageLink href="#" disabled={currentPage === 1} onClick={() => setCurrentPage(pageNumber - 1)}>
+            <PageLink previousPage={previousPage} disabled={pageNumber === 1}>
                 Previous
             </PageLink>
             {pageNum.map((pageNum, i) => (
-                <PageLink key={i} href="#" active={currentPage === pageNum} disabled={isNaN(pageNum)} onClick={() => setCurrentPage(pageNum)}>
+                <PageLink key={i} href="#" disabled={pageNum === pageNumber}>
                     {pageNum}
                 </PageLink>
             ))}
-            <PageLink href="#" disabled={currentPage === totalPages} onClick={() => setCurrentPage(pageNumber + 1)}>
+            <PageLink nextPage={nextPage} disabled={pageNumber === totalPages}>
                 Next
             </PageLink>
         </nav>

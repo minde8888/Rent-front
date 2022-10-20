@@ -1,14 +1,19 @@
 import { HTMLProps } from 'react';
 
-export type Props = HTMLProps<HTMLAnchorElement> & { active?: boolean };
+interface Props extends HTMLProps<HTMLAnchorElement> {
+    nextPage?: string;
+    previousPage?: string;
+    // active: { active?: boolean };
+}
 
-export default function PageLink({ className, active, disabled, children, ...otherProps }: Props) {
+export default function PageLink({ nextPage, previousPage, className, disabled, children, ...otherProps }: Props) {
+    console.log(nextPage);
     if (disabled) {
         return <span className={'customClassName'}>{children}</span>;
     }
 
     return (
-        <a className={'customClassName'} aria-current={active ? 'page' : undefined} {...otherProps}>
+        <a className={'customClassName'} {...otherProps}>
             {children}
         </a>
     );
