@@ -55,7 +55,16 @@ const Products: React.FC = () => {
                 </div>
             </div>
             <div className="container">
-                <Pagination previousPage={previousPage} nextPage={nextPage} currentPage={pageNumber} totalPages={totalPages} maxLength={7} setCurrentPage={setCurrentPage} />
+                <Pagination
+                    firstPage={firstPage}
+                    lastPage={lastPage}
+                    nextPage={nextPage}
+                    previousPage={previousPage}
+                    pageNumber={pageNumber ?? 0}
+                    pageSize={pageSize ?? 0}
+                    totalPages={totalPages ?? 0}
+                    totalRecords={totalRecords ?? 0}
+                />
             </div>
         </div>
     );

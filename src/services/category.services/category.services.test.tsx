@@ -5,7 +5,7 @@ jest.mock('../api.services/instanceApi.service');
 
 describe('category service', () => {
     xtest('add new category', async () => {
-        const mockCategory = [{
+        const mockCategory = {
             $id: '',
             categoriesId: '',
             categoriesName: 'test_1',
