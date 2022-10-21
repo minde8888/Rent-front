@@ -4,7 +4,7 @@ import { Form, FormikProps, withFormik } from 'formik';
 import style from '../profile.module.scss';
 import userImage from '../../../svg/add-image-frame-svgrepo-com.svg';
 import { TextField } from '../../validation/textField';
-import { useAppDispatch } from '../../../hooks/redux.hooks';
+import { useAppDispatch } from '../../../hooks/redux.hook';
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import UploadImage from '../uploadImage/uploadImage';
 import { imageResize } from '../../../helpers/imageResize.helper';

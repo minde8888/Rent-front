@@ -15,7 +15,7 @@ import image7 from '../../image/beach-6301597_640.jpg';
 import image8 from '../../image/bedroom-490779_640.jpg';
 import Hero from './hero/hero.component';
 import ReactPlayer from 'react-player/youtube';
-import { useAppSelector } from '../../hooks/redux.hooks';
+import { useAppSelector } from '../../hooks/redux.hook';
 import { Link } from 'react-router-dom';
 
 const Home = () => {

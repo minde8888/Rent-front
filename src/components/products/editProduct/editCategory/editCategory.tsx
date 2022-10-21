@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useEffect } from 'react';
 import { useState } from 'react';
-import { useAppDispatch } from '../../../../hooks/redux.hooks';
+import { useAppDispatch } from '../../../../hooks/redux.hook';
 import { CatValues } from '../../../../models/product.model';
 import { deleteProductCategoryById, updateProductCategory } from '../../../../redux/slice/productsSlice';
 import { deleteCategory, updateCategory } from '../../../../services/category.services/category.services';

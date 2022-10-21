@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Product, ResponseProducts } from '../../models/product.model';
 import api from '../api.services/instanceApi.service';
-import AuthError from '../handleServerError/AuthServerError';
+import ProductError from '../handleServerError/AuthServerError';
 import RegisterError from '../handleServerError/RegisterError';
 import { IResponse, ServerError } from '../typings';
 import { Products } from './typings';
@@ -11,7 +11,6 @@ const PRODUCTS_URL = 'products/';
 export const addProduct = async (formData: FormData): Promise<Products> => {
     try {
         // console.log(Object.fromEntries(formData));
-
         const { data } = await api.post<Products>(PRODUCTS_URL, formData);
         if (!(Object.keys(data).length !== 0)) throw Error('no products found');
         return data;
@@ -19,9 +18,9 @@ export const addProduct = async (formData: FormData): Promise<Products> => {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
             if (serverError && serverError.response?.data) {
-                throw new AuthError(serverError.response.data.errors.$values[0]);
+                throw new ProductError(serverError.response.data.errors.$values[0]);
             }
-            throw new AuthError(error.message);
+            throw new ProductError(error.message);
         }
         throw error;
     }
@@ -36,9 +35,9 @@ export const getAllProducts = async (): Promise<ResponseProducts> => {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
             if (serverError && serverError.response?.data) {
-                throw new AuthError(serverError.response.data.errors.$values[0]);
+                throw new ProductError(serverError.response.data.errors.$values[0]);
             }
-            throw new AuthError(error.message);
+            throw new ProductError(error.message);
         }
         throw error;
     }
@@ -54,9 +53,9 @@ export const getProduct = async (id: string): Promise<IResponse<Product>> => {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
             if (serverError && serverError.response?.data) {
-                throw new AuthError(serverError.response.data.errors.$values[0]);
+                throw new ProductError(serverError.response.data.errors.$values[0]);
             }
-            throw new AuthError(error.message);
+            throw new ProductError(error.message);
         }
         throw error;
     }
@@ -86,9 +85,9 @@ export const removeProduct = async (id: string) => {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
             if (serverError && serverError.response?.data) {
-                throw new AuthError(serverError.response.data.errors.$values[0]);
+                throw new ProductError(serverError.response.data.errors.$values[0]);
             }
-            throw new AuthError(error.message);
+            throw new ProductError(error.message);
         }
         throw error;
     }

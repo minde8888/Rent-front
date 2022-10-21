@@ -3,7 +3,7 @@ import React, { MouseEventHandler, useState } from 'react';
 import style from './profile.module.scss';
 import CurrentProfile from './currentProfile/currentProfile.component';
 import Edit from './editProfile/profileEdit.component';
-import { useAppSelector } from '../../hooks/redux.hooks';
+import { useAppSelector } from '../../hooks/redux.hook';
 
 const Profile: React.FC = (): JSX.Element => {
     const [toggle, setToggle] = useState<boolean>(true);

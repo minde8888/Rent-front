@@ -2,11 +2,11 @@ import { useState, useCallback } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { login } from '../../../services/auth.services/auth.services';
-import { useAppDispatch } from '../../../hooks/redux.hooks';
+import { useAppDispatch } from '../../../hooks/redux.hook';
 import { loginFail, loginSuccess } from '../../../redux/slice/authSlice';
 import { TextField } from '../../validation/textField';
 import { Navigate, NavLink } from 'react-router-dom';
-import { useAppSelector } from '../../../hooks/redux.hooks';
+import { useAppSelector } from '../../../hooks/redux.hook';
 import style from '../auth.module.scss';
 import { getUserProfile } from '../../../redux/slice/userSlice';
 

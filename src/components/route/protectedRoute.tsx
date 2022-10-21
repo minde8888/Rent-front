@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/redux.hooks';
+import { useAppSelector } from '../../hooks/redux.hook';
 import AccessDenied from '../auth/login/accessDenied/accessDenied.component';
 
 interface Props {

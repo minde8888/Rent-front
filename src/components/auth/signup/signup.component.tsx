@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { register } from '../../../services/auth.services/auth.services';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook';
 import { SelectField } from '../../validation/selectField';
 import { TextField } from '../../validation/textField';
 import style from '../auth.module.scss';

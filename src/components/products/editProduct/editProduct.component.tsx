@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook';
 import { getProduct, updateProduct } from '../../../services/products.services/products.services';
 import * as Yup from 'yup';
 import { TextField } from '../../validation/textField';
@@ -14,7 +14,7 @@ import { CatValues } from '../../../models/product.model';
 import style from './editProduct.module.scss';
 import EditCategory from './editCategory/editCategory';
 import Modal from '../../modal/modal.component';
-import useModal from '../../../hooks/useModal';
+import useModal from '../../../hooks/useModal.hook';
 
 interface FormValues {
     place?: string;

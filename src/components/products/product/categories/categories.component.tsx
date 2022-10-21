@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import { useAppSelector } from '../../../../hooks/redux.hooks';
+import { useAppSelector } from '../../../../hooks/redux.hook';
 import { Product } from '../../../../models/product.model';
 import style from './categories.module.scss';
 

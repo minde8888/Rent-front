@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { Form, FormikProps, withFormik } from 'formik';
-import { useAppSelector } from '../../../hooks/redux.hooks';
+import { useAppSelector } from '../../../hooks/redux.hook';
 import { imageResize } from '../../../helpers/imageResize.helper';
 import style from './addProduct.module.scss';
 import UploadProductImages from './uploadImages/uploadProductImages.component';

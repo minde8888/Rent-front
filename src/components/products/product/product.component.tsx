@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector } from '../../../hooks/redux.hooks';
+import { useAppSelector } from '../../../hooks/redux.hook';
 import LightBox from './lightBox/lightBox.component';
 import style from './product.module.scss';
 
@@ -18,7 +18,7 @@ const Product: React.FC = () => {
 
     return (
         <div className={style.container}>
-            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => {}} closeLightBox={(): void => {}} />
+            <LightBox images={product[0].imageSrc.$values} id={id} showLightBox={(): void => { }} closeLightBox={(): void => { }} />
             <div className={style.content}>
                 <div className={style.col}>
                     <h1>{product[0].place}</h1>

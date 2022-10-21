@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.hooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.hook';
 import { getProducts, deleteProductById } from '../../../../redux/slice/productsSlice';
 import { getAllProducts, removeProduct } from '../../../../services/products.services/products.services';
 import style from './editAllProducts.module.scss';

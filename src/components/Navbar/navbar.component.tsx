@@ -1,8 +1,8 @@
 import { FunctionComponent, MouseEventHandler } from 'react';
 import { Outlet } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/redux.hooks';
-import { useAppDispatch } from '../../hooks/redux.hooks';
+import { useAppSelector } from '../../hooks/redux.hook';
+import { useAppDispatch } from '../../hooks/redux.hook';
 import { userLogout } from '../../redux/slice/authSlice';
 import { getProducts } from '../../redux/slice/productsSlice';
 import { logout } from '../../services/auth.services/auth.services';
