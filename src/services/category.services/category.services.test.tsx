@@ -4,36 +4,25 @@ import { addNewCategory, deleteCategory, updateCategory } from './category.servi
 jest.mock('../api.services/instanceApi.service');
 
 describe('category service', () => {
-    xtest('add new category', async () => {
-        const mockCategory = {
-            $id: '',
-            categoriesId: '',
-            categoriesName: 'test_1',
-            description: '',
-            imageName: '',
-            productsId: '123'
-        };
+    test('add new category', async () => {
+
         const categoriesDto = {
             categoriesName: 'test_1',
             description: '',
             imageName: '',
             productsId: '123'
         };
-
-        api.post = jest.fn().mockRejectedValue(categoriesDto)
-        // (api.post as jest.Mock).mockResolvedValue({ mockCategory, ...response });
+        (api.post as jest.Mock).mockResolvedValue({ data: categoriesDto });
         const result = await addNewCategory(categoriesDto);
-        // console.log(mockCategory);
-        // console.log(result);
-
-        // expect(result).toEqual(mockCategory);
+        expect(result).toEqual(categoriesDto);
     });
 
-    xtest('throws error because update category API fails', async () => {
-        (api.delete as jest.Mock).mockResolvedValueOnce(new Error('error'));
+    test('throws error because update category API fails', async () => {
+        (api.delete as jest.Mock).mockRejectedValueOnce(new Error('error'));
         try {
             await deleteCategory('123');
         } catch (error) {
+
             expect((error as Error).message).toBe("error");
         } finally {
             expect.assertions(1);

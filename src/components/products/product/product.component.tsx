@@ -22,7 +22,7 @@ const Product: React.FC = () => {
             <div className={style.content}>
                 <div className={style.col}>
                     <h1>{product[0].place}</h1>
-                    <h2>{product[0].postsDto.productName}</h2>
+                    <h2>{product[0].postsDto?.productName}</h2>
                     <div className={style.text}>{product[0].postsDto.content}</div>
                     <div className={style.size}>
                         <b>Size : </b>

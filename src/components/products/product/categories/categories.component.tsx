@@ -19,10 +19,10 @@ const Categories: React.FC = () => {
                         <div className={style.description}>
                             <Link to={data.productsId}>
                                 <div className={style.place}> {data.place}</div>
-                                <h2> {data.postsDto.productName}</h2>
-                                <div className={style.text}> {data.postsDto.content}</div>
+                                <h2> {data.postsDto?.productName}</h2>
+                                <div className={style.text}> {data.postsDto?.content}</div>
                                 <div className={style.size}>
-                                    <b>Size:</b> {data.size}m<sup>2</sup>{' '}
+                                    <b>Size:</b> {data.size}m<sup>2</sup>
                                 </div>
                                 <div>
                                     <b>Price : </b> {data.price}

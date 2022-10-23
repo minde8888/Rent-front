@@ -60,12 +60,12 @@ const data = {
     $id: '',
     pageNumber: 0,
     pageSize: 0,
-    firstPage: '',
-    lastPage: '',
+    firstPage: 0,
+    lastPage: 0,
     totalPages: 0,
     totalRecords: 0,
-    nextPage: '',
-    previousPage: '',
+    nextPage: 0,
+    previousPage: 0,
     productDto: { $id: '', $values: [product] }
 };
 

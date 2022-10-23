@@ -2,12 +2,12 @@ export interface ResponseProducts {
     $id: string;
     pageNumber?: number;
     pageSize?: number;
-    firstPage?: string;
-    lastPage?: string;
+    firstPage?: number;
+    lastPage?: number;
     totalPages?: number;
     totalRecords?: number;
-    nextPage?: string;
-    previousPage?: string;
+    nextPage?: number;
+    previousPage?: number;
     productDto: Products;
 }
 

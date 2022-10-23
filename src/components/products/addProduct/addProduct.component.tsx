@@ -13,7 +13,7 @@ interface ProductProps extends Product {
 }
 
 interface FormValues extends Product {
-    productName: string;
+    productName?: string;
     uniqueCat: string[];
 }
 
@@ -100,7 +100,6 @@ const ProductForm = withFormik<ProductProps, FormValues>({
         if (values.categories !== 'Choice Category' && values.categoriesName !== '') {
             values.categoriesName = `${values.categoriesName}, ${values.categories}`;
         }
-        console.log(values);
         let formData = new FormData();
 
         for (const key in values) {

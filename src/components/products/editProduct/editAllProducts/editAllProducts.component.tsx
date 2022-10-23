@@ -38,9 +38,9 @@ const EditAllProducts: React.FC = () => {
                         <Link to={data.productsId}>
                             <div> {data.phone}</div>
                             <div> {data.email}</div>
-                            <h2> {data.postsDto.productName}</h2>
+                            <h2> {data.postsDto?.productName}</h2>
                             <h3> {data.place}</h3>
-                            <div className={style.text}> {data.postsDto.content}</div>
+                            <div className={style.text}> {data.postsDto?.content}</div>
                             <div>
                                 <b>Size : </b>
                                 {data.size}m<sup>2</sup>

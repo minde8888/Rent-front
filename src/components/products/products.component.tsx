@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hook';
-import Pagination from '../pagination/pagination';
+import Pagination from '../pagination/pagination.component';
 import style from './products.module.scss';
 
 const Products: React.FC = () => {
     const products = useAppSelector((state) => state.data.products);
-    const [currentPage, setCurrentPage] = useState(1);
 
     if (!Array.isArray(products.productDto?.$values) || products.productDto?.$values.length < 0) return null;
     const { firstPage, lastPage, previousPage, nextPage, pageNumber, pageSize, totalPages, totalRecords } = products;
@@ -37,8 +36,8 @@ const Products: React.FC = () => {
                             <div className={style.description}>
                                 <Link to={data.productsId}>
                                     <div className={style.place}> {data.place}</div>
-                                    <h2> {data.postsDto.productName}</h2>
-                                    <div className={style.text}> {data.postsDto.content}</div>
+                                    <h2> {data.postsDto?.productName}</h2>
+                                    <div className={style.text}> {data.postsDto?.content}</div>
                                     <div className={style.size}>
                                         <b>Size:</b> {data.size}m<sup>2</sup>{' '}
                                     </div>
@@ -56,12 +55,12 @@ const Products: React.FC = () => {
             </div>
             <div className="container">
                 <Pagination
-                    firstPage={firstPage}
-                    lastPage={lastPage}
-                    nextPage={nextPage}
-                    previousPage={previousPage}
+                    firstPage={firstPage ?? 0}
+                    nextPage={nextPage ?? 0}
                     pageNumber={pageNumber ?? 0}
+                    lastPage={lastPage ?? 0}
                     pageSize={pageSize ?? 0}
+                    previousPage={previousPage ?? 0}
                     totalPages={totalPages ?? 0}
                     totalRecords={totalRecords ?? 0}
                 />

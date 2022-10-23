@@ -18,11 +18,8 @@ interface CategoryUpdate extends AddCategoryProps {
 }
 
 export const addNewCategory = async (categoriesDto: AddCategoryProps): Promise<AddCategory> => {
-    console.log(categoriesDto);
-
     try {
         const { data } = await api.post<AddCategory>(PRODUCTS_URL, { ...categoriesDto });
-        console.log(data);
 
         if (!(Object.keys(data).length !== 0)) throw Error('no product found');
         return data;
