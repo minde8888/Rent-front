@@ -4,16 +4,13 @@ import api from '../api.services/instanceApi.service';
 import ProductError from '../handleServerError/AuthServerError';
 import RegisterError from '../handleServerError/RegisterError';
 import { IResponse, ServerError } from '../typings';
-import { Products } from './typings';
 
 const PRODUCTS_URL = 'products/';
 
-export const addProduct = async (formData: FormData): Promise<Products> => {
+export const addProduct = async (formData: FormData) => {
     try {
         // console.log(Object.fromEntries(formData));
-        const { data } = await api.post<Products>(PRODUCTS_URL, formData);
-        if (!(Object.keys(data).length !== 0)) throw Error('no products found');
-        return data;
+        return await api.post('products', formData);
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
@@ -62,7 +59,7 @@ export const getProduct = async (id: string): Promise<IResponse<Product>> => {
 };
 
 export const updateProduct = (formData: FormData) => {
-    console.log(Object.fromEntries(formData));
+    // console.log(Object.fromEntries(formData));
 
     try {
         return api.put<AxiosResponse>(PRODUCTS_URL + 'update', formData);
@@ -81,6 +78,23 @@ export const updateProduct = (formData: FormData) => {
 export const removeProduct = async (id: string) => {
     try {
         return await api.delete<AxiosResponse>(PRODUCTS_URL + 'delete/' + id);
+    } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+            const serverError = error as AxiosError<ServerError>;
+            if (serverError && serverError.response?.data) {
+                throw new ProductError(serverError.response.data.errors.$values[0]);
+            }
+            throw new ProductError(error.message);
+        }
+        throw error;
+    }
+};
+
+export const paginationProduct = async (PageNumber: number) => {
+    try {
+        const { data } = await api.get<ResponseProducts>(`Products?PageNumber=${PageNumber}&PageSize=${3}`);
+        if (!(Object.keys(data).length !== 0)) throw Error('no products found');
+        return data;
     } catch (error: any) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;

@@ -27,13 +27,12 @@ export const product = {
 
 export const response = {
     $id: '',
+    firstPage: 0,
+    nextPage: 0,
     pageNumber: 0,
     pageSize: 0,
-    firstPage: '',
-    lastPage: '',
+    previousPage: 0,
     totalPages: 0,
     totalRecords: 0,
-    nextPage: '',
-    previousPage: '',
     productDto: { $id: '', $values: [product] }
 };

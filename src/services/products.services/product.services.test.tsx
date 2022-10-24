@@ -22,7 +22,7 @@ describe('auth service', () => {
         const mockProduct = { formData: formData };
         (api.post as jest.Mock).mockResolvedValue({ data: mockProduct });
         const result = await addProduct(formData);
-        expect(result).toEqual(mockProduct);
+        expect(result.data.formData).toEqual(mockProduct.formData);
     });
     test('throws error because get all products API fails', async () => {
         (api.get as jest.Mock).mockRejectedValue(new Error('error'));
@@ -59,6 +59,4 @@ describe('auth service', () => {
         const result = await getProduct('123');
         expect(result).toEqual(mockProduct);
     });
-
-
 });

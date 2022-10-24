@@ -5,7 +5,7 @@ import style from '../addProduct.module.scss';
 import { FormEvent, useState } from 'react';
 
 interface Props {
-    productName: string;
+    productName?: string;
     place?: string;
     price?: string;
     size?: string;

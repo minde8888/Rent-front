@@ -22,7 +22,7 @@ interface FormValues {
     size: string;
     phone: string;
     email: string;
-    productName: string;
+    productName?: string;
     content?: string;
     imageSrc?: string[] | string;
     file?: File[] | number;
@@ -96,7 +96,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             );
 
             setIsSubmitting(true);
-            console.log(values);
 
             await onSubmit(values);
             setIsSubmitting(false);
@@ -237,8 +236,8 @@ const EditProduct: React.FC = () => {
                 size={product[0].size}
                 phone={product[0].phone}
                 email={product[0].email}
-                productName={product[0].postsDto.productName}
-                content={product[0].postsDto.content}
+                productName={product[0].postsDto?.productName}
+                content={product[0].postsDto?.content}
                 imageSrc={product[0].imageSrc.$values}
                 productsId={id}
                 categories={product[0].categoriesDto.$values}

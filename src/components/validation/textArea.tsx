@@ -7,7 +7,6 @@ interface PropsType {
 
 export const TextArea = ({ label, ...props }: PropsType) => {
     const [field, meta] = useField(props);
-
     return (
         <>
             <label htmlFor={field.name}>{label}</label>
