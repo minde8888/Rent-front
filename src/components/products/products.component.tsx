@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux.hook';
-import Pagination from '../pagination/pagination';
+import Pagination from '../pagination/pagination.component';
 import style from './products.module.scss';
 
 const Products: React.FC = () => {

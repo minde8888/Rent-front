@@ -1,5 +1,3 @@
-import PageLink from './pageLink';
-
 interface Props {
     firstPage?: string;
     lastPage?: string;
@@ -9,11 +7,9 @@ interface Props {
     pageSize: number;
     totalPages: number;
     totalRecords: number;
-    // setCurrentPage: (page: number) => void;
 }
 
 export default function Pagination({ firstPage, lastPage, nextPage, previousPage, pageNumber, pageSize, totalPages, totalRecords }: Props) {
-    // let pageNumber = currentPage ?? 0;
     const pageNum = [pageNumber - 1, pageNumber, pageNumber + 1];
     return (
         <nav className="pagination" aria-label="Pagination">
