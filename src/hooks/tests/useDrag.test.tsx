@@ -1,16 +1,11 @@
-import userEvent from '@testing-library/user-event';
-import { useRef } from 'react';
 import useDrag from '../useDrag.hook';
 
-export default async function drag() {
-    const divRef = useRef<HTMLDivElement | null>(null);
-    useDrag(divRef as unknown as HTMLDivElement);
-    return <div ref={divRef}></div>;
+export default async function Component() {
+    return <div></div>;
 }
 
 describe('useDrag', () => {
-    xtest('should use Drag ', () => {
-        const element = drag();
-        console.log(element);
+    xtest('should use Drag ', async () => {
+        const { positionX, positionY } = useDrag(Component() as unknown as HTMLDivElement);
     });
 });

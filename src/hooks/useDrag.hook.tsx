@@ -73,7 +73,7 @@ const useDrag = (ref: HTMLDivElement | null): Props => {
     );
 
     useEffect(() => {
-        if (!ref) return () => { };
+        if (!ref) return () => {};
 
         ref.addEventListener('pointerdown', handlePointerDown);
         ref.addEventListener('touchstart', handlePointerDown);
