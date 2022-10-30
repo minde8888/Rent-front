@@ -26,7 +26,7 @@ describe('auth service', () => {
         (api.put as jest.Mock).mockRejectedValue(new Error('error'));
         const formData = new FormData();
         try {
-            await updateUser(formData, '1234');
+            await updateUser(formData);
         } catch (error) {
             expect((<Error>error).message).toBe('error');
         } finally {
@@ -38,7 +38,7 @@ describe('auth service', () => {
         const formData = new FormData();
         const mockUser = { formData: formData, id: 1234 };
         (api.put as jest.Mock).mockResolvedValue({ data: mockUser });
-        const result = await updateUser(formData, '1234');
+        const result = await updateUser(formData);
         expect(result).toEqual(mockUser);
     });
 });

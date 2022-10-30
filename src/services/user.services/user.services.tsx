@@ -23,9 +23,10 @@ export const getProfile = async (id: string): Promise<User> => {
     }
 };
 
-export const updateUser = async (formData: FormData, id: string): Promise<User> => {
+export const updateUser = async (formData: FormData): Promise<User> => {
     try {
-        const { data } = await api.put<User>(SELLER_URL + 'update/' + id, formData);
+        console.log(Object.fromEntries(formData));
+        const { data } = await api.put<User>(SELLER_URL + 'update/', formData);
         if (!(Object.keys(data).length !== 0)) throw Error('no user found');
         return data;
     } catch (error: any) {

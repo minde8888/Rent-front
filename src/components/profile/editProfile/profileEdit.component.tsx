@@ -125,12 +125,10 @@ const EditForm = withFormik<EditProps, FormValues>({
         });
 
         try {
-            if (values.id !== undefined) {
-                const user = await updateUser(formData, values.id);
-                props.dispatch(updateProfile(user));
+            const user = await updateUser(formData);
+            props.dispatch(updateProfile(user));
 
-                if (Object.keys(user).length !== 0) props.passToggle();
-            }
+            if (Object.keys(user).length !== 0) props.passToggle();
         } catch (error: any) {
             setErrors(error);
         }
