@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { AddCategory } from '../../redux/slice/productsSlice';
+import { Categories } from '../../models/categories.model';
 import api from '../api.services/instanceApi.service';
-import RegisterError from '../handleServerError/RegisterError';
+import ProductError from '../handleServerError/ProductError';
 import { ServerError } from '../typings';
 
 const PRODUCTS_URL = 'category/';
@@ -17,34 +17,50 @@ interface CategoryUpdate extends AddCategoryProps {
     categoriesUpdateId: string;
 }
 
-export const addNewCategory = async (categoriesDto: AddCategoryProps): Promise<AddCategory> => {
+export const addNewCategory = async (categoriesDto: AddCategoryProps): Promise<Categories> => {
     try {
-        const { data } = await api.post<AddCategory>(PRODUCTS_URL, { ...categoriesDto });
-
+        const { data } = await api.post<Categories>(PRODUCTS_URL, { ...categoriesDto });
         if (!(Object.keys(data).length !== 0)) throw Error('no product found');
         return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
             if (serverError && serverError.response) {
-                throw new RegisterError(serverError.response.data.errors.$values[0]);
+                throw new ProductError(serverError.response.data.errors.$values[0]);
             }
-            throw new RegisterError(error.message);
+            throw new ProductError(error.message);
         }
         throw error;
     }
 };
 
-export const updateCategory = (categories: CategoryUpdate): Promise<AxiosResponse<AddCategory, any>> => {
+export const getAllCategories = async (): Promise<Categories> => {
+    try {
+        const { data } = await api.get<Categories>(PRODUCTS_URL);
+        if (!(Object.keys(data).length !== 0)) throw Error('no product found');
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const serverError = error as AxiosError<ServerError>;
+            if (serverError && serverError.response) {
+                throw new ProductError(serverError.response.data.errors.$values[0]);
+            }
+            throw new ProductError(error.message);
+        }
+        throw error;
+    }
+};
+
+export const updateCategory = (categories: CategoryUpdate): Promise<AxiosResponse<Categories, any>> => {
     try {
         return api.put(PRODUCTS_URL + 'update/', { ...categories });
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
             if (serverError && serverError.response) {
-                throw new RegisterError(serverError.response.data.errors.$values[0]);
+                throw new ProductError(serverError.response.data.errors.$values[0]);
             }
-            throw new RegisterError(error.message);
+            throw new ProductError(error.message);
         }
         throw error;
     }
@@ -57,9 +73,9 @@ export const deleteCategory = async (id: string): Promise<void> => {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
             if (serverError && serverError.response?.data) {
-                throw new RegisterError(serverError.response.data.errors.$values[0]);
+                throw new ProductError(serverError.response.data.errors.$values[0]);
             }
-            throw new RegisterError(error.message);
+            throw new ProductError(error.message);
         }
         throw error;
     }

@@ -37,7 +37,7 @@ export default function Pagination({ firstPage, lastPage, nextPage, previousPage
                 Previous
             </button>
             {pageNum.map((pageNum, i) => (
-                <button
+                nextPage !== 0 && <button
                     key={i}
                     onClick={() => {
                         onClick(pageNum);
@@ -51,7 +51,7 @@ export default function Pagination({ firstPage, lastPage, nextPage, previousPage
                 onClick={() => {
                     onClick(nextPage);
                 }}
-                disabled={navPageThird === null}
+                disabled={nextPage === 0}
             >
                 Next
             </button>

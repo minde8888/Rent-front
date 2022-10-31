@@ -1,15 +1,7 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Categories } from '../../models/categories.model';
 import { CatValues, Product, ResponseProducts } from '../../models/product.model';
 import { IResponse } from '../../services/typings';
-
-export interface AddCategory {
-    $id: string;
-    categoriesId: string;
-    categoriesName: string;
-    description?: string;
-    imageName?: string;
-    productsId: string;
-}
 
 interface UpdateCategories {
     category: CatValues[];
@@ -52,7 +44,7 @@ const productsSlice = createSlice({
             };
         },
 
-        addProductCategory: (state, action: PayloadAction<AddCategory>) => {
+        addProductCategory: (state, action: PayloadAction<Categories>) => {
             const dataCopy = [...state.productDto.$values];
             const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
             const categories = dataCopy[productIndex]?.categoriesDto.$values;

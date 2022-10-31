@@ -14,7 +14,6 @@ import image6 from '../../image/hotel-1831072_640.jpg';
 import image7 from '../../image/beach-6301597_640.jpg';
 import image8 from '../../image/bedroom-490779_640.jpg';
 import Hero from './hero/hero.component';
-import ReactPlayer from 'react-player/youtube';
 import { useAppSelector } from '../../hooks/redux.hook';
 import { Link } from 'react-router-dom';
 
@@ -26,13 +25,7 @@ const Home = () => {
     return (
         <div className={style.home}>
             <div className={style.col_1}>
-                <div className={style.row_1}>
-                    <ReactPlayer url="https://www.youtube.com/watch?v=6F-hjdpMc1U" width="100%" height="100%" playing controls={false} muted={true} />
-                </div>
-                <div className={style.row_2}>
-                    <img src={image1} alt={'alt-home'} />
-                    <img src={image2} alt={'alt-home'} />
-                </div>
+                <Hero />
             </div>
             <div className={style.title}>
                 <h1 className={style.desc_1}>Lorem Ipsum</h1>
@@ -63,10 +56,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className={style.title}>
-                <h1 className={style.desc_2}>Lorem Ipsum</h1>
-            </div>
-            <Hero />
             <div className={style.title}>
                 <h1 className={style.desc_1}>Lorem Ipsum</h1>
             </div>

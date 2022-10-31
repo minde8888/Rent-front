@@ -5,18 +5,18 @@ import style from './products.module.scss';
 
 const Products: React.FC = () => {
     const products = useAppSelector((state) => state.data.products);
+    const categories = useAppSelector((state) => state.data.categories);
 
     if (!Array.isArray(products.productDto?.$values) || products.productDto?.$values.length < 0) return null;
     const { firstPage, lastPage, previousPage, nextPage, pageNumber, pageSize, totalPages, totalRecords } = products;
 
     let arrayCat: string[] = [];
-    products.productDto?.$values.map((arr) =>
-        arr.categoriesDto?.$values?.map((el) => {
-            if (el.categoriesName) {
-                return (arrayCat = [...arrayCat, el.categoriesName.trim()]);
-            }
-        })
-    );
+    categories.$values?.map((el) => {
+        if (el.categoriesName) {
+            return (arrayCat = [...arrayCat, el.categoriesName.trim()]);
+        }
+    })
+
     const uniqueCat = [...new Set(arrayCat)];
 
     return (
@@ -73,10 +73,12 @@ interface Cat {
 }
 
 const Categories = ({ category }: Cat): JSX.Element | null => {
-    if (Array.isArray(category) && category.length !== 0) {
+    let arr = category.filter(elem => elem != "")
+
+    if (Array.isArray(arr) && arr.length !== 0) {
         return (
             <>
-                {category.map((e, k) => (
+                {arr.map((e, k) => (
                     <Link key={k} to={`cat/${e}`}>
                         {e}
                     </Link>

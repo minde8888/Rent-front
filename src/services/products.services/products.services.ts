@@ -92,7 +92,7 @@ export const removeProduct = async (id: string) => {
 
 export const paginationProduct = async (PageNumber: number) => {
     try {
-        const { data } = await api.get<ResponseProducts>(`Products?PageNumber=${PageNumber}&PageSize=${3}`);
+        const { data } = await api.get<ResponseProducts>(`Products?PageNumber=${PageNumber}&PageSize=${10}`);
         if (!(Object.keys(data).length !== 0)) throw Error('no products found');
         return data;
     } catch (error: any) {
