@@ -13,8 +13,8 @@ import image5 from '../../image/bedroom-5664221_640.jpg';
 import image6 from '../../image/hotel-1831072_640.jpg';
 import image7 from '../../image/beach-6301597_640.jpg';
 import image8 from '../../image/bedroom-490779_640.jpg';
-import Hero from './hero/hero.component';
 import { useAppSelector } from '../../hooks/redux.hook';
+import travel from '../../svg/Welcome To Travel World.svg';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -25,7 +25,10 @@ const Home = () => {
     return (
         <div className={style.home}>
             <div className={style.col_1}>
-                <Hero />
+                <img src={image2} alt="alt_hotel" />
+                <div className={style.desc}>
+                    WELCOME TO TRAVEL WORLD
+                </div>
             </div>
             <div className={style.title}>
                 <h1 className={style.desc_1}>Lorem Ipsum</h1>
@@ -146,7 +149,7 @@ const Home = () => {
                         )
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 export default Home;
