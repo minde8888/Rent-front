@@ -23,7 +23,7 @@ interface FormValues {
     phone: string;
     email: string;
     productName?: string;
-    content?: string;
+    productDescription?: string;
     imageSrc?: string[] | string;
     file?: File[] | number;
     imageWidth?: string;
@@ -42,7 +42,7 @@ interface Props extends FormValues {
     isSubmitting: boolean;
 }
 
-export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, content, categories }: Props) => {
+export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, productsId, place, price, phone, email, size, productName, productDescription, categories }: Props) => {
     const { isOpen, toggle } = useModal();
     const onCancel = () => toggle();
 
@@ -96,7 +96,6 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
             );
 
             setIsSubmitting(true);
-
             await onSubmit(values);
             setIsSubmitting(false);
         },
@@ -120,7 +119,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                 email: email || '',
                 size: size || '',
                 productName: productName || '',
-                content: content || '',
+                productDescription: productDescription || '',
                 imageSrc: '',
                 file: [],
                 imageWidth: '',
@@ -180,7 +179,7 @@ export const InnerForm = ({ imageSrc, onSubmit, isSubmitting, setIsSubmitting, p
                             <label>Product name</label>
                             <TextField id="productName" name="productName" type="productName" />
                             <label>Description</label>
-                            <TextArea className={'style.profileTextArea'} id="Content" name="content" rows="20" />
+                            <TextArea className={'style.profileTextArea'} id="ProductDescription" name="productDescription" rows="20" />
                         </div>
                     </div>
                     <div className={style.col}>
@@ -215,15 +214,8 @@ const EditProduct: React.FC = () => {
                 }
             }
         }
-        try {
-            const data = updateProduct(formData);
-            if (!(data instanceof Error)) {
-                const product = getProduct(values.productsId);
-                dispatch(updateOneProduct(await product));
-            }
-        } catch (err) {
-            throw err;
-        }
+        const response = await updateProduct(formData);
+        dispatch(updateOneProduct(response));
     };
     return (
         <div>
@@ -237,7 +229,7 @@ const EditProduct: React.FC = () => {
                 phone={product[0].phone}
                 email={product[0].email}
                 productName={product[0].postsDto?.productName}
-                content={product[0].postsDto?.content}
+                productDescription={product[0].postsDto?.content}
                 imageSrc={product[0].imageSrc.$values}
                 productsId={id}
                 categories={product[0].categoriesDto.$values}

@@ -1,8 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Product, ResponseProducts } from '../../models/product.model';
 import api from '../api.services/instanceApi.service';
-import ProductError from '../handleServerError/AuthServerError';
-import RegisterError from '../handleServerError/RegisterError';
+import ProductError from '../handleServerError/ProductError';
 import { IResponse, ServerError } from '../typings';
 
 const PRODUCTS_URL = 'products/';
@@ -58,18 +57,19 @@ export const getProduct = async (id: string): Promise<IResponse<Product>> => {
     }
 };
 
-export const updateProduct = (formData: FormData) => {
-    // console.log(Object.fromEntries(formData));
-
+export const updateProduct = async (formData: FormData): Promise<Product> => {
+    console.log(Object.fromEntries(formData));
     try {
-        return api.put<AxiosResponse>(PRODUCTS_URL + 'update', formData);
+        const { data } = await api.put<Product>(PRODUCTS_URL + 'update', formData);
+        if (!(Object.keys(data).length !== 0)) throw Error('no product found');
+        return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const serverError = error as AxiosError<ServerError>;
             if (serverError && serverError.response) {
-                throw new RegisterError(serverError.response.data.errors.$values[0]);
+                throw new ProductError(serverError.response.data.errors.$values[0]);
             }
-            throw new RegisterError(error.message);
+            throw new ProductError(error.message);
         }
         throw error;
     }

@@ -19,13 +19,15 @@ describe('<Home />', () => {
     });
 
     test('renders all images', async () => {
-        const { getAllByAltText } = await setup();
-        const homeImg = getAllByAltText('alt-home');
+        const { getAllByAltText, getByAltText } = await setup();
+        const primeImg = getByAltText('alt_prime_img');
+        const homeImg = getAllByAltText('alt_home');
         const hotelImg = getAllByAltText('alt_hotel');
         const profileImg = getAllByAltText('alt_prof');
         const productImg = getAllByAltText('alt-product');
 
-        expect(homeImg).toHaveLength(4);
+        expect(primeImg).toHaveAttribute('src', 'swimming-2392283_640.jpg');
+        expect(homeImg).toHaveLength(2);
         expect(hotelImg).toHaveLength(4);
         expect(profileImg).toHaveLength(6);
         expect(productImg).toHaveLength(1);

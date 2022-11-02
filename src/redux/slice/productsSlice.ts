@@ -19,9 +19,9 @@ const productsSlice = createSlice({
             };
         },
 
-        updateOneProduct: (state, action: PayloadAction<IResponse<Product>>) => {
+        updateOneProduct: (state, action: PayloadAction<Product>) => {
             const dataCopy = [...state.productDto?.$values];
-            const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.$values[0].productsId);
+            const productIndex = dataCopy.findIndex((p) => p.productsId === action.payload.productsId);
             const product = dataCopy[productIndex];
             const updatedProduct = { ...product, ...action.payload };
             dataCopy.splice(productIndex, 1, updatedProduct);

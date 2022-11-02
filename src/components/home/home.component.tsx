@@ -5,7 +5,6 @@ import prof3 from '../../image/portrait-gcf634d440_640.jpg';
 import prof4 from '../../image/human-g2897b2a4c_640.jpg';
 import prof5 from '../../image/young-woman-g599baf728_640.jpg';
 import prof6 from '../../image/happy-gc1e199d7e_640.jpg';
-import image1 from '../../image/spain-83365_640.jpg';
 import image2 from '../../image/swimming-2392283_640.jpg';
 import image3 from '../../image/hotel-389256_640.jpg';
 import image4 from '../../image/bedroom-490779_640.jpg';
@@ -14,7 +13,6 @@ import image6 from '../../image/hotel-1831072_640.jpg';
 import image7 from '../../image/beach-6301597_640.jpg';
 import image8 from '../../image/bedroom-490779_640.jpg';
 import { useAppSelector } from '../../hooks/redux.hook';
-import travel from '../../svg/Welcome To Travel World.svg';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -25,7 +23,7 @@ const Home = () => {
     return (
         <div className={style.home}>
             <div className={style.col_1}>
-                <img src={image2} alt="alt_hotel" />
+                <img src={image2} alt="alt_prime_img" />
                 <div className={style.desc}>
                     WELCOME TO TRAVEL WORLD
                 </div>
@@ -64,7 +62,7 @@ const Home = () => {
             </div>
             <div className={style.col_3}>
                 <div className={style.box}>
-                    <img src={image7} alt={'alt-home'} />
+                    <img src={image7} alt={'alt_home'} />
                     <div className={style.box_desc}>
                         <h2>Why do we use it?</h2>
                         <div>
@@ -85,7 +83,7 @@ const Home = () => {
                             publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                         </div>
                     </div>
-                    <img src={image8} alt={'alt-home'} />
+                    <img src={image8} alt={'alt_home'} />
                 </div>
             </div>
 

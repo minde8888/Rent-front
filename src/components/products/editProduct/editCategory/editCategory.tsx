@@ -16,7 +16,7 @@ interface Props {
 const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element | null => {
 
     const [category, setCategory] = useState<CatValues[]>(categories);
-    const [isLoaded, setIsLoaded] = useState<boolean>(true);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -25,6 +25,7 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
 
     const handleInput = (e: ChangeEvent, index: number) => {
         if (e.target instanceof HTMLInputElement) {
+            console.log(e.target.value);
             const value = e.target.value;
             setCategory((state) => state.map((val, i) => (i !== index ? val : { ...val, categoriesName: value })));
         }
@@ -40,6 +41,8 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
     );
     /* eslint-disable */
     const saveCategories = async (productsId: string) => {
+        console.log(productsId);
+
         const stringCat = category.map((e) => e.categoriesName);
         const stringCatId = category.map((e) => e.categoriesId);
         const obj = {
@@ -50,9 +53,9 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
 
         dispatch(updateProductCategory({ category, productsId: productsId }));
         const response = await updateCategory(obj);
-        setIsLoaded(false)
+        setIsLoaded(true)
         if (response.status === 200) {
-            setIsLoaded(true)
+            setIsLoaded(false)
         }
     };
 
@@ -71,11 +74,11 @@ const EditCategory = ({ categories, onCancel, productsId }: Props): JSX.Element 
                 </div>
             ))}
             <AddRemoveInputField productsId={productsId} categories={categories} />
-            <button disabled={isLoaded} className={style.saveBtn} onClick={() => saveCategories(productsId)} type="button">
+            <button onClick={(e) => saveCategories(productsId)} disabled={isLoaded} className={style.saveBtn} type="button">
                 Save
             </button >
         </div>
     );
 };
-
+//saveCategories(productsId)
 export default EditCategory;
