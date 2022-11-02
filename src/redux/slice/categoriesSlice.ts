@@ -1,6 +1,5 @@
 import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { Categories } from '../../models/categories.model';
-import { CatValues } from '../../models/product.model';
 import { IResponse } from '../../services/typings';
 
 export interface AddCategory {
