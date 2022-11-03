@@ -58,7 +58,7 @@ export const getProduct = async (id: string): Promise<IResponse<Product>> => {
 };
 
 export const updateProduct = async (formData: FormData): Promise<Product> => {
-    console.log(Object.fromEntries(formData));
+    // console.log(Object.fromEntries(formData));
     try {
         const { data } = await api.put<Product>(PRODUCTS_URL + 'update', formData);
         if (!(Object.keys(data).length !== 0)) throw Error('no product found');

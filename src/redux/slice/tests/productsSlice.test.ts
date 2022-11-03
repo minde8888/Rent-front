@@ -10,7 +10,7 @@ describe('productsSlice', () => {
 
     test('returns updated products data', () => {
         const initialState = responseEmptyProduct as ResponseProducts;
-        const newState = reducer(initialState, updateOneProduct(products));
+        const newState = reducer(initialState, updateOneProduct(product));
         expect(newState).toEqual({ ...responseWithProducts });
     });
 
@@ -122,7 +122,7 @@ const responseWithProducts = {
     previousPage: 0,
     productDto: {
         $id: '',
-        $values: [products]
+        $values: [product]
     }
 };
 

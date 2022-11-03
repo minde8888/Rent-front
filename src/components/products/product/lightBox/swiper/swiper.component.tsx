@@ -127,14 +127,18 @@ function Arrows({ imagesPixelsToHide, increment, decrement, count }: ArrowProps)
         }
     };
 
+    let rightArrow = {
+        justifyContent: count === 0 ? 'flex-end' : ''
+    };
+
     return (
-        <div className={style.arrow}>
-            <div className={style.right} onClick={rightClick}>
+        <div className={style.arrow} style={rightArrow}>
+            <button style={{ display: count !== 0 ? 'block' : 'none' }} className={style.right} onClick={rightClick}>
                 &#10096;
-            </div>
-            <div className={style.left} onClick={leftClick}>
+            </button>
+            <button style={{ display: count !== imagesPixelsToHide.length - 1 ? 'block' : 'none' }} className={style.left} onClick={leftClick}>
                 &#10097;
-            </div>
+            </button>
         </div>
     );
 }
