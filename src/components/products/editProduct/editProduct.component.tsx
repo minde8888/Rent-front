@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook';
-import { getProduct, updateProduct } from '../../../services/products.services/products.services';
+import { updateProduct } from '../../../services/products.services/products.services';
 import * as Yup from 'yup';
 import { TextField } from '../../validation/textField';
 import { TextArea } from '../../validation/textArea';

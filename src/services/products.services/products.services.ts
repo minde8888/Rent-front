@@ -39,24 +39,6 @@ export const getAllProducts = async (): Promise<ResponseProducts> => {
     }
 };
 
-export const getProduct = async (id: string): Promise<IResponse<Product>> => {
-    try {
-        const { data } = await api.get<IResponse<Product>>(PRODUCTS_URL + 'id?id=' + id);
-
-        if (!(Object.keys(data).length !== 0)) throw Error('no product found');
-        return data;
-    } catch (error: any) {
-        if (axios.isAxiosError(error)) {
-            const serverError = error as AxiosError<ServerError>;
-            if (serverError && serverError.response?.data) {
-                throw new ProductError(serverError.response.data.errors.$values[0]);
-            }
-            throw new ProductError(error.message);
-        }
-        throw error;
-    }
-};
-
 export const updateProduct = async (formData: FormData): Promise<Product> => {
     // console.log(Object.fromEntries(formData));
     try {

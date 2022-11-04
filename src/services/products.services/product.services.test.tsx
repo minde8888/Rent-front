@@ -1,6 +1,6 @@
 import { product, response } from "../../components/products/variables/variables";
 import api from "../api.services/instanceApi.service";
-import { addProduct, getAllProducts, getProduct } from "./products.services";
+import { addProduct, getAllProducts } from "./products.services";
 
 jest.mock('../api.services/instanceApi.service');
 
@@ -39,24 +39,6 @@ describe('auth service', () => {
         const mockProduct = { ...response };
         (api.get as jest.Mock).mockResolvedValue({ data: response });
         const result = await getAllProducts();
-        expect(result).toEqual(mockProduct);
-    });
-
-    test('throws error because get product API fails', async () => {
-        (api.get as jest.Mock).mockRejectedValue(new Error('error'));
-        try {
-            await getProduct('123');
-        } catch (error) {
-            expect((error as Error).message).toBe('error');
-        } finally {
-            expect.assertions(1);
-        }
-    });
-
-    test('return one product from API mock', async () => {
-        const mockProduct = { $id: '', $values: [product] };
-        (api.get as jest.Mock).mockResolvedValue({ data: mockProduct });
-        const result = await getProduct('123');
         expect(result).toEqual(mockProduct);
     });
 });
