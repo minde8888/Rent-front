@@ -1,4 +1,4 @@
-import Social from '../home/social/social.component';
+import Social from './social/social.component';
 import style from './footer.module.scss';
 
 const Footer = () => {

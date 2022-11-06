@@ -17,7 +17,7 @@ interface FormValues extends Product {
     uniqueCat: string[];
 }
 
-const ProductEdit = ({ errors, isSubmitting, setFieldValue, values }: FormikProps<FormValues>) => {
+const ProductEdit = ({ isSubmitting, setFieldValue, values }: FormikProps<FormValues>) => {
     const getImagesData = async (files: Array<ImageFiles>): Promise<void> => {
         let arrayImageWidth: number[] = [];
         let arrayImageHeight: number[] = [];
